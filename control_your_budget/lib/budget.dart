@@ -2,16 +2,13 @@ class Budget {
 
   String username;
   String budgetName;
-  double fullBudget;
-  double transportBudget;
-  double foodBudget;
-  double accomodationBudget;
-  double pastimeBudget;
-  double otherExpensesBudget;
+  double fullBudget = 0;
+  double transportBudget = 0;
+  double foodBudget = 0;
+  double accomodationBudget = 0;
+  double pastimeBudget = 0;
+  double otherExpensesBudget = 0;
 
-  Budget({double fB, String bN}){
-    fullBudget=fB;
-    budgetName=bN;
-  }
+  Budget(this.budgetName);
 }
 

@@ -1,5 +1,5 @@
 import 'budget.dart';
 
-class Budget{
+class CreateBudget{
   
 }
