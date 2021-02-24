@@ -14,72 +14,96 @@ void main() {
           ),
           backgroundColor: Colors.cyanAccent[700],
         ),
-        body: Budgetpage(),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Budgetpage(),),
+        ),
       ),
     ),
   );
 }
 
-class Budgetpage extends StatelessWidget {
+class Budgetpage extends StatefulWidget {
+  @override
+  _BudgetpageState createState() => _BudgetpageState();
+}
+
+class _BudgetpageState extends State<Budgetpage> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        FlatButton(
-          onPressed: () {
-            print('Top button pressed.');
-          },
-          child: Container(
-            padding: EdgeInsets.all(10.0),
-            color: Colors.white,
-            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-            child: Row(children: [
-              Icon(
-                Icons.note_add,
-                size: 20.0,
-                color: Colors.cyanAccent[700],
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Text(
-                'Start new budget',
-                style: TextStyle(
-                  color: Colors.cyanAccent[700],
-                  fontSize: 20.0,
-                ),
-              ),
-            ]),
+        Expanded(
+          flex: 5,
+          child: FlatButton(
+            onPressed: () {
+              print('Full budget pressed.');
+            },
+            child: Container(
+              child: Text('Your Full Budget'),
+            ),
           ),
         ),
-        FlatButton(
-          onPressed: () {
-            print('Bottom button pressed.');
-          },
-          child: Container(
-            padding: EdgeInsets.all(10.0),
-            color: Colors.white,
-            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-            child: Row(children: [
-              Icon(
-                Icons.settings,
-                size: 20.0,
-                color: Colors.cyanAccent[700],
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Text(
-                'Settings',
-                style: TextStyle(
-                  color: Colors.cyanAccent[700],
-                  fontSize: 20.0,
-                ),
-              ),
-            ]),
+        Expanded(
+          flex: 5,
+          child: FlatButton(
+            onPressed: () {
+              print('Transport budget pressed.');
+            },
+            child: Container(
+              child: Text('Your Transport Budget'),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: FlatButton(
+            onPressed: () {
+              print('Food budget pressed.');
+            },
+            child: Container(
+              child: Text('Your Food Budget'),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: FlatButton(
+            onPressed: () {
+              print('Accomodation budget pressed.');
+            },
+            child: Container(
+              child: Text('Your Accomodation Budget'),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: FlatButton(
+            onPressed: () {
+              print('Pastime budget pressed.');
+            },
+            child: Container(
+              child: Text('Your Pastime Budget'),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: FlatButton(
+            onPressed: () {
+              print('Other expenses pressed.');
+            },
+            child: Container(
+              child: Text('Other expenses'),
+            ),
           ),
         ),
       ],
     );
   }
 }
+
