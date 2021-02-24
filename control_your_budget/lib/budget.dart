@@ -1,14 +1,8 @@
-class Budget {
-
-  String username;
-  String budgetName;
-  double fullBudget = 0;
-  double transportBudget = 0;
-  double foodBudget = 0;
-  double accomodationBudget = 0;
-  double pastimeBudget = 0;
-  double otherExpensesBudget = 0;
-
-  Budget(this.budgetName);
-}
-
+Map<String, int> singleBudget = {
+  'fullBudget': 0,
+  'transportBudget': 0,
+  'foodBudget': 0,
+  'accomodationBudget': 0,
+  'pastimeBudget': 0,
+  'otherExpenses': 0,
+};

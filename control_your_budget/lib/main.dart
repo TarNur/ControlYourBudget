@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'start_page.dart';
+import 'newBudget_page.dart';
+import 'viewBudget_page.dart';
+import 'settings_page.dart';
 
 void main() => runApp(ControlYourBudget());
 
@@ -14,6 +17,11 @@ class ControlYourBudget extends StatelessWidget {
         textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white))
       ),
       home: StartPage(),
+      routes: {
+        '/first': (context) => NewBudget(),
+        '/second': (context) => ViewBudgets(),
+        '/third': (context) => Settings(),
+      },
     );
   }
 }
