@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'constants.dart';
+import 'package:control_your_budget/constants.dart';
 
 class NewBudget extends StatefulWidget {
   @override
@@ -18,6 +17,7 @@ class _NewBudgetState extends State<NewBudget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
+            flex: 1,
             child: Container(
               margin: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
@@ -27,6 +27,7 @@ class _NewBudgetState extends State<NewBudget> {
             ),
           ),
           Expanded(
+            flex: 3,
             child: Container(
               margin: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
@@ -36,10 +37,15 @@ class _NewBudgetState extends State<NewBudget> {
             ),
           ),
           Container(
-              color: kBottomContainerColour,
-              margin: EdgeInsets.only(top: 10.0),
-              width: double.infinity,
-              height: kBottomContainerHeight),
+            child: Center(
+              child: Text('Create Budget'),
+            ),
+            color: kBottomContainerColour,
+            margin: EdgeInsets.only(top: 10.0),
+            padding: EdgeInsets.only(bottom: 20.0),
+            width: double.infinity,
+            height: kBottomContainerHeight,
+          ),
         ],
       ),
     );

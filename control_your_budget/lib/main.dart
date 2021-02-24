@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'start_page.dart';
-import 'newBudget_page.dart';
-import 'viewBudget_page.dart';
-import 'settings_page.dart';
+import 'package:control_your_budget/screens/newBudget_page.dart';
+import 'package:control_your_budget/screens/settings_page.dart';
+import 'package:control_your_budget/screens/start_page.dart';
+import 'package:control_your_budget/screens/viewBudget_page.dart';
+
 
 void main() => runApp(ControlYourBudget());
 
