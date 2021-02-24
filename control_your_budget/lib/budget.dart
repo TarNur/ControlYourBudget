@@ -2,13 +2,25 @@ class Budget {
 
   String username;
   String budgetName;
-  int fullBudget;
-  int foodBudget;
-  int transportBudget;
-  int accomodationBudget;
+  double fullBudget;
+  double foodBudget;
+  double transportBudget;
+  double accomodationBudget;
 
-  Budget({int fB, int fB2}){
+  Budget({double fB, double fB2}){
     fullBudget=fB;
     foodBudget=fB2;
+  }
+}
+
+class CreateBudget{
+  double transportBudget;
+  double foodBudget;
+  double accomodationBudget;
+  double pastimeBudget;
+  double otherExpensesBudget;
+
+  CreateBudget({double fullBudget}){
+    transportBudget = fullBudget * 0.3;
   }
 }
