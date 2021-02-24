@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
+  runApp(BudgetApp());
+}
+
+class BudgetApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.cyan[100],
         appBar: AppBar(
@@ -20,8 +25,8 @@ void main() {
             child: Budgetpage(),),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class Budgetpage extends StatefulWidget {
