@@ -9,19 +9,14 @@ void main() {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(128.0),
-                  child: Image.asset('images/CYBlogo.png'),
-                ),
-              ),
+              Text('Control Your Budget'),
             ],
           ),
           backgroundColor: Colors.cyanAccent[700],
-         ),
-         body: Budgetpage(),
+        ),
+        body: Budgetpage(),
       ),
-    ),  
+    ),
   );
 }
 
@@ -31,61 +26,57 @@ class Budgetpage extends StatelessWidget {
     return Column(
       children: [
         FlatButton(
-          onPressed: (){
+          onPressed: () {
             print('Top button pressed.');
           },
           child: Container(
             padding: EdgeInsets.all(10.0),
             color: Colors.white,
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.note_add,
-                  size: 20.0,
+            child: Row(children: [
+              Icon(
+                Icons.note_add,
+                size: 20.0,
+                color: Colors.cyanAccent[700],
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                'Start new budget',
+                style: TextStyle(
                   color: Colors.cyanAccent[700],
+                  fontSize: 20.0,
                 ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  'Start new budget',
-                  style: TextStyle(
-                    color: Colors.cyanAccent[700],
-                    fontSize: 20.0,
-                  ),
-                ),
-              ]
-            ),
+              ),
+            ]),
           ),
         ),
         FlatButton(
-          onPressed: (){
+          onPressed: () {
             print('Bottom button pressed.');
           },
           child: Container(
             padding: EdgeInsets.all(10.0),
             color: Colors.white,
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.settings,
-                  size: 20.0,
+            child: Row(children: [
+              Icon(
+                Icons.settings,
+                size: 20.0,
+                color: Colors.cyanAccent[700],
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                'Settings',
+                style: TextStyle(
                   color: Colors.cyanAccent[700],
+                  fontSize: 20.0,
                 ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  'Settings',
-                  style: TextStyle(
-                    color: Colors.cyanAccent[700],
-                    fontSize: 20.0,
-                  ),
-                ),
-              ]
-            ),
+              ),
+            ]),
           ),
         ),
       ],
