@@ -56,7 +56,7 @@ class _StartPageState extends State<StartPage> {
           children: <Widget>[
             DrawerHeader(
               child: Text(
-                'Settings',
+                'Your Profile',
                 style: kSettingsTextStyle,
               ),
               margin: EdgeInsets.symmetric(
@@ -65,7 +65,7 @@ class _StartPageState extends State<StartPage> {
               ),
             ),
             ListTile(
-              title: Text('Mingi setting'),
+              title: Text('Profile Settings'),
               onTap: () {
                 // Update the state of the app
                 // ...
@@ -74,7 +74,7 @@ class _StartPageState extends State<StartPage> {
               },
             ),
             ListTile(
-              title: Text('Mingi setting 2'),
+              title: Text('Settings'),
               onTap: () {
                 // Update the state of the app
                 // ...
