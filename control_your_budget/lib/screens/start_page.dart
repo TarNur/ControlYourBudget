@@ -10,7 +10,6 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +28,7 @@ class _StartPageState extends State<StartPage> {
                   label: 'Your Budgets',
                 ),
                 onPress: () {
-                  setState(() {
-                  });
+                  setState(() {});
                 }),
           ),
           Expanded(
@@ -38,8 +36,7 @@ class _StartPageState extends State<StartPage> {
             child: ReusableCard(
                 colour: kInactiveCardColour,
                 onPress: () {
-                  setState(() {
-                  });
+                  setState(() {});
                 }),
           ),
           Container(
@@ -58,7 +55,14 @@ class _StartPageState extends State<StartPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Settings'),
+              child: Text(
+                'Settings',
+                style: kSettingsTextStyle,
+              ),
+              margin: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 10,
+              ),
             ),
             ListTile(
               title: Text('Mingi setting'),
@@ -81,7 +85,8 @@ class _StartPageState extends State<StartPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton( // Create New Budget Button
+      floatingActionButton: FloatingActionButton(
+        // Create New Budget Button
         onPressed: () {
           Navigator.pushNamed(context, '/first');
         },
