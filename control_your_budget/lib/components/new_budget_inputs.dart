@@ -3,10 +3,6 @@ import 'package:control_your_budget/constants.dart';
 import 'package:flutter/services.dart';
 
 class FullBudgetAmountInputField extends StatelessWidget {
-  const FullBudgetAmountInputField({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +12,7 @@ class FullBudgetAmountInputField extends StatelessWidget {
         color: kInactiveCardColour,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: TextFormField( 
+      child: TextFormField(
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
           FilteringTextInputFormatter.allow(
@@ -38,10 +34,6 @@ class FullBudgetAmountInputField extends StatelessWidget {
 }
 
 class BudgetNameInputField extends StatelessWidget {
-  const BudgetNameInputField({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(

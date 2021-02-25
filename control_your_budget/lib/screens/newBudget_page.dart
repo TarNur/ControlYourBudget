@@ -18,11 +18,13 @@ class _NewBudgetState extends State<NewBudget> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded( // BUDGET NAME SISESTUS
+          Expanded(
+            // BUDGET NAME SISESTUS
             flex: 1,
             child: BudgetNameInputField(),
           ),
-          Expanded( // BUDGET AMOUNT SISESTUS
+          Expanded(
+            // BUDGET AMOUNT SISESTUS
             flex: 1,
             child: FullBudgetAmountInputField(),
           ),
@@ -47,4 +49,3 @@ class _NewBudgetState extends State<NewBudget> {
     );
   }
 }
-
