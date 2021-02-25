@@ -22,22 +22,18 @@ class _StartPageState extends State<StartPage> {
           Expanded(
             flex: 1,
             child: ReusableCard(
-                colour: kInactiveCardColour,
-                cardChild: IconContent(
-                  icon: FontAwesomeIcons.folderOpen,
-                  label: 'Your Budgets',
-                ),
-                onPress: () {
-                  setState(() {});
-                }),
+              colour: kInactiveCardColour,
+              cardChild: IconContent(
+                icon: FontAwesomeIcons.folderOpen,
+                label: 'Your Budgets',
+              ),
+            ),
           ),
           Expanded(
             flex: 5,
             child: ReusableCard(
-                colour: kInactiveCardColour,
-                onPress: () {
-                  setState(() {});
-                }),
+              colour: kInactiveCardColour,
+            ),
           ),
           Container(
               color: kBottomContainerColourStart,

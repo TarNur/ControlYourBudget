@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:flutter/services.dart';
 
-class FullBudgetAmountInputField extends StatelessWidget {
+class FullBudgetAmountInputField extends StatelessWidget { // Uue Budgeti loomisel Full Budgeti sisetusinputkast
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +16,7 @@ class FullBudgetAmountInputField extends StatelessWidget {
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
           FilteringTextInputFormatter.allow(
-            RegExp(r'^\d*[.]?\d*'), // TODO: lubab läbi ühe tähe alguses
+            RegExp(r'^\d*[.]?\d*'), 
           ),
         ],
         textAlign: TextAlign.center,
@@ -33,7 +33,7 @@ class FullBudgetAmountInputField extends StatelessWidget {
   }
 }
 
-class BudgetNameInputField extends StatelessWidget {
+class BudgetNameInputField extends StatelessWidget { // Uue Budgeti loomisel Budgeti nime sisestusinputkast
   @override
   Widget build(BuildContext context) {
     return Container(
