@@ -20,7 +20,7 @@ class FullBudgetAmountInputField extends StatelessWidget {
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
           FilteringTextInputFormatter.allow(
-            RegExp(r'^\d*.{1}\d*'), // TODO: lubab läbi ühe tähe alguses
+            RegExp(r'^\d*[.]?\d*'), // TODO: lubab läbi ühe tähe alguses
           ),
         ],
         textAlign: TextAlign.center,
