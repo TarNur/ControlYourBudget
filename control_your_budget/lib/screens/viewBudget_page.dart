@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// Siia ühe Budgeti vaate page
+
 class ViewBudgets extends StatefulWidget {
   @override
   _ViewBudgetsState createState() => _ViewBudgetsState();

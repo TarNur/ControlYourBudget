@@ -1,8 +1,12 @@
-Map<String, int> singleBudget = {
-  'fullBudget': 0,
-  'transportBudget': 0,
-  'foodBudget': 0,
-  'accomodationBudget': 0,
-  'pastimeBudget': 0,
-  'otherExpenses': 0,
-};
+class Budget{
+  
+  Budget({this.budgetName,this.fullBudgetAmount});
+
+  final String budgetName;
+  final double fullBudgetAmount;
+  
+  void printData(){
+    print(budgetName);
+    print(fullBudgetAmount);
+  }
+}
