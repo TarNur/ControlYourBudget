@@ -10,20 +10,20 @@ class NewBudget extends StatefulWidget {
 }
 
 class _NewBudgetState extends State<NewBudget> {
-
   String budgetName;
   double budgetAmount;
+  double moneyLeft;
 
-  void updateName(String text){
+  void updateName(String text) {
     budgetName = text;
     print(budgetName);
   }
 
-  void updateAmount(String text){
+  void updateAmount(String text) {
     budgetAmount = double.parse(text);
     print(budgetAmount);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +70,7 @@ class _NewBudgetState extends State<NewBudget> {
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
-                    RegExp(r'^\d*[.]?\d*'),
+                    RegExp(r'^\d*[.]?\d?\d?'),
                   ),
                 ],
                 textAlign: TextAlign.center,
@@ -89,18 +89,78 @@ class _NewBudgetState extends State<NewBudget> {
             flex: 5,
             child: Container(
               margin: EdgeInsets.all(15.0),
+              padding: EdgeInsets.only(
+                left: 10.0,
+                right: 10.0,
+                top: 20.0,
+              ),
               decoration: BoxDecoration(
                 color: kInactiveCardColour,
                 borderRadius: BorderRadius.circular(10.0),
               ),
+              child: Column(
+                // TODO: Siia tuleb alamkategooriad luua
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  BudgetCategoryInputField(
+                    categoryName: 'Transport Budget',
+                  ),
+                  BudgetCategoryInputField(
+                    categoryName: 'Accomodation Budget',
+                  ),
+                  BudgetCategoryInputField(
+                    categoryName: 'Food Budget',
+                  ),
+                  BudgetCategoryInputField(
+                    categoryName: 'Pastime Budget',
+                  ),
+                  BudgetCategoryInputField(
+                    categoryName: 'Other Expenses',
+                  ),
+                ],
+              ),
             ),
           ),
-          BottomButton(  // CREATE BUDGET NUPP
+          BottomButton(
+            // CREATE BUDGET NUPP
             onTap: () {
               print('Budget\'i nimi on $budgetName ja amount on $budgetAmount');
-              Budget(budgetName: budgetName, fullBudgetAmount: budgetAmount).printData();
+              Budget(budgetName: budgetName, fullBudgetAmount: budgetAmount)
+                  .printData();
             },
             buttonTitle: 'CREATE BUDGET',
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class BudgetCategoryInputField extends StatelessWidget {
+  BudgetCategoryInputField({this.categoryName});
+  final String categoryName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        //Üks alamkategooria siin
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: TextField(
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp(r'^\d*[.]?\d?\d?'),
+                ),
+              ],
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: categoryName,
+                hintText: 'Money left from budget: ',
+              ),
+            ),
           )
         ],
       ),

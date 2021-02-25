@@ -6,7 +6,7 @@ class Budget{
   final double fullBudgetAmount;
   
   void printData(){
-    print(budgetName);
-    print(fullBudgetAmount);
+    print('Budgeti nimi on $budgetName');
+    print('Budgeti full amount on $fullBudgetAmount');
   }
 }
