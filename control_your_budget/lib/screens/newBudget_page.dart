@@ -18,8 +18,7 @@ class _NewBudgetState extends State<NewBudget> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            //Budget name form
+          Expanded( // BUDGET NAME SISESTUS
             flex: 1,
             child: Container(
               margin: EdgeInsets.all(15.0),
@@ -41,7 +40,7 @@ class _NewBudgetState extends State<NewBudget> {
               ),
             ),
           ),
-          Expanded(
+          Expanded( // BUDGET AMOUNT SISESTUS
             flex: 1,
             child: Container(
               margin: EdgeInsets.all(15.0),
@@ -50,11 +49,11 @@ class _NewBudgetState extends State<NewBudget> {
                 color: kInactiveCardColour,
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: TextFormField( // TODO: Leia viis kuidas, sisesta ainult rahaformaadis
+              child: TextFormField( 
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
-                    RegExp(r'[0-9]'),
+                    RegExp(r'^\d*.{1}\d*'), // sai vist Regexi tööle aga vaja kontrollida
                   ),
                 ],
                 textAlign: TextAlign.center,
