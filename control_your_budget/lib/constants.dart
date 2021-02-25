@@ -5,6 +5,11 @@ const kLabelTextStyle = TextStyle(
   color: Color(0xFF8D8E98),
 );
 
+const kSettingsTextStyle = TextStyle(
+  fontSize: 25.0,
+  color: Colors.white,
+);
+
 const kLargeButtonTextStyle = TextStyle(
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
