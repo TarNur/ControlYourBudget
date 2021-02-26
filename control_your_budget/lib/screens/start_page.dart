@@ -25,7 +25,7 @@ class _StartPageState extends State<StartPage> {
               colour: kInactiveCardColour,
               cardChild: IconContent(
                 icon: FontAwesomeIcons.folderOpen,
-                label: 'Your Budgets',
+                label: 'Your Budgets: ',
               ),
             ),
           ),
