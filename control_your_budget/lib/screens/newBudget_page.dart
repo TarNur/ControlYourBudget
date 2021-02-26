@@ -11,17 +11,34 @@ class NewBudget extends StatefulWidget {
 
 class _NewBudgetState extends State<NewBudget> {
   String budgetName;
-  double budgetAmount;
-  double moneyLeft;
+  double budgetAmount = 0;
+  double moneyLeft = 0;
+  double transportBudget=0;
+  double accomodationBudget = 0;
+  double foodBudget = 0;
+  double pastimeBudget = 0;
+  double otherExpensesBudget = 0;
 
   void updateName(String text) {
     budgetName = text;
-    print(budgetName);
   }
 
   void updateAmount(String text) {
     budgetAmount = double.parse(text);
-    print(budgetAmount);
+  }
+
+  double updateSubCatAmount(String text) {
+    print(double.parse(text));
+    return double.parse(text);
+  }
+
+  void updateMoneyLeft() {
+    moneyLeft = budgetAmount -
+        (transportBudget +
+            accomodationBudget +
+            foodBudget +
+            pastimeBudget +
+            otherExpensesBudget);
   }
 
   @override
@@ -50,7 +67,7 @@ class _NewBudgetState extends State<NewBudget> {
                   labelText: 'Budget Name:',
                 ),
                 maxLength: 15,
-                onFieldSubmitted: (text) {
+                onChanged: (text) {
                   updateName(text);
                 },
               ),
@@ -79,8 +96,11 @@ class _NewBudgetState extends State<NewBudget> {
                   labelText: 'Budget:',
                 ),
                 maxLength: 15,
-                onFieldSubmitted: (text) {
-                  updateAmount(text);
+                onChanged: (text) {
+                  setState(() {
+                    updateAmount(text);
+                    updateMoneyLeft();
+                  });
                 },
               ),
             ),
@@ -99,24 +119,159 @@ class _NewBudgetState extends State<NewBudget> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Column(
-                // TODO: Siia tuleb alamkategooriad luua
+                // ALAMKATEGOORIAD
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  BudgetCategoryInputField(
-                    categoryName: 'Transport Budget',
+                  Expanded(
+                    child: Column(
+                      //TRANSPORT ALAMKATEGOORIA
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*[.]?\d?\d?'),
+                              ),
+                            ],
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Transport Budget',
+                              hintText: 'Money left from budget: $moneyLeft',
+                            ),
+                            onChanged: (text) {
+                              setState(
+                                () {
+                                  transportBudget = updateSubCatAmount(text);
+                                  updateMoneyLeft();
+                                },
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  BudgetCategoryInputField(
-                    categoryName: 'Accomodation Budget',
+                  Expanded(
+                    child: Column(
+                      //ACCOMODATION ALAMKATEGOORIA
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*[.]?\d?\d?'),
+                              ),
+                            ],
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Accomodation Budget',
+                              hintText: 'Money left from budget: $moneyLeft',
+                            ),
+                            onChanged: (text) {
+                              setState(
+                                () {
+                                  accomodationBudget = updateSubCatAmount(text);
+                                  updateMoneyLeft();
+                                },
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  BudgetCategoryInputField(
-                    categoryName: 'Food Budget',
+                  Expanded(
+                    child: Column(
+                      //FOOD ALAMKATEGOORIA
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*[.]?\d?\d?'),
+                              ),
+                            ],
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Food budget',
+                              hintText: 'Money left from budget: $moneyLeft',
+                            ),
+                            onChanged: (text) {
+                              setState(
+                                () {
+                                  foodBudget = updateSubCatAmount(text);
+                                  updateMoneyLeft();
+                                },
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  BudgetCategoryInputField(
-                    categoryName: 'Pastime Budget',
+                  Expanded(
+                    child: Column(
+                      //PASTIME ALAMKATEGOORIA
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*[.]?\d?\d?'),
+                              ),
+                            ],
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Pastime Budget',
+                              hintText: 'Money left from budget: $moneyLeft',
+                            ),
+                            onChanged: (text) {
+                              setState(
+                                () {
+                                  pastimeBudget = updateSubCatAmount(text);
+                                  updateMoneyLeft();
+                                },
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  BudgetCategoryInputField(
-                    categoryName: 'Other Expenses',
+                  Expanded(
+                    child: Column(
+                      //OTHER EXPENSES ALAMKATEGOORIA
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*[.]?\d?\d?'),
+                              ),
+                            ],
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Other Expenses',
+                              hintText: 'Money left from budget: $moneyLeft',
+                            ),
+                            onChanged: (text) {
+                              setState(
+                                () {
+                                  otherExpensesBudget = updateSubCatAmount(text);
+                                  updateMoneyLeft();
+                                },
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -130,37 +285,6 @@ class _NewBudgetState extends State<NewBudget> {
                   .printData();
             },
             buttonTitle: 'CREATE BUDGET',
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class BudgetCategoryInputField extends StatelessWidget {
-  BudgetCategoryInputField({this.categoryName});
-  final String categoryName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        //Üks alamkategooria siin
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: TextField(
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(
-                  RegExp(r'^\d*[.]?\d?\d?'),
-                ),
-              ],
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: categoryName,
-                hintText: 'Money left from budget: ',
-              ),
-            ),
           )
         ],
       ),
