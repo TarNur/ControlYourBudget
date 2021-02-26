@@ -74,6 +74,7 @@ class _NewBudgetState extends State<NewBudget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('CONTROL YOUR BUDGET'),
       ),
