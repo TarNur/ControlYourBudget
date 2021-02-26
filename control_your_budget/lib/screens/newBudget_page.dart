@@ -13,22 +13,19 @@ class _NewBudgetState extends State<NewBudget> {
   String budgetName;
   double budgetAmount = 0;
   double moneyLeft = 0;
-  double transportBudget=0;
+  double transportBudget = 0;
   double accomodationBudget = 0;
   double foodBudget = 0;
   double pastimeBudget = 0;
   double otherExpensesBudget = 0;
 
   void updateName(String text) {
+    // Uuenda Budgeti nimi
     budgetName = text;
   }
 
-  void updateAmount(String text) {
-    budgetAmount = double.parse(text);
-  }
-
-  double updateSubCatAmount(String text) {
-    print(double.parse(text));
+  double updateMoneyAmount(String text) {
+    // Uuenda rahaline väärtus
     return double.parse(text);
   }
 
@@ -50,8 +47,8 @@ class _NewBudgetState extends State<NewBudget> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // BUDGET NAME SISESTUS
           Expanded(
-            // BUDGET NAME SISESTUS
             flex: 1,
             child: Container(
               margin: EdgeInsets.all(15.0),
@@ -73,8 +70,8 @@ class _NewBudgetState extends State<NewBudget> {
               ),
             ),
           ),
+          // BUDGET AMOUNT SISESTUS
           Expanded(
-            // BUDGET AMOUNT SISESTUS
             flex: 1,
             child: Container(
               margin: EdgeInsets.all(15.0),
@@ -98,7 +95,7 @@ class _NewBudgetState extends State<NewBudget> {
                 maxLength: 15,
                 onChanged: (text) {
                   setState(() {
-                    updateAmount(text);
+                    budgetAmount = updateMoneyAmount(text);
                     updateMoneyLeft();
                   });
                 },
@@ -118,14 +115,14 @@ class _NewBudgetState extends State<NewBudget> {
                 color: kInactiveCardColour,
                 borderRadius: BorderRadius.circular(10.0),
               ),
+              // ALAMKATEGOORIAD
               child: Column(
-                // ALAMKATEGOORIAD
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  //TRANSPORT ALAMKATEGOORIA
                   Expanded(
                     child: Column(
-                      //TRANSPORT ALAMKATEGOORIA
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
@@ -143,7 +140,7 @@ class _NewBudgetState extends State<NewBudget> {
                             onChanged: (text) {
                               setState(
                                 () {
-                                  transportBudget = updateSubCatAmount(text);
+                                  transportBudget = updateMoneyAmount(text);
                                   updateMoneyLeft();
                                 },
                               );
@@ -153,9 +150,9 @@ class _NewBudgetState extends State<NewBudget> {
                       ],
                     ),
                   ),
+                  //ACCOMODATION ALAMKATEGOORIA
                   Expanded(
                     child: Column(
-                      //ACCOMODATION ALAMKATEGOORIA
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
@@ -173,7 +170,7 @@ class _NewBudgetState extends State<NewBudget> {
                             onChanged: (text) {
                               setState(
                                 () {
-                                  accomodationBudget = updateSubCatAmount(text);
+                                  accomodationBudget = updateMoneyAmount(text);
                                   updateMoneyLeft();
                                 },
                               );
@@ -183,9 +180,9 @@ class _NewBudgetState extends State<NewBudget> {
                       ],
                     ),
                   ),
+                  //FOOD ALAMKATEGOORIA
                   Expanded(
                     child: Column(
-                      //FOOD ALAMKATEGOORIA
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
@@ -203,7 +200,7 @@ class _NewBudgetState extends State<NewBudget> {
                             onChanged: (text) {
                               setState(
                                 () {
-                                  foodBudget = updateSubCatAmount(text);
+                                  foodBudget = updateMoneyAmount(text);
                                   updateMoneyLeft();
                                 },
                               );
@@ -213,9 +210,9 @@ class _NewBudgetState extends State<NewBudget> {
                       ],
                     ),
                   ),
+                  //PASTIME ALAMKATEGOORIA
                   Expanded(
                     child: Column(
-                      //PASTIME ALAMKATEGOORIA
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
@@ -233,7 +230,7 @@ class _NewBudgetState extends State<NewBudget> {
                             onChanged: (text) {
                               setState(
                                 () {
-                                  pastimeBudget = updateSubCatAmount(text);
+                                  pastimeBudget = updateMoneyAmount(text);
                                   updateMoneyLeft();
                                 },
                               );
@@ -243,9 +240,9 @@ class _NewBudgetState extends State<NewBudget> {
                       ],
                     ),
                   ),
+                  //OTHER EXPENSES ALAMKATEGOORIA
                   Expanded(
                     child: Column(
-                      //OTHER EXPENSES ALAMKATEGOORIA
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
@@ -263,7 +260,7 @@ class _NewBudgetState extends State<NewBudget> {
                             onChanged: (text) {
                               setState(
                                 () {
-                                  otherExpensesBudget = updateSubCatAmount(text);
+                                  otherExpensesBudget = updateMoneyAmount(text);
                                   updateMoneyLeft();
                                 },
                               );
