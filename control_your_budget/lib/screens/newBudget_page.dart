@@ -51,6 +51,7 @@ class _NewBudgetState extends State<NewBudget> {
 
   TextField createSubCat(String categoryName, var budgetCategory) {
     return TextField(
+      keyboardType: TextInputType.numberWithOptions(signed: true,),
       inputFormatters: [
         FilteringTextInputFormatter.allow(
           RegExp(r'^\d*[.]?\d?\d?'),
@@ -62,6 +63,11 @@ class _NewBudgetState extends State<NewBudget> {
         labelText: categoryName,
         hintText: 'Money left from budget: $moneyLeft',
       ),
+      onChanged: (text){
+        setState(() {
+          updateMoneyLeft();
+        });
+      },
       onTap: () {
         setState(() {
           checkAllAmounts();
@@ -113,7 +119,7 @@ class _NewBudgetState extends State<NewBudget> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: TextFormField(
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: TextInputType.numberWithOptions(signed: true,),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                     RegExp(r'^\d*[.]?\d?\d?'),
@@ -126,6 +132,9 @@ class _NewBudgetState extends State<NewBudget> {
                 ),
                 controller: budgetAmount,
                 maxLength: 15,
+                onChanged: (text){
+                  updateMoneyLeft();
+                },
                 onTap: () {
                   setState(() {
                     checkAllAmounts();
@@ -136,13 +145,14 @@ class _NewBudgetState extends State<NewBudget> {
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: 4,
             child: Container(
               margin: EdgeInsets.all(15.0),
               padding: EdgeInsets.only(
                 left: 10.0,
                 right: 10.0,
-                top: 20.0,
+                top: 5.0,
+                bottom: 5.0
               ),
               decoration: BoxDecoration(
                 color: kInactiveCardColour,
@@ -158,7 +168,7 @@ class _NewBudgetState extends State<NewBudget> {
                     'Money left from Initial Budget: $moneyLeft',
                     style: kLabelTextStyle,
                   ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 5.0),
                   Expanded(
                     child: createSubCat('Transport Budget', transportBudget),
                   ),
