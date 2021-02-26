@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
 import 'package:flutter/services.dart';
-import 'package:control_your_budget/budget.dart';
 
 class NewBudget extends StatefulWidget {
   @override
@@ -10,32 +9,35 @@ class NewBudget extends StatefulWidget {
 }
 
 class _NewBudgetState extends State<NewBudget> {
-  String budgetName;
+  var budgetName = TextEditingController();
+
   double budgetAmount = 0;
   double moneyLeft = 0;
-  double transportBudget = 0;
-  double accomodationBudget = 0;
-  double foodBudget = 0;
-  double pastimeBudget = 0;
-  double otherExpensesBudget = 0;
 
-  void updateName(String text) {
-    // Uuenda Budgeti nimi
-    budgetName = text;
-  }
-
-  double updateMoneyAmount(String text) {
-    // Uuenda rahaline väärtus
-    return double.parse(text);
-  }
+  var transportBudget = TextEditingController();
+  var foodBudget = TextEditingController();
+  var accomodationBudget = TextEditingController();
+  var pastimeBudget = TextEditingController();
+  var otherExpensesBudget = TextEditingController();
 
   void updateMoneyLeft() {
-    moneyLeft = budgetAmount -
-        (transportBudget +
-            accomodationBudget +
-            foodBudget +
-            pastimeBudget +
-            otherExpensesBudget);
+    moneyLeft = budgetAmount;
+  }
+
+  TextField createSubCat(String categoryName, var budgetCategory) {
+    return TextField(
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(
+          RegExp(r'^\d*[.]?\d?\d?'),
+        ),
+      ],
+      controller: budgetCategory,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: categoryName,
+        hintText: 'Money left from budget: $moneyLeft',
+      ),
+    );
   }
 
   @override
@@ -64,9 +66,7 @@ class _NewBudgetState extends State<NewBudget> {
                   labelText: 'Budget Name:',
                 ),
                 maxLength: 15,
-                onChanged: (text) {
-                  updateName(text);
-                },
+                controller: budgetName,
               ),
             ),
           ),
@@ -95,7 +95,6 @@ class _NewBudgetState extends State<NewBudget> {
                 maxLength: 15,
                 onChanged: (text) {
                   setState(() {
-                    budgetAmount = updateMoneyAmount(text);
                     updateMoneyLeft();
                   });
                 },
@@ -122,153 +121,24 @@ class _NewBudgetState extends State<NewBudget> {
                 children: [
                   //TRANSPORT ALAMKATEGOORIA
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*[.]?\d?\d?'),
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Transport Budget',
-                              hintText: 'Money left from budget: $moneyLeft',
-                            ),
-                            onChanged: (text) {
-                              setState(
-                                () {
-                                  transportBudget = updateMoneyAmount(text);
-                                  updateMoneyLeft();
-                                },
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
+                    child: createSubCat('Transport Budget', transportBudget),
                   ),
                   //ACCOMODATION ALAMKATEGOORIA
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*[.]?\d?\d?'),
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Accomodation Budget',
-                              hintText: 'Money left from budget: $moneyLeft',
-                            ),
-                            onChanged: (text) {
-                              setState(
-                                () {
-                                  accomodationBudget = updateMoneyAmount(text);
-                                  updateMoneyLeft();
-                                },
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
+                    child:
+                        createSubCat('Accomodation Budget', accomodationBudget),
                   ),
                   //FOOD ALAMKATEGOORIA
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*[.]?\d?\d?'),
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Food budget',
-                              hintText: 'Money left from budget: $moneyLeft',
-                            ),
-                            onChanged: (text) {
-                              setState(
-                                () {
-                                  foodBudget = updateMoneyAmount(text);
-                                  updateMoneyLeft();
-                                },
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
+                    child: createSubCat('Food Budget', foodBudget),
                   ),
                   //PASTIME ALAMKATEGOORIA
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*[.]?\d?\d?'),
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Pastime Budget',
-                              hintText: 'Money left from budget: $moneyLeft',
-                            ),
-                            onChanged: (text) {
-                              setState(
-                                () {
-                                  pastimeBudget = updateMoneyAmount(text);
-                                  updateMoneyLeft();
-                                },
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
+                    child: createSubCat('Pastime Budget', pastimeBudget),
                   ),
                   //OTHER EXPENSES ALAMKATEGOORIA
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*[.]?\d?\d?'),
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Other Expenses',
-                              hintText: 'Money left from budget: $moneyLeft',
-                            ),
-                            onChanged: (text) {
-                              setState(
-                                () {
-                                  otherExpensesBudget = updateMoneyAmount(text);
-                                  updateMoneyLeft();
-                                },
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
+                    child: createSubCat('Other Expenses', otherExpensesBudget),
                   ),
                 ],
               ),
@@ -277,9 +147,10 @@ class _NewBudgetState extends State<NewBudget> {
           BottomButton(
             // CREATE BUDGET NUPP
             onTap: () {
-              print('Budget\'i nimi on $budgetName ja amount on $budgetAmount');
-              Budget(budgetName: budgetName, fullBudgetAmount: budgetAmount)
-                  .printData();
+              print(budgetName.text);
+              if (transportBudget.text == '') {
+                print('Fuck you');
+              }
             },
             buttonTitle: 'CREATE BUDGET',
           )
