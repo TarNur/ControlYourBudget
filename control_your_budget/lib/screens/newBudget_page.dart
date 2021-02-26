@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
+import 'package:control_your_budget/components/alert_box.dart';
 import 'package:flutter/services.dart';
 
 class NewBudget extends StatefulWidget {
@@ -40,6 +41,12 @@ class _NewBudgetState extends State<NewBudget> {
     checkAmount(accomodationBudget);
     checkAmount(pastimeBudget);
     checkAmount(otherExpensesBudget);
+  }
+
+  void addToOtherExpenses() {
+    otherExpensesBudget.value = TextEditingValue(
+      text: (double.parse(otherExpensesBudget.text) + moneyLeft).toString(),
+    );
   }
 
   TextField createSubCat(String categoryName, var budgetCategory) {
@@ -146,8 +153,11 @@ class _NewBudgetState extends State<NewBudget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //TRANSPORT ALAMKATEGOORIA
-                  Text('Money left from Initial Budget: $moneyLeft', style: kLabelTextStyle,),
-                  SizedBox(height:15.0),
+                  Text(
+                    'Money left from Initial Budget: $moneyLeft',
+                    style: kLabelTextStyle,
+                  ),
+                  SizedBox(height: 15.0),
                   Expanded(
                     child: createSubCat('Transport Budget', transportBudget),
                   ),
@@ -176,11 +186,17 @@ class _NewBudgetState extends State<NewBudget> {
             // CREATE BUDGET NUPP
             onTap: () {
               checkAllAmounts();
-              print(budgetName.text);
-              if (transportBudget.text == '') {
-                print('Fuck you');
+
+              if (moneyLeft > 0) {
+                // Kui raha üle, pane muud kulud alla.
+                addToOtherExpenses();
+                updateMoneyLeft();
+              }
+
+              if (moneyLeft < 0) {
+                showAlertDialog(context); //ALERT SIIT
               } else {
-                print(transportBudget.text);
+                print('On OK.');
               }
             },
             buttonTitle: 'CREATE BUDGET',
