@@ -10,10 +10,8 @@ class NewBudget extends StatefulWidget {
 
 class _NewBudgetState extends State<NewBudget> {
   var budgetName = TextEditingController();
-
-  double budgetAmount = 0;
+  var budgetAmount = TextEditingController();
   double moneyLeft = 0;
-
   var transportBudget = TextEditingController();
   var foodBudget = TextEditingController();
   var accomodationBudget = TextEditingController();
@@ -21,7 +19,27 @@ class _NewBudgetState extends State<NewBudget> {
   var otherExpensesBudget = TextEditingController();
 
   void updateMoneyLeft() {
-    moneyLeft = budgetAmount;
+    moneyLeft = double.parse(budgetAmount.text) -
+        double.parse(transportBudget.text) -
+        double.parse(accomodationBudget.text) -
+        double.parse(foodBudget.text) -
+        double.parse(pastimeBudget.text) -
+        double.parse(otherExpensesBudget.text);
+  }
+
+  void checkAmount(var budget) {
+    if (budget.text == '') {
+      budget.value = TextEditingValue(text: '0');
+    }
+  }
+
+  void checkAllAmounts() {
+    checkAmount(budgetAmount);
+    checkAmount(transportBudget);
+    checkAmount(foodBudget);
+    checkAmount(accomodationBudget);
+    checkAmount(pastimeBudget);
+    checkAmount(otherExpensesBudget);
   }
 
   TextField createSubCat(String categoryName, var budgetCategory) {
@@ -37,6 +55,12 @@ class _NewBudgetState extends State<NewBudget> {
         labelText: categoryName,
         hintText: 'Money left from budget: $moneyLeft',
       ),
+      onTap: () {
+        setState(() {
+          checkAllAmounts();
+          updateMoneyLeft();
+        });
+      },
     );
   }
 
@@ -92,9 +116,11 @@ class _NewBudgetState extends State<NewBudget> {
                   hintText: 'Enter Budget amount',
                   labelText: 'Budget:',
                 ),
+                controller: budgetAmount,
                 maxLength: 15,
-                onChanged: (text) {
+                onTap: () {
                   setState(() {
+                    checkAllAmounts();
                     updateMoneyLeft();
                   });
                 },
@@ -117,9 +143,11 @@ class _NewBudgetState extends State<NewBudget> {
               // ALAMKATEGOORIAD
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //TRANSPORT ALAMKATEGOORIA
+                  Text('Money left from Initial Budget: $moneyLeft', style: kLabelTextStyle,),
+                  SizedBox(height:15.0),
                   Expanded(
                     child: createSubCat('Transport Budget', transportBudget),
                   ),
@@ -147,9 +175,12 @@ class _NewBudgetState extends State<NewBudget> {
           BottomButton(
             // CREATE BUDGET NUPP
             onTap: () {
+              checkAllAmounts();
               print(budgetName.text);
               if (transportBudget.text == '') {
                 print('Fuck you');
+              } else {
+                print(transportBudget.text);
               }
             },
             buttonTitle: 'CREATE BUDGET',
