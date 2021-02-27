@@ -3,6 +3,7 @@ import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
+import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
@@ -168,6 +169,17 @@ class _NewBudgetState extends State<NewBudget> {
                         color: Colors.cyan,
                         onPressed: () {
                           print('pressed');
+                          showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => SingleChildScrollView(
+                                      child: Container(
+                                    padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom),
+                                    child: AddTaskScreen(),
+                                  )));
                         },
                       ),
                     ],
