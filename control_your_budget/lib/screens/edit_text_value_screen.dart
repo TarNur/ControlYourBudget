@@ -34,19 +34,12 @@ class EditTextValueScreen extends StatelessWidget {
               onChanged: (value) {
                 newValue = value;
               },
-            ),
-            FlatButton(
-              child: Text(
-                'Confirm',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              color: Colors.cyan,
-              onPressed: () {
+              onSubmitted: (value){
+                newValue = value;
                 Navigator.pop(context, newValue);
               },
             ),
+            
           ],
         ),
       ),
