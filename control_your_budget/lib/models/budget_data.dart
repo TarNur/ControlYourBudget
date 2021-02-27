@@ -1,10 +1,10 @@
 import 'budget.dart';
 
 class BudgetData {
-  List<Budget> budgets = [
-    Budget(budgetName: 'France Trip',budgetAmount: 15000,selectedCurrency: 'EUR'),
-    Budget(budgetName: 'Germany Trip',budgetAmount: 15000,selectedCurrency: 'EUR'),
-    Budget(budgetName: 'Alps Trip',budgetAmount: 15000,selectedCurrency: 'EUR'),
-    Budget(budgetName: 'UK Trip',budgetAmount: 15000,selectedCurrency: 'EUR'),
+  List<BudgetInfo> budgets = [
+    BudgetInfo(budgetName: 'France Trip',budgetAmount: 15000,selectedCurrency: 'EUR'),
+    BudgetInfo(budgetName: 'Germany Trip',budgetAmount: 15000,selectedCurrency: 'EUR'),
+    BudgetInfo(budgetName: 'Alps Trip',budgetAmount: 15000,selectedCurrency: 'EUR'),
+    BudgetInfo(budgetName: 'UK Trip',budgetAmount: 15000,selectedCurrency: 'EUR'),
   ];
 }

@@ -1,7 +1,9 @@
+import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/budgets_list.dart';
 import 'package:control_your_budget/models/budget_data.dart';
+import 'package:control_your_budget/budget_helper.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -9,6 +11,18 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
+  BudgetHelper _budgetHelper = BudgetHelper();
+  Future<List<BudgetInfo>> _budgets;
+
+  @override
+  void initState() {
+    _budgetHelper.initializeDatabase().then((value) {
+      print('-----------database initialized');
+      _budgets = _budgetHelper.getBudgets();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

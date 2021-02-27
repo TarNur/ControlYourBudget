@@ -1,3 +1,5 @@
+import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
@@ -10,6 +12,8 @@ class NewBudget extends StatefulWidget {
 }
 
 class _NewBudgetState extends State<NewBudget> {
+  BudgetHelper _budgetHelper = BudgetHelper();
+
   String budgetName = 'Prantsusmaa reis';
   double budgetAmount = 1500;
   double moneyLeft = 0;
@@ -57,6 +61,14 @@ class _NewBudgetState extends State<NewBudget> {
       },
       children: pickerItems,
     );
+  }
+
+  @override
+  void initState() {
+    _budgetHelper.initializeDatabase().then((value) {
+      print('-----------database initialized');
+    });
+    super.initState();
   }
 
   @override
@@ -151,12 +163,12 @@ class _NewBudgetState extends State<NewBudget> {
                         style: kLabelTextStyle,
                       ),
                       IconButton(
-                          icon: Icon(Icons.edit),
-                          iconSize: 30.0,
-                          color: Colors.cyan,
-                          onPressed: (){
-                            print('pressed');
-                          },
+                        icon: Icon(Icons.edit),
+                        iconSize: 30.0,
+                        color: Colors.cyan,
+                        onPressed: () {
+                          print('pressed');
+                        },
                       ),
                     ],
                   ),
@@ -231,6 +243,17 @@ class _NewBudgetState extends State<NewBudget> {
           BottomButton(
             // CREATE BUDGET NUPP
             onTap: () {
+              var budgetInfo = BudgetInfo(
+                budgetName: budgetName,
+                budgetAmount: budgetAmount,
+                transportBudget: transportBudget,
+                accomodationBudget: accomodationBudget,
+                foodBudget: foodBudget,
+                pastimeBudget: pastimeBudget,
+                otherExpensesBudget: otherExpensesBudget,
+                selectedCurrency: selectedCurrency,
+              );
+              // _budgetHelper.insertBudget(budgetInfo);
               print('bottom button pressed');
             },
             buttonTitle: 'CREATE BUDGET',
