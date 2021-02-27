@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
+import 'package:control_your_budget/components/budgets_list.dart';
+import 'package:control_your_budget/models/budget_data.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -59,7 +61,7 @@ class _StartPageState extends State<StartPage> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              // child:
+              child: BudgetsList(BudgetData().budgets),
             ),
           ),
         ],

@@ -122,7 +122,7 @@ class _NewBudgetState extends State<NewBudget> {
             ),
           ),
           Container(
-            height: 70.0,
+            height: 60.0,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 5.0),
             color: Colors.cyan,
@@ -150,10 +150,13 @@ class _NewBudgetState extends State<NewBudget> {
                         'Transport Budget: $transportBudget $selectedCurrency',
                         style: kLabelTextStyle,
                       ),
-                      Icon(
-                        Icons.edit,
-                        size: 30.0,
-                        color: Colors.cyan,
+                      IconButton(
+                          icon: Icon(Icons.edit),
+                          iconSize: 30.0,
+                          color: Colors.cyan,
+                          onPressed: (){
+                            print('pressed');
+                          },
                       ),
                     ],
                   ),
