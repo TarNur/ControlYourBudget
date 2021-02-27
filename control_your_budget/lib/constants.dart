@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const kLabelTextStyle = TextStyle(
   fontSize: 15.0,
-  color: Color(0xFF8D8E98),
+  color: Colors.black,
 );
 
 const kSettingsTextStyle = TextStyle(
@@ -20,4 +20,28 @@ const kBottomContainerHeight = 80.0;
 const kInactiveCardColour = Color(0xFF1D1E33);
 const kActiveCardColour = Color(0xFF111328);
 const kBottomContainerColourStart = Color(0xFF111328);
-const kBottomContainerColourCreate = Colors.cyanAccent;
+const kBottomContainerColourCreate = Colors.cyan;
+const kLightGreyColour = Color(0xFFB7B8C2);
+
+const List<String> currenciesList = [
+  'EUR',
+  'BRL',
+  'CAD',
+  'CNY',
+  'AUD',
+  'GBP',
+  'HKD',
+  'IDR',
+  'ILS',
+  'INR',
+  'JPY',
+  'MXN',
+  'NOK',
+  'NZD',
+  'PLN',
+  'RON',
+  'RUB',
+  'SEK',
+  'SGD',
+  'USD',
+];

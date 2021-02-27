@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
-import 'package:control_your_budget/components/alert_box.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
 
 class NewBudget extends StatefulWidget {
   @override
@@ -10,70 +10,52 @@ class NewBudget extends StatefulWidget {
 }
 
 class _NewBudgetState extends State<NewBudget> {
-  var budgetName = TextEditingController();
-  var budgetAmount = TextEditingController();
+  String budgetName = 'Prantsusmaa reis';
+  double budgetAmount = 1500;
   double moneyLeft = 0;
-  var transportBudget = TextEditingController();
-  var foodBudget = TextEditingController();
-  var accomodationBudget = TextEditingController();
-  var pastimeBudget = TextEditingController();
-  var otherExpensesBudget = TextEditingController();
+  double transportBudget = 1500;
+  double foodBudget = 1500;
+  double accomodationBudget = 1500;
+  double pastimeBudget = 1500;
+  double otherExpensesBudget = 1500;
+  String selectedCurrency = 'EUR';
 
-  void updateMoneyLeft() {
-    moneyLeft = double.parse(budgetAmount.text) -
-        double.parse(transportBudget.text) -
-        double.parse(accomodationBudget.text) -
-        double.parse(foodBudget.text) -
-        double.parse(pastimeBudget.text) -
-        double.parse(otherExpensesBudget.text);
-  }
-
-  void checkAmount(var budget) {
-    if (budget.text == '') {
-      budget.value = TextEditingValue(text: '0');
+  DropdownButton<String> androidDropdown() {
+    List<DropdownMenuItem<String>> dropdownItems = [];
+    for (String currency in currenciesList) {
+      var newItem = DropdownMenuItem(
+        child: Text(currency),
+        value: currency,
+      );
+      dropdownItems.add(newItem);
     }
-  }
 
-  void checkAllAmounts() {
-    checkAmount(budgetAmount);
-    checkAmount(transportBudget);
-    checkAmount(foodBudget);
-    checkAmount(accomodationBudget);
-    checkAmount(pastimeBudget);
-    checkAmount(otherExpensesBudget);
-  }
-
-  void addToOtherExpenses() {
-    otherExpensesBudget.value = TextEditingValue(
-      text: (double.parse(otherExpensesBudget.text) + moneyLeft).toString(),
+    return DropdownButton<String>(
+      value: selectedCurrency,
+      items: dropdownItems,
+      onChanged: (value) {
+        setState(() {
+          selectedCurrency = value;
+        });
+      },
     );
   }
 
-  TextField createSubCat(String categoryName, var budgetCategory) {
-    return TextField(
-      keyboardType: TextInputType.numberWithOptions(signed: true,),
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(
-          RegExp(r'^\d*[.]?\d?\d?'),
-        ),
-      ],
-      controller: budgetCategory,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: categoryName,
-        hintText: 'Money left from budget: $moneyLeft',
-      ),
-      onChanged: (text){
+  CupertinoPicker iOSPicker() {
+    List<Text> pickerItems = [];
+    for (String currency in currenciesList) {
+      pickerItems.add(Text(currency));
+    }
+
+    return CupertinoPicker(
+      backgroundColor: Colors.cyan,
+      itemExtent: 32.0,
+      onSelectedItemChanged: (selectedIndex) {
         setState(() {
-          updateMoneyLeft();
+          selectedCurrency = currenciesList[selectedIndex];
         });
       },
-      onTap: () {
-        setState(() {
-          checkAllAmounts();
-          updateMoneyLeft();
-        });
-      },
+      children: pickerItems,
     );
   }
 
@@ -94,17 +76,22 @@ class _NewBudgetState extends State<NewBudget> {
               margin: EdgeInsets.all(15.0),
               padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
-                color: kInactiveCardColour,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: TextFormField(
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  hintText: 'Enter name for Budget',
-                  labelText: 'Budget Name:',
-                ),
-                maxLength: 15,
-                controller: budgetName,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'Budget Name: $budgetName',
+                    style: kLabelTextStyle,
+                  ),
+                  Icon(
+                    Icons.edit,
+                    size: 30.0,
+                    color: Colors.cyan,
+                  ),
+                ],
               ),
             ),
           ),
@@ -115,79 +102,124 @@ class _NewBudgetState extends State<NewBudget> {
               margin: EdgeInsets.all(15.0),
               padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
-                color: kInactiveCardColour,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: TextFormField(
-                keyboardType: TextInputType.numberWithOptions(signed: true,),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^\d*[.]?\d?\d?'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'Budget Amount: $budgetAmount $selectedCurrency',
+                    style: kLabelTextStyle,
+                  ),
+                  Icon(
+                    Icons.edit,
+                    size: 30.0,
+                    color: Colors.cyan,
                   ),
                 ],
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  hintText: 'Enter Budget amount',
-                  labelText: 'Budget:',
-                ),
-                controller: budgetAmount,
-                maxLength: 15,
-                onChanged: (text){
-                  updateMoneyLeft();
-                },
-                onTap: () {
-                  setState(() {
-                    checkAllAmounts();
-                    updateMoneyLeft();
-                  });
-                },
               ),
             ),
+          ),
+          Container(
+            height: 70.0,
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 5.0),
+            color: Colors.cyan,
+            child: Platform.isIOS ? iOSPicker() : androidDropdown(),
           ),
           Expanded(
             flex: 4,
             child: Container(
               margin: EdgeInsets.all(15.0),
               padding: EdgeInsets.only(
-                left: 10.0,
-                right: 10.0,
-                top: 5.0,
-                bottom: 5.0
-              ),
+                  left: 5.0, right: 5.0, top: 10.0, bottom: 10.0),
               decoration: BoxDecoration(
-                color: kInactiveCardColour,
-                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20.0),
               ),
               // ALAMKATEGOORIAD
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  //TRANSPORT ALAMKATEGOORIA
-                  Text(
-                    'Money left from Initial Budget: $moneyLeft',
-                    style: kLabelTextStyle,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Transport Budget: $transportBudget $selectedCurrency',
+                        style: kLabelTextStyle,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        size: 30.0,
+                        color: Colors.cyan,
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 5.0),
-                  Expanded(
-                    child: createSubCat('Transport Budget', transportBudget),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Accomodation budget: $accomodationBudget $selectedCurrency',
+                        style: kLabelTextStyle,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        size: 30.0,
+                        color: Colors.cyan,
+                      ),
+                    ],
                   ),
-                  //ACCOMODATION ALAMKATEGOORIA
-                  Expanded(
-                    child:
-                        createSubCat('Accomodation Budget', accomodationBudget),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Food Budget: $foodBudget $selectedCurrency',
+                        style: kLabelTextStyle,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        size: 30.0,
+                        color: Colors.cyan,
+                      ),
+                    ],
                   ),
-                  //FOOD ALAMKATEGOORIA
-                  Expanded(
-                    child: createSubCat('Food Budget', foodBudget),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Pastime Budget: $pastimeBudget $selectedCurrency',
+                        style: kLabelTextStyle,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        size: 30.0,
+                        color: Colors.cyan,
+                      ),
+                    ],
                   ),
-                  //PASTIME ALAMKATEGOORIA
-                  Expanded(
-                    child: createSubCat('Pastime Budget', pastimeBudget),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Other Expenses: $otherExpensesBudget $selectedCurrency',
+                        style: kLabelTextStyle,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        size: 30.0,
+                        color: Colors.cyan,
+                      ),
+                    ],
                   ),
-                  //OTHER EXPENSES ALAMKATEGOORIA
-                  Expanded(
-                    child: createSubCat('Other Expenses', otherExpensesBudget),
+                  Center(
+                    child: Container(
+                      child: Text(
+                        'Money left: $moneyLeft $selectedCurrency',
+                        style: kLabelTextStyle,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -196,19 +228,7 @@ class _NewBudgetState extends State<NewBudget> {
           BottomButton(
             // CREATE BUDGET NUPP
             onTap: () {
-              checkAllAmounts();
-
-              if (moneyLeft > 0) {
-                // Kui raha üle, pane muud kulud alla.
-                addToOtherExpenses();
-                updateMoneyLeft();
-              }
-
-              if (moneyLeft < 0) {
-                showAlertDialog(context); //ALERT SIIT
-              } else {
-                print('On OK.');
-              }
+              print('bottom button pressed');
             },
             buttonTitle: 'CREATE BUDGET',
           )
