@@ -42,7 +42,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 Text(
-                  '0 Budgets Made',
+                  '${BudgetData().budgets.length} Budgets Made',
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,

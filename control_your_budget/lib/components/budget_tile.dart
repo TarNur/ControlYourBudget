@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BudgetTile extends StatelessWidget {
   final String budgetName;
@@ -17,7 +18,7 @@ class BudgetTile extends StatelessWidget {
         '$budgetAmount $selectedCurrency',
       ),
       trailing: Icon(
-        Icons.folder_open_rounded,
+        FontAwesomeIcons.folderOpen,
         size: 40.0,
         color: Colors.cyan,
       ),
