@@ -85,15 +85,17 @@ class _NewBudgetState extends State<NewBudget> {
         otherExpensesBudget;
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text('CONTROL YOUR BUDGET'),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 50.0,),
           // BUDGET NAME SISESTUS
           Expanded(
             flex: 1,
             child: Container(
-              margin: EdgeInsets.all(15.0),
+             margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -139,7 +141,7 @@ class _NewBudgetState extends State<NewBudget> {
           Expanded(
             flex: 1,
             child: Container(
-              margin: EdgeInsets.all(15.0),
+             margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -190,7 +192,7 @@ class _NewBudgetState extends State<NewBudget> {
           Expanded(
             flex: 4,
             child: Container(
-              margin: EdgeInsets.all(15.0),
+             margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
               padding: EdgeInsets.only(
                   left: 5.0, right: 5.0, top: 10.0, bottom: 10.0),
               decoration: BoxDecoration(
@@ -404,10 +406,10 @@ class _NewBudgetState extends State<NewBudget> {
               );
               // _budgetHelper.insertBudget(budgetInfo);
               if (moneyLeft < 0 || moneyLeft > 0) {
-                showAlertDialogMoney(context);
+                showAlertDialogMoney(context); 
               } else if (ifBudgetNameChanged == false || budgetName == null) {
-                showAlertDialogBudgetName(context);
-              } else if (budgetAmount == 0) {
+                showAlertDialogBudgetName(context); 
+              } else if (budgetAmount == 0){
                 showAlertDialogBudgetAmount0(context);
               } else {
                 print('On OK.');

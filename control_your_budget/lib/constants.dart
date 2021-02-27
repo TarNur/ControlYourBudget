@@ -16,7 +16,7 @@ const kLargeButtonTextStyle = TextStyle(
   color: Colors.black54,
 );
 
-const kBottomContainerHeight = 80.0;
+const kBottomContainerHeight = 70.0;
 const kInactiveCardColour = Color(0xFF1D1E33);
 const kActiveCardColour = Color(0xFF111328);
 const kBottomContainerColourStart = Color(0xFF111328);
