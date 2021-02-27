@@ -85,12 +85,10 @@ class _NewBudgetState extends State<NewBudget> {
         otherExpensesBudget;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text('CONTROL YOUR BUDGET'),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SizedBox(height: 50.0,),
           // BUDGET NAME SISESTUS
           Expanded(
             flex: 1,
@@ -202,7 +200,7 @@ class _NewBudgetState extends State<NewBudget> {
               // ALAMKATEGOORIAD
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -406,10 +404,10 @@ class _NewBudgetState extends State<NewBudget> {
               );
               // _budgetHelper.insertBudget(budgetInfo);
               if (moneyLeft < 0 || moneyLeft > 0) {
-                showAlertDialogMoney(context); 
+                showAlertDialogMoney(context);
               } else if (ifBudgetNameChanged == false || budgetName == null) {
-                showAlertDialogBudgetName(context); 
-              } else if (budgetAmount == 0){
+                showAlertDialogBudgetName(context);
+              } else if (budgetAmount == 0) {
                 showAlertDialogBudgetAmount0(context);
               } else {
                 print('On OK.');
