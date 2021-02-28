@@ -18,9 +18,14 @@ class _StartPageState extends State<StartPage> {
   void initState() {
     _budgetHelper.initializeDatabase().then((value) {
       print('-----------database initialized');
-      _budgets = _budgetHelper.getBudgets();
+      loadBudgets();
     });
     super.initState();
+  }
+
+  void loadBudgets() {
+    _budgets = _budgetHelper.getBudgets();
+    if (mounted) setState(() {});
   }
 
   @override
@@ -56,7 +61,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 Text(
-                  '${BudgetData().budgets.length} Budgets Made',
+                  '${BudgetData().budgets.length} Budgets Made', // TODO: how many budgets made
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,
@@ -75,7 +80,21 @@ class _StartPageState extends State<StartPage> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: BudgetsList(BudgetData().budgets),
+              child: FutureBuilder(
+                  future: _budgets,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print('siin');
+                      return BudgetsList(
+                          snapshot.data); // TODO: Võimalik et ei Tööta
+                    }
+                    return Center(
+                      child: Text(
+                        'Loading ...',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }),
             ),
           ),
         ],
