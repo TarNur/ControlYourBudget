@@ -1,4 +1,3 @@
-import 'package:control_your_budget/models/budget_data.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/screens/newBudget_page.dart';
 import 'package:control_your_budget/screens/settings_page.dart';
