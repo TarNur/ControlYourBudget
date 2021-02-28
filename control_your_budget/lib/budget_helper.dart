@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:control_your_budget/models/budget.dart';
+import 'package:path/path.dart' as p;
 
 final String tableName = 'budget';
 final String budgetID = 'id';
@@ -34,7 +35,8 @@ class BudgetHelper {
 
   Future<Database> initializeDatabase() async {
     var dir = await getDatabasesPath();
-    var path = dir + "budget.db";
+    //var path = dir + "budgets.db";
+    var path = p.join(dir, 'budgets.db');
 
     var database = await openDatabase(
       path,
