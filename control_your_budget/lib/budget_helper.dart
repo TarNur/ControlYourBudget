@@ -81,4 +81,15 @@ class BudgetHelper {
 
     return _budgets;
   }
+
+  Future<void> deleteBudget(int id) async {
+  final db = await database;
+
+
+  await db.delete(
+    'budget',
+    where: "id = ?",
+    whereArgs: [id],
+  );
+}
 }

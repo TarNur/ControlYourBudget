@@ -17,6 +17,7 @@ class _BudgetsListState extends State<BudgetsList> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return BudgetTile(
+          id: widget.budgets[index].id,
           budgetName: widget.budgets[index].budgetName,
           budgetAmount: widget.budgets[index].budgetAmount,
           selectedCurrency: widget.budgets[index].selectedCurrency,

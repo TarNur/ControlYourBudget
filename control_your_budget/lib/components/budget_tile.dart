@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:control_your_budget/budget_helper.dart';
 
 class BudgetTile extends StatelessWidget {
   final String budgetName;
   final double budgetAmount;
   final String selectedCurrency;
+  final int id;
 
-  BudgetTile({this.budgetName, this.budgetAmount, this.selectedCurrency});
+  BudgetTile(
+      {this.id, this.budgetName, this.budgetAmount, this.selectedCurrency});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        budgetName,
+        'View Budget: $budgetName', // TODO: Vaja lisada Nupp
+        style: TextStyle(
+          color: Colors.cyan,
+          fontSize: 20.0,
+        ),
       ),
       subtitle: Text(
         '$budgetAmount $selectedCurrency',
       ),
-      trailing: Icon(
-        FontAwesomeIcons.folderOpen,
-        size: 40.0,
-        color: Colors.cyan,
+      trailing: Material(
+        color: Colors.white,
+        child: IconButton(
+            icon: Icon(Icons.delete),
+            iconSize: 30.0,
+            splashColor: Colors.redAccent,
+            splashRadius: 40.0,
+            color: Colors.red,
+            onPressed: () {
+              BudgetHelper().deleteBudget(id);
+              print('deleted budget');
+            }),
       ),
     );
   }

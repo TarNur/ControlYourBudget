@@ -37,7 +37,7 @@ class _StartPageState extends State<StartPage> {
         children: [
           Container(
             padding: EdgeInsets.only(
-                top: 60.0, left: 30.0, right: 30.0, bottom: 30.0),
+                top: 60.0, left: 30.0, right: 30.0, bottom: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
@@ -67,6 +67,20 @@ class _StartPageState extends State<StartPage> {
                     color: kLightGreyColour,
                     fontSize: 18,
                   ),
+                ),
+                SizedBox(height: 30.0),
+                FlatButton(
+                  child: Text(
+                    'Refresh Budgets',
+                    style: TextStyle(
+                      color: Colors.cyan,
+                      fontSize: 18,
+                    ),
+                  ),
+                  onPressed: (){
+                    print('loaded budgets');
+                    loadBudgets();
+                  },
                 ),
               ],
             ),
@@ -103,13 +117,13 @@ class _StartPageState extends State<StartPage> {
         onPressed: () {
           Navigator.of(context)
               .push(
-                MaterialPageRoute(
-                  builder: (context) => NewBudget(),
-                ),
-              )
+            MaterialPageRoute(
+              builder: (context) => NewBudget(),
+            ),
+          )
               .then((value) {
-                loadBudgets();
-              });
+            loadBudgets();
+          });
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.cyan,

@@ -21,7 +21,7 @@ class EditTextValueScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              'Change amount',
+              'Change Name',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30.0,
