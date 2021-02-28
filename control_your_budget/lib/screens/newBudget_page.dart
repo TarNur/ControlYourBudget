@@ -420,6 +420,7 @@ class _NewBudgetState extends State<NewBudget> {
                 print('otherExpensesBudget on $otherExpensesBudget');
                 print('selectedCurrency on $selectedCurrency');
                 _budgetHelper.insertBudget(budgetInfo);
+                Navigator.pop(context);
               }
             },
             buttonTitle: 'CREATE BUDGET',

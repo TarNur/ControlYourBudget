@@ -2,8 +2,8 @@ import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/budgets_list.dart';
-import 'package:control_your_budget/models/budget_data.dart';
 import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/screens/newBudget_page.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -13,6 +13,7 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   BudgetHelper _budgetHelper = BudgetHelper();
   Future<List<BudgetInfo>> _budgets;
+  var budgetsMade = 0;
 
   @override
   void initState() {
@@ -61,7 +62,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 Text(
-                  '${BudgetData().budgets.length} Budgets Made', // TODO: how many budgets made
+                  'Your Budgets:', // TODO: how many budgets made
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,
@@ -84,14 +85,12 @@ class _StartPageState extends State<StartPage> {
                   future: _budgets,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      print('siin');
-                      return BudgetsList(
-                          snapshot.data); // TODO: Võimalik et ei Tööta
+                      return BudgetsList(snapshot.data);
                     }
                     return Center(
                       child: Text(
-                        'Loading ...',
-                        style: TextStyle(color: Colors.black),
+                        'Loading...',
+                        style: TextStyle(color: Colors.cyan, fontSize: 30.0),
                       ),
                     );
                   }),
@@ -102,7 +101,15 @@ class _StartPageState extends State<StartPage> {
       floatingActionButton: FloatingActionButton(
         // Create New Budget Button
         onPressed: () {
-          Navigator.pushNamed(context, '/first');
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => NewBudget(),
+                ),
+              )
+              .then((value) {
+                loadBudgets();
+              });
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.cyan,
