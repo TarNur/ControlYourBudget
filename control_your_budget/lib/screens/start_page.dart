@@ -68,7 +68,7 @@ class _StartPageState extends State<StartPage> {
                     fontSize: 18,
                   ),
                 ),
-                SizedBox(height: 30.0),
+                SizedBox(height: 10.0),
                 FlatButton(
                   child: Text(
                     'Refresh Budgets',

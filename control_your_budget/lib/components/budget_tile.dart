@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/screens/viewBudget_page.dart';
 
 class BudgetTile extends StatelessWidget {
   final String budgetName;
@@ -13,21 +14,32 @@ class BudgetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(
-        'View Budget: $budgetName', // TODO: Vaja lisada Nupp
-        style: TextStyle(
-          color: Colors.cyan,
-          fontSize: 20.0,
+      title: FlatButton(
+        child: Text(
+          'View Budget: $budgetName', // TODO: Vaja lisada Nupp
+          style: TextStyle(
+            color: Colors.cyan,
+            fontSize: 20.0,
+          ),
         ),
+        onPressed: (){
+          print('pressed view budget');
+          Navigator.of(context)
+              .push(
+            MaterialPageRoute(
+              builder: (context) => ViewBudgets(), // TODO: Nupp peab viima õige budgeti vaatele
+            ),
+          );
+        },
       ),
       subtitle: Text(
-        '$budgetAmount $selectedCurrency',
+        'Budget size: $budgetAmount $selectedCurrency',
       ),
       trailing: Material(
         color: Colors.white,
         child: IconButton(
             icon: Icon(Icons.delete),
-            iconSize: 30.0,
+            iconSize: 25.0,
             splashColor: Colors.redAccent,
             splashRadius: 40.0,
             color: Colors.red,
