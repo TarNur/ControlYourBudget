@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
-import 'package:control_your_budget/screens/settings_page.dart';
+import 'package:control_your_budget/screens/newBill_page.dart';
 
 // Siia ühe Budgeti vaate page
 
@@ -13,74 +13,68 @@ class _ViewBudgetsState extends State<ViewBudgets> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('CONTROL YOUR BUDGET'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-              padding: EdgeInsets.all(30.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
+      body: Column(children: [
+        Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SizedBox(
+                height: 10.0,
               ),
-              child: Center(
-                child: Text(
-                  'Budget Name: Placeholder name',
-                  style: kLabelTextStyle,
+              Text(
+                'Budget name: Placeholder name',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-              padding: EdgeInsets.all(30.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
+              SizedBox(
+                height: 10.0,
               ),
-              child: Center(
-                child: Text(
-                  'Budget Amount: 5000.0 USD',
-                  style: kLabelTextStyle,
+              Text(
+                'Budget amount: 7000.0 left of 7000.0USD', // TODO: how many budgets made
+                style: TextStyle(
+                  color: kLightGreyColour,
+                  fontSize: 15,
                 ),
               ),
-            ),
+              SizedBox(
+                height: 10.0,
+              ),
+            ],
           ),
-          Expanded(
-            flex: 5,
+        ),
+        Expanded(
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-              padding: EdgeInsets.all(30.0),
+              padding: EdgeInsets.symmetric(horizontal: 70.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Center(
-                child: Text(
-                  'Alamkategooriad siia',
-                  style: kLabelTextStyle,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
                 ),
               ),
+              child: Center(child: Text('Alamkategooriad koos arvetega siia...'))
             ),
           ),
-        ],
-      ),
+
+      ]),
       floatingActionButton: FloatingActionButton(
         // Create New Budget Button
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             MaterialPageRoute(
-              builder: (context) => Settings(), // TODO: tuleb muuta arve sisestus screeniks...
+              builder: (context) => NewBill(),
             ),
-          );
+          )
+              .then((value) {
+            //loadBudgets();
+          });
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.cyan,

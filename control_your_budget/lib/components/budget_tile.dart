@@ -14,7 +14,7 @@ class BudgetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: FlatButton(
+      title: GestureDetector(
         child: Text(
           'View Budget: $budgetName', // TODO: Vaja lisada Nupp
           style: TextStyle(
@@ -22,7 +22,7 @@ class BudgetTile extends StatelessWidget {
             fontSize: 20.0,
           ),
         ),
-        onPressed: (){
+        onTap: (){
           print('pressed view budget');
           Navigator.of(context)
               .push(
@@ -33,7 +33,7 @@ class BudgetTile extends StatelessWidget {
         },
       ),
       subtitle: Text(
-        'Budget size: $budgetAmount $selectedCurrency',
+        'Money left: $budgetAmount of $budgetAmount$selectedCurrency',
       ),
       trailing: Material(
         color: Colors.white,
