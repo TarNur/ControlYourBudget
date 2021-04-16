@@ -53,7 +53,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
         ),
         SizedBox(
-          height: 5.0,
+          height: 2.0,
         ),
         ListTile(
           title: Text(
@@ -80,7 +80,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
         ),
         SizedBox(
-          height: 5.0,
+          height: 2.0,
         ),
         ListTile(
           title: Text(
@@ -107,7 +107,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
         ),
         SizedBox(
-          height: 5.0,
+          height: 2.0,
         ),
         ListTile(
           title: Text(
@@ -134,7 +134,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
         ),
         SizedBox(
-          height: 5.0,
+          height: 2.0,
         ),
         ListTile(
           title: Text(
