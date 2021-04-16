@@ -88,7 +88,7 @@ class _NewBillState extends State<NewBill> {
     }
 
     return CupertinoPicker(
-      backgroundColor: Colors.cyan,
+      backgroundColor: Colors.white,
       itemExtent: 32.0,
       onSelectedItemChanged: (selectedIndex) {
         setState(() {
@@ -103,7 +103,7 @@ class _NewBillState extends State<NewBill> {
   int budgetID;
   double billAmount = 0;
   String paymentType = 'Credit Card';
-  String subCategory = 'transportBudget';
+  String subCategory = 'Transport';
   String selectedCurrency;
   bool ifBudgetNameChanged = false;
   bool reimbursable = false;
@@ -261,18 +261,22 @@ class _NewBillState extends State<NewBill> {
                     'Payment Type: ',
                     style: kLabelTextStyle,
                   ),
-                  Container(
-                    height: 55.0,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 0),
-                    color: Colors.cyan,
-                    child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                        canvasColor: Colors.white, accentColor: Colors.white),
+                    child: Container(
+                      height: 55.0,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(horizontal: 0),
+                      color: Colors.cyan,
+                      child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          
+
           Expanded(
             flex: 4,
             child: Container(

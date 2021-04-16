@@ -91,7 +91,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
         ),
         Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
