@@ -65,7 +65,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
               Row(
                 children: [
                   SizedBox(
-                width: 20.0,
+                width: 30.0,
               ),
                   Text(
                     'Budget name: $budgetName',
@@ -75,6 +75,9 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
+                  SizedBox(
+                width: 30.0,
+              ),
                   IconButton(
                     icon: Icon(Icons.edit),
                     iconSize: 30.0,
@@ -85,9 +88,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10.0,
-              ),
+              
             ],
           ),
         ),
