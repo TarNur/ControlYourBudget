@@ -261,16 +261,12 @@ class _NewBillState extends State<NewBill> {
                     'Payment Type: ',
                     style: kLabelTextStyle,
                   ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                        canvasColor: Colors.white, accentColor: Colors.white),
-                    child: Container(
-                      height: 55.0,
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      color: Colors.cyan,
-                      child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
-                    ),
+                  Container(
+                    height: 55.0,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(horizontal: 0),
+                    color: Colors.white,
+                    child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
                   ),
                 ],
               ),
