@@ -1,7 +1,8 @@
 import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 
-class BudgetsList extends StatefulWidget { //TODO: Nimi vaja muuta
+class BudgetsList extends StatefulWidget {
+  //TODO: Nimi vaja muuta
   final BudgetInfo budgets;
 
   BudgetsList(this.budgets);
@@ -16,105 +17,147 @@ class _BudgetsListState extends State<BudgetsList> {
     return ListView(
       children: [
         ListTile(
-          title: GestureDetector(
-            child: Text(
-              'Budget Amount', // TODO: Vaja lisada Nupp
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20.0,
-              ),
+          title: Text(
+            'Budget Amount', 
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20.0,
             ),
-            onTap: () {
-              
-            },
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.budgetAmountLeft} of ${widget.budgets.budgetAmount}${widget.budgets.selectedCurrency}',
           ),
         ),
         ListTile(
-          title: GestureDetector(
-            child: Text(
-              'Transport Budget', // TODO: Vaja lisada Nupp
-              style: TextStyle(
-                color: Colors.cyan,
-                fontSize: 20.0,
-              ),
+          title: Text(
+            'Transport Budget', 
+            style: TextStyle(
+              color: Colors.cyan,
+              fontSize: 20.0,
             ),
-            onTap: () {
-              
-            },
+          ),
+          trailing: Material(
+            color: Colors.white,
+            child: IconButton(
+                icon: Icon(Icons.folder_open),
+                iconSize: 25.0,
+                splashColor: Colors.cyan,
+                splashRadius: 40.0,
+                color: Colors.cyan,
+                onPressed: () {
+                  print('open');
+                }),
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.transportBudgetLeft} of ${widget.budgets.transportBudget}${widget.budgets.selectedCurrency}',
           ),
         ),
+        SizedBox(
+          height: 20.0,
+        ),
         ListTile(
-          title: GestureDetector(
-            child: Text(
-              'Accomodation Budget', // TODO: Vaja lisada Nupp
-              style: TextStyle(
-                color: Colors.cyan,
-                fontSize: 20.0,
-              ),
+          title: Text(
+            'Accomodation Budget', 
+            style: TextStyle(
+              color: Colors.cyan,
+              fontSize: 20.0,
             ),
-            onTap: () {
-              
-            },
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.accomodationBudgetLeft} of ${widget.budgets.accomodationBudget}${widget.budgets.selectedCurrency}',
           ),
+          trailing: Material(
+            color: Colors.white,
+            child: IconButton(
+                icon: Icon(Icons.folder_open),
+                iconSize: 25.0,
+                splashColor: Colors.cyan,
+                splashRadius: 40.0,
+                color: Colors.cyan,
+                onPressed: () {
+                  print('open');
+                }),
+          ),
+        ),
+        SizedBox(
+          height: 20.0,
         ),
         ListTile(
-          title: GestureDetector(
-            child: Text(
-              'Food Budget', // TODO: Vaja lisada Nupp
-              style: TextStyle(
-                color: Colors.cyan,
-                fontSize: 20.0,
-              ),
+          title: Text(
+            'Food Budget', 
+            style: TextStyle(
+              color: Colors.cyan,
+              fontSize: 20.0,
             ),
-            onTap: () {
-              
-            },
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.foodBudgetLeft} of ${widget.budgets.foodBudget}${widget.budgets.selectedCurrency}',
           ),
+          trailing: Material(
+            color: Colors.white,
+            child: IconButton(
+                icon: Icon(Icons.folder_open),
+                iconSize: 25.0,
+                splashColor: Colors.cyan,
+                splashRadius: 40.0,
+                color: Colors.cyan,
+                onPressed: () {
+                  print('open');
+                }),
+          ),
+        ),
+        SizedBox(
+          height: 20.0,
         ),
         ListTile(
-          title: GestureDetector(
-            child: Text(
-              'Pastime Budget', // TODO: Vaja lisada Nupp
-              style: TextStyle(
-                color: Colors.cyan,
-                fontSize: 20.0,
-              ),
+          title: Text(
+            'Pastime Budget', 
+            style: TextStyle(
+              color: Colors.cyan,
+              fontSize: 20.0,
             ),
-            onTap: () {
-              
-            },
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.pastimeBudgetLeft} of ${widget.budgets.pastimeBudget}${widget.budgets.selectedCurrency}',
           ),
+          trailing: Material(
+            color: Colors.white,
+            child: IconButton(
+                icon: Icon(Icons.folder_open),
+                iconSize: 25.0,
+                splashColor: Colors.cyan,
+                splashRadius: 40.0,
+                color: Colors.cyan,
+                onPressed: () {
+                  print('open');
+                }),
+          ),
+        ),
+        SizedBox(
+          height: 20.0,
         ),
         ListTile(
-          title: GestureDetector(
-            child: Text(
-              'Transport Budget', // TODO: Vaja lisada Nupp
-              style: TextStyle(
-                color: Colors.cyan,
-                fontSize: 20.0,
-              ),
+          title: Text(
+            'Transport Budget', 
+            style: TextStyle(
+              color: Colors.cyan,
+              fontSize: 20.0,
             ),
-            onTap: () {
-              
-            },
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.otherExpensesBudgetLeft} of ${widget.budgets.otherExpensesBudget}${widget.budgets.selectedCurrency}',
+          ),
+          trailing: Material(
+            color: Colors.white,
+            child: IconButton(
+                icon: Icon(Icons.folder_open),
+                iconSize: 25.0,
+                splashColor: Colors.cyan,
+                splashRadius: 40.0,
+                color: Colors.cyan,
+                onPressed: () {
+                  print('open');
+                }),
           ),
         ),
       ],

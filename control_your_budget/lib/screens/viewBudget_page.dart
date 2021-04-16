@@ -57,17 +57,33 @@ class _ViewBudgetsState extends State<ViewBudgets> {
         Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
+    
             children: [
               SizedBox(
                 height: 10.0,
               ),
-              Text(
-                'Budget name: $budgetName',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.w700,
-                ),
+              Row(
+                children: [
+                  SizedBox(
+                width: 20.0,
+              ),
+                  Text(
+                    'Budget name: $budgetName',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    iconSize: 30.0,
+                    color: Colors.cyan,
+                    onPressed: () {
+                      
+                    },
+                  ),
+                ],
               ),
               SizedBox(
                 height: 10.0,
@@ -77,7 +93,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
         ),
         Expanded(
             child: Container(
-              padding: EdgeInsets.all(60.0),
+              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(

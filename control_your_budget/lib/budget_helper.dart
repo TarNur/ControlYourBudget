@@ -169,16 +169,16 @@ class BudgetHelper {
 
     double budgetAmountLeftCurrent = budget.budgetAmountLeft;
     double subcategoryLeftCurrent;
-    if (subCategory == 'transportBudget'){
+    if (subCategory == 'Transport'){
       subcategoryLeftCurrent = budget.transportBudgetLeft;
       await db.rawUpdate('UPDATE $tableName SET $transportBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
-    } else if (subCategory == 'accomodationBudget'){
+    } else if (subCategory == 'Accomodation'){
       subcategoryLeftCurrent = budget.accomodationBudgetLeft;
       await db.rawUpdate('UPDATE $tableName SET $accomodationBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
-    } else if (subCategory == 'foodBudget'){
+    } else if (subCategory == 'Food'){
       subcategoryLeftCurrent = budget.foodBudgetLeft;
       await db.rawUpdate('UPDATE $tableName SET $foodBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
-    } else if (subCategory == 'pastimeBudget'){
+    } else if (subCategory == 'Pastime'){
       subcategoryLeftCurrent = budget.pastimeBudgetLeft;
       await db.rawUpdate('UPDATE $tableName SET $pastimeBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
     } else {
