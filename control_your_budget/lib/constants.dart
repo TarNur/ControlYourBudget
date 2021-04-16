@@ -45,3 +45,9 @@ const List<String> currenciesList = [
   'SGD',
   'USD',
 ];
+
+const List<String> paymentTypes = [
+  'Credit Card',
+  'Debit Card',
+  'Cash',
+];

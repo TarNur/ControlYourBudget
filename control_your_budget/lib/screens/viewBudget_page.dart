@@ -1,3 +1,4 @@
+import 'package:control_your_budget/budget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/screens/newBill_page.dart';
@@ -5,13 +6,28 @@ import 'package:control_your_budget/screens/newBill_page.dart';
 // Siia ühe Budgeti vaate page
 
 class ViewBudgets extends StatefulWidget {
+  final String budgetName;
+  final double budgetAmount;
+  final int budgetID;
+  final String selectedCurrency;
+
+  ViewBudgets({this.budgetName, this.budgetAmount, this.budgetID, this.selectedCurrency});
   @override
   _ViewBudgetsState createState() => _ViewBudgetsState();
 }
 
 class _ViewBudgetsState extends State<ViewBudgets> {
+  String budgetName;
+  double budgetAmount;
+  int budgetID;
+  String selectedCurrency;
+
   @override
   Widget build(BuildContext context) {
+    budgetName = widget.budgetName;
+    budgetAmount = widget.budgetAmount;
+    budgetID = widget.budgetID;
+    selectedCurrency = widget.selectedCurrency;
     return Scaffold(
       appBar: AppBar(
         title: Text('CONTROL YOUR BUDGET'),
@@ -25,7 +41,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                 height: 10.0,
               ),
               Text(
-                'Budget name: Placeholder name',
+                'Budget name: $budgetName',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
@@ -36,7 +52,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                 height: 10.0,
               ),
               Text(
-                'Budget amount: 7000.0 left of 7000.0USD', // TODO: how many budgets made
+                'Budget amount: $budgetAmount left of $budgetAmount$selectedCurrency', // TODO: how many budgets made
                 style: TextStyle(
                   color: kLightGreyColour,
                   fontSize: 15,

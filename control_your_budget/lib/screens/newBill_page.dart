@@ -3,6 +3,8 @@ import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
 import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:control_your_budget/screens/edit_text_value_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
 
 class NewBill extends StatefulWidget {
   NewBill({Key key}) : super(key: key);
@@ -12,27 +14,59 @@ class NewBill extends StatefulWidget {
 }
 
 class _NewBillState extends State<NewBill> {
-  
-  String budgetName = 'Enter Bill Name';
-  double budgetAmount = 0;
+  DropdownButton<String> androidDropdown() {
+    List<DropdownMenuItem<String>> dropdownItems = [];
+    for (String paymentType in paymentTypes) {
+      var newItem = DropdownMenuItem(
+        child: Text(paymentType),
+        value: paymentType,
+      );
+      dropdownItems.add(newItem);
+    }
+
+    return DropdownButton<String>(
+      value: paymentType,
+      items: dropdownItems,
+      onChanged: (value) {
+        setState(() {
+          paymentType = value;
+        });
+      },
+    );
+  }
+
+  CupertinoPicker iOSPicker() {
+    List<Text> pickerItems = [];
+    for (String paymentType in paymentTypes) {
+      pickerItems.add(Text(paymentType));
+    }
+
+    return CupertinoPicker(
+      backgroundColor: Colors.cyan,
+      itemExtent: 32.0,
+      onSelectedItemChanged: (selectedIndex) {
+        setState(() {
+          paymentType = paymentTypes[selectedIndex];
+        });
+      },
+      children: pickerItems,
+    );
+  }
+
+  String billName = 'Enter Bill Name';
+  double billAmount = 0;
   double moneyLeft = 0;
   double transportBudget = 0;
   double foodBudget = 0;
   double accomodationBudget = 0;
   double pastimeBudget = 0;
-  double otherExpensesBudget = 0;
+  String paymentType = 'Credit Card';
   String selectedCurrency = 'EUR';
   bool ifBudgetNameChanged = false;
   bool reimbursable = false;
 
   @override
   Widget build(BuildContext context) {
-    moneyLeft = budgetAmount -
-        transportBudget -
-        foodBudget -
-        accomodationBudget -
-        pastimeBudget -
-        otherExpensesBudget;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -55,7 +89,7 @@ class _NewBillState extends State<NewBill> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Bill Name: $budgetName',
+                    'Bill Name: $billName',
                     style: kLabelTextStyle,
                   ),
                   IconButton(
@@ -77,7 +111,7 @@ class _NewBillState extends State<NewBill> {
                       );
                       if (typedValue != null) {
                         setState(() {
-                          budgetName = typedValue;
+                          billName = typedValue;
                           ifBudgetNameChanged = true;
                         });
                       }
@@ -101,7 +135,7 @@ class _NewBillState extends State<NewBill> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Bill Amount: $budgetAmount $selectedCurrency',
+                    'Bill Amount: $billAmount $selectedCurrency',
                     style: kLabelTextStyle,
                   ),
                   IconButton(
@@ -123,7 +157,7 @@ class _NewBillState extends State<NewBill> {
                       );
                       if (typedValue != null) {
                         setState(() {
-                          budgetAmount = double.parse(typedValue);
+                          billAmount = double.parse(typedValue);
                         });
                       }
                     },
@@ -163,6 +197,13 @@ class _NewBillState extends State<NewBill> {
                           })
                     ],
                   ),
+                  Container(
+                    height: 55.0,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    color: Colors.cyan,
+                    child: Platform.isIOS ? iOSPicker() : androidDropdown(),
+                  ),
                 ],
               ),
             ),
@@ -171,6 +212,10 @@ class _NewBillState extends State<NewBill> {
             // CREATE BUDGET NUPP
             onTap: () {
               print('bottom button pressed');
+              print('Bill Amount: $billAmount $selectedCurrency');
+              print('Bill name: $billName');
+              print('Bill reimbursable: $reimbursable');
+              print('Payment: $paymentType');
             },
             buttonTitle: 'CREATE BILL',
           )

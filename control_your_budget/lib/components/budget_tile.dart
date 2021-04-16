@@ -27,7 +27,7 @@ class BudgetTile extends StatelessWidget {
           Navigator.of(context)
               .push(
             MaterialPageRoute(
-              builder: (context) => ViewBudgets(), // TODO: Nupp peab viima õige budgeti vaatele
+              builder: (context) => ViewBudgets(budgetName: budgetName,budgetAmount: budgetAmount,budgetID: id, selectedCurrency: selectedCurrency,), // TODO: Nupp peab viima õige budgeti vaatele
             ),
           );
         },
