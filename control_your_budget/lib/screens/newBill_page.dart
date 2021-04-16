@@ -7,7 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
 class NewBill extends StatefulWidget {
-  NewBill({Key key}) : super(key: key);
+  final int budgetID;
+  final String selectedCurrency;
+
+  NewBill({this.budgetID, this.selectedCurrency});
 
   @override
   _NewBillState createState() => _NewBillState();
@@ -54,19 +57,17 @@ class _NewBillState extends State<NewBill> {
   }
 
   String billName = 'Enter Bill Name';
+  int budgetID;
   double billAmount = 0;
-  double moneyLeft = 0;
-  double transportBudget = 0;
-  double foodBudget = 0;
-  double accomodationBudget = 0;
-  double pastimeBudget = 0;
   String paymentType = 'Credit Card';
-  String selectedCurrency = 'EUR';
+  String selectedCurrency;
   bool ifBudgetNameChanged = false;
   bool reimbursable = false;
 
   @override
   Widget build(BuildContext context) {
+    budgetID = widget.budgetID;
+    selectedCurrency = widget.selectedCurrency;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -213,6 +214,7 @@ class _NewBillState extends State<NewBill> {
             onTap: () {
               print('bottom button pressed');
               print('Bill Amount: $billAmount $selectedCurrency');
+              print('BudgetID: $budgetID');
               print('Bill name: $billName');
               print('Bill reimbursable: $reimbursable');
               print('Payment: $paymentType');

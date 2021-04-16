@@ -402,6 +402,12 @@ class _NewBudgetState extends State<NewBudget> {
                 pastimeBudget: pastimeBudget,
                 otherExpensesBudget: otherExpensesBudget,
                 selectedCurrency: selectedCurrency,
+                budgetAmountLeft: budgetAmount,
+                transportBudgetLeft: transportBudget,
+                accomodationBudgetLeft: accomodationBudget,
+                foodBudgetLeft: foodBudget,
+                pastimeBudgetLeft: pastimeBudget,
+                otherExpensesBudgetLeft: otherExpensesBudget,
               );
               // _budgetHelper.insertBudget(budgetInfo);
               if (moneyLeft < 0 || moneyLeft > 0) {

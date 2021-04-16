@@ -20,6 +20,7 @@ class _BudgetsListState extends State<BudgetsList> {
           id: widget.budgets[index].id,
           budgetName: widget.budgets[index].budgetName,
           budgetAmount: widget.budgets[index].budgetAmount,
+          budgetAmountLeft: widget.budgets[index].budgetAmountLeft,
           selectedCurrency: widget.budgets[index].selectedCurrency,
         );
       },

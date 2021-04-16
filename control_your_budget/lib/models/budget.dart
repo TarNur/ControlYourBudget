@@ -1,3 +1,5 @@
+import 'package:control_your_budget/constants.dart';
+
 class BudgetInfo {
   BudgetInfo(
       {this.id,
@@ -8,7 +10,13 @@ class BudgetInfo {
       this.accomodationBudget,
       this.pastimeBudget,
       this.otherExpensesBudget,
-      this.selectedCurrency});
+      this.selectedCurrency,
+      this.budgetAmountLeft,
+      this.transportBudgetLeft,
+      this.foodBudgetLeft,
+      this.accomodationBudgetLeft,
+      this.pastimeBudgetLeft,
+      this.otherExpensesBudgetLeft});
 
   final int id;
   final String budgetName;
@@ -19,6 +27,12 @@ class BudgetInfo {
   final double pastimeBudget;
   final double otherExpensesBudget;
   final String selectedCurrency;
+  final double budgetAmountLeft;
+  final double transportBudgetLeft;
+  final double foodBudgetLeft;
+  final double accomodationBudgetLeft;
+  final double pastimeBudgetLeft;
+  final double otherExpensesBudgetLeft;
 
   void changeBudgetAmount() {}
 
@@ -34,6 +48,12 @@ class BudgetInfo {
         pastimeBudget: json["pastimeBudget"].toDouble(),
         otherExpensesBudget: json["otherExpensesBudget"].toDouble(),
         selectedCurrency: json["selectedCurrency"],
+        budgetAmountLeft: json["budgetAmountLeft"].toDouble(),
+        transportBudgetLeft: json["transportBudgetLeft"].toDouble(),
+        foodBudgetLeft: json["foodBudgetLeft"].toDouble(),
+        accomodationBudgetLeft: json["accomodationBudgetLeft"].toDouble(),
+        pastimeBudgetLeft: json["pastimeBudgetLeft"].toDouble(),
+        otherExpensesBudgetLeft: json["otherExpensesBudgetLeft"].toDouble(),
       );
 
   Map<String, dynamic> toMap() {
@@ -47,6 +67,53 @@ class BudgetInfo {
       'pastimeBudget': pastimeBudget,
       'otherExpensesBudget': otherExpensesBudget,
       'selectedCurrency': selectedCurrency,
+      'budgetAmountLeft': budgetAmountLeft,
+      'transportBudgetLeft': transportBudgetLeft,
+      'foodBudgetLeft': foodBudgetLeft,
+      'accomodationBudgetLeft': accomodationBudgetLeft,
+      'pastimeBudgetLeft': pastimeBudgetLeft,
+      'otherExpensesBudgetLeft': otherExpensesBudgetLeft,
+    };
+  }
+}
+
+class BillInfo {
+  BillInfo(
+      {this.id,
+      this.billName,
+      this.billAmount,
+      this.billSubcategory,
+      this.paymentType,
+      this.reimbursable});
+
+  final int id;
+  final String billName;
+  final double billAmount;
+  final String billSubcategory;
+  final String paymentType;
+  final bool reimbursable;
+
+  void changeBudgetAmount() {}
+
+  void changeBudgetName() {}
+
+  factory BillInfo.fromMap(Map<String, dynamic> json) => BillInfo(
+        id: json["id"],
+        billName: json["billName"],
+        billAmount: json["billAmount"].toDouble(),
+        billSubcategory: json["billSubcategory"],
+        paymentType: json["paymentType"],
+        reimbursable: json["reimbursable"],
+      );
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'billName': billName,
+      'billAmount': billAmount,
+      'billSubcategory': billSubcategory,
+      'paymentType': paymentType,
+      'reimbursable': reimbursable,
     };
   }
 }

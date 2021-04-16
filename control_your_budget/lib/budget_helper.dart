@@ -14,6 +14,21 @@ final String pastimeBudget = 'pastimeBudget';
 final String otherExpensesBudget = 'otherExpensesBudget';
 final String selectedCurrency = 'selectedCurrency';
 
+final String tableName2 = 'bill';
+final String billName = 'billName';
+final String billAmount = 'billAmount';
+final String paymentType = 'paymentType';
+final String reimbursable = 'reimbursable';
+final String billSubcategory = 'billSubcategory';
+
+final String budgetAmountLeft = 'budgetAmountLeft';
+final String transportBudgetLeft = 'transportBudgetLeft';
+final String accomodationBudgetLeft = 'accomodationBudgetLeft';
+final String foodBudgetLeft = 'foodBudgetLeft';
+final String pastimeBudgetLeft = 'pastimeBudgetLeft';
+final String otherExpensesBudgetLeft = 'otherExpensesBudgetLeft';
+final String selectedCurrencyLeft = 'selectedCurrencyLeft';
+
 class BudgetHelper {
   static Database _database;
   static BudgetHelper _budgetHelper;
@@ -36,7 +51,7 @@ class BudgetHelper {
   Future<Database> initializeDatabase() async {
     var dir = await getDatabasesPath();
     //var path = dir + "budgets.db";
-    var path = p.join(dir, 'budgets.db');
+    var path = p.join(dir, 'budget.db');
 
     var database = await openDatabase(
       path,
@@ -52,7 +67,22 @@ class BudgetHelper {
           $foodBudget real,
           $pastimeBudget real,
           $otherExpensesBudget real,
-          $selectedCurrency text not null)
+          $selectedCurrency text not null,
+          $budgetAmountLeft real,
+          $transportBudgetLeft real,
+          $accomodationBudgetLeft real,
+          $foodBudgetLeft real,
+          $pastimeBudgetLeft real,
+          $otherExpensesBudgetLeft real)
+        ''');
+        db.execute('''
+        create table $tableName2 (
+          $budgetID integer primary key,
+          $billSubcategory text not null
+          $billName text not null,
+          $billAmount real,
+          $paymentType text not null,
+          $reimbursable numeric)
         ''');
       },
     );

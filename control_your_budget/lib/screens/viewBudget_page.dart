@@ -8,10 +8,11 @@ import 'package:control_your_budget/screens/newBill_page.dart';
 class ViewBudgets extends StatefulWidget {
   final String budgetName;
   final double budgetAmount;
+  final double budgetAmountLeft;
   final int budgetID;
   final String selectedCurrency;
 
-  ViewBudgets({this.budgetName, this.budgetAmount, this.budgetID, this.selectedCurrency});
+  ViewBudgets({this.budgetName, this.budgetAmount, this.budgetAmountLeft, this.budgetID, this.selectedCurrency});
   @override
   _ViewBudgetsState createState() => _ViewBudgetsState();
 }
@@ -19,6 +20,7 @@ class ViewBudgets extends StatefulWidget {
 class _ViewBudgetsState extends State<ViewBudgets> {
   String budgetName;
   double budgetAmount;
+  double budgetAmountLeft;
   int budgetID;
   String selectedCurrency;
 
@@ -26,6 +28,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
   Widget build(BuildContext context) {
     budgetName = widget.budgetName;
     budgetAmount = widget.budgetAmount;
+    budgetAmountLeft = widget.budgetAmountLeft;
     budgetID = widget.budgetID;
     selectedCurrency = widget.selectedCurrency;
     return Scaffold(
@@ -52,7 +55,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                 height: 10.0,
               ),
               Text(
-                'Budget amount: $budgetAmount left of $budgetAmount$selectedCurrency', // TODO: how many budgets made
+                'Budget amount: $budgetAmountLeft left of $budgetAmount$selectedCurrency', // TODO: how many budgets made
                 style: TextStyle(
                   color: kLightGreyColour,
                   fontSize: 15,
@@ -85,7 +88,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
           Navigator.of(context)
               .push(
             MaterialPageRoute(
-              builder: (context) => NewBill(),
+              builder: (context) => NewBill(budgetID: budgetID, selectedCurrency: selectedCurrency,),
             ),
           )
               .then((value) {

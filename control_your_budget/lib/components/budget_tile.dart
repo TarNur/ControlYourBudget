@@ -5,11 +5,12 @@ import 'package:control_your_budget/screens/viewBudget_page.dart';
 class BudgetTile extends StatelessWidget {
   final String budgetName;
   final double budgetAmount;
+  final double budgetAmountLeft;
   final String selectedCurrency;
   final int id;
 
   BudgetTile(
-      {this.id, this.budgetName, this.budgetAmount, this.selectedCurrency});
+      {this.id, this.budgetName, this.budgetAmount, this.budgetAmountLeft, this.selectedCurrency});
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +28,13 @@ class BudgetTile extends StatelessWidget {
           Navigator.of(context)
               .push(
             MaterialPageRoute(
-              builder: (context) => ViewBudgets(budgetName: budgetName,budgetAmount: budgetAmount,budgetID: id, selectedCurrency: selectedCurrency,), // TODO: Nupp peab viima õige budgeti vaatele
+              builder: (context) => ViewBudgets(budgetName: budgetName,budgetAmount: budgetAmount, budgetAmountLeft: budgetAmountLeft,budgetID: id, selectedCurrency: selectedCurrency,), // TODO: Nupp peab viima õige budgeti vaatele
             ),
           );
         },
       ),
       subtitle: Text(
-        'Money left: $budgetAmount of $budgetAmount$selectedCurrency',
+        'Money left: $budgetAmountLeft of $budgetAmount$selectedCurrency',
       ),
       trailing: Material(
         color: Colors.white,
