@@ -1,3 +1,4 @@
+import 'package:control_your_budget/constants.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:control_your_budget/models/budget.dart';
@@ -15,6 +16,7 @@ final String otherExpensesBudget = 'otherExpensesBudget';
 final String selectedCurrency = 'selectedCurrency';
 
 final String tableName2 = 'bill';
+final String billID = 'billID';
 final String billName = 'billName';
 final String billAmount = 'billAmount';
 final String paymentType = 'paymentType';
@@ -51,7 +53,7 @@ class BudgetHelper {
   Future<Database> initializeDatabase() async {
     var dir = await getDatabasesPath();
     //var path = dir + "budgets.db";
-    var path = p.join(dir, 'budget.db');
+    var path = p.join(dir, 'controlyourbudget_1.db');
 
     var database = await openDatabase(
       path,
@@ -77,12 +79,13 @@ class BudgetHelper {
         ''');
         db.execute('''
         create table $tableName2 (
-          $budgetID integer primary key,
-          $billSubcategory text not null
+          $billID integer primary key autoincrement,
+          $budgetID integer,
+          $billSubcategory text not null,
           $billName text not null,
           $billAmount real,
           $paymentType text not null,
-          $reimbursable numeric)
+          $reimbursable integer)
         ''');
       },
     );
@@ -94,6 +97,16 @@ class BudgetHelper {
     var result = await db.insert(
       tableName,
       budgetInfo.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    print('result $result');
+  }
+
+  void insertBill(BillInfo billInfo) async {
+    var db = await this.database;
+    var result = await db.insert(
+      tableName,
+      billInfo.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     print('result $result');
@@ -112,14 +125,108 @@ class BudgetHelper {
     return _budgets;
   }
 
+  Future<List<BillInfo>> getBills() async {
+    List<BillInfo> _bills = [];
+
+    var db = await this.database;
+    var result = await db.query(tableName2);
+    result.forEach((element) {
+      var billInfo = BillInfo.fromMap(element);
+      _bills.add(billInfo);
+    });
+
+    return _bills;
+  }
+
+  Future<BudgetInfo> getBudget(int id) async {
+    // muuta
+    final db = await this.database;
+
+    List<Map> result =
+        await db.rawQuery('SELECT * FROM $tableName WHERE id=?', [id]);
+
+    result.forEach((element) {
+      print(element);
+    });
+    return BudgetInfo.fromMap(result.first);
+  }
+
+  Future<BillInfo> getBill(int billID) async {
+    // muuta
+    final db = await this.database;
+
+    List<Map> result =
+        await db.rawQuery('SELECT * FROM $tableName2 WHERE billID=?', [billID]);
+
+    result.forEach((element) {
+      print(element);
+    });
+    return BillInfo.fromMap(result.first);
+  }
+
+  Future<void> updateBudgetAmountsLeft(int id, String subCategory, BudgetInfo budget, double billAmount) async {
+    final db = await this.database;
+
+    double budgetAmountLeftCurrent = budget.budgetAmountLeft;
+    double subcategoryLeftCurrent;
+    if (subCategory == 'transportBudget'){
+      subcategoryLeftCurrent = budget.transportBudgetLeft;
+      await db.rawUpdate('UPDATE $tableName SET $transportBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
+    } else if (subCategory == 'accomodationBudget'){
+      subcategoryLeftCurrent = budget.accomodationBudgetLeft;
+      await db.rawUpdate('UPDATE $tableName SET $accomodationBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
+    } else if (subCategory == 'foodBudget'){
+      subcategoryLeftCurrent = budget.foodBudgetLeft;
+      await db.rawUpdate('UPDATE $tableName SET $foodBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
+    } else if (subCategory == 'pastimeBudget'){
+      subcategoryLeftCurrent = budget.pastimeBudgetLeft;
+      await db.rawUpdate('UPDATE $tableName SET $pastimeBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
+    } else {
+      subcategoryLeftCurrent = budget.otherExpensesBudgetLeft;
+      await db.rawUpdate('UPDATE $tableName SET $otherExpensesBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
+    }
+    await db.rawUpdate('UPDATE $tableName SET $budgetAmountLeft = ? WHERE id = ?', [budgetAmountLeftCurrent - billAmount, id]);
+  }
+
+  Future<void> updateBudget(BudgetInfo updatedBudget) async {
+    final db = await this.database;
+
+    await db.update(
+      'budget',
+      updatedBudget.toMap(),
+      where: "id = ?",
+      whereArgs: [updatedBudget.id],
+    );
+  }
+
+  Future<void> updateBill(BillInfo updatedBill) async {
+    final db = await this.database;
+
+    await db.update(
+      'bill',
+      updatedBill.toMap(),
+      where: "BillID = ?",
+      whereArgs: [updatedBill.billID],
+    );
+  }
+
   Future<void> deleteBudget(int id) async {
-  final db = await database;
+    final db = await this.database;
 
+    await db.delete(
+      'budget',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+  }
 
-  await db.delete(
-    'budget',
-    where: "id = ?",
-    whereArgs: [id],
-  );
-}
+  Future<void> deleteBill(int billID) async {
+    final db = await this.database;
+
+    await db.delete(
+      'bill',
+      where: "billID = ?",
+      whereArgs: [billID],
+    );
+  }
 }

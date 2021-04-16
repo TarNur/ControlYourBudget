@@ -51,3 +51,11 @@ const List<String> paymentTypes = [
   'Debit Card',
   'Cash',
 ];
+
+const List<String> subCategories = [
+  'transportBudget',
+  'accomodationBudget',
+  'foodBudget',
+  'pastimeBudget',
+  'otherExpensesBudget',
+];

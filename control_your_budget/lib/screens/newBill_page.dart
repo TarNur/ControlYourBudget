@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/models/budget.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
 import 'package:control_your_budget/screens/edit_value_screen.dart';
@@ -17,7 +19,48 @@ class NewBill extends StatefulWidget {
 }
 
 class _NewBillState extends State<NewBill> {
+  BudgetHelper _budgetHelper = BudgetHelper();
+
   DropdownButton<String> androidDropdown() {
+    List<DropdownMenuItem<String>> dropdownItems = [];
+    for (String subCategory in subCategories) {
+      var newItem = DropdownMenuItem(
+        child: Text(subCategory),
+        value: subCategory,
+      );
+      dropdownItems.add(newItem);
+    }
+
+    return DropdownButton<String>(
+      value: subCategory,
+      items: dropdownItems,
+      onChanged: (value) {
+        setState(() {
+          subCategory = value;
+        });
+      },
+    );
+  }
+
+  CupertinoPicker iOSPicker() {
+    List<Text> pickerItems = [];
+    for (String subCategory in subCategories) {
+      pickerItems.add(Text(subCategory));
+    }
+
+    return CupertinoPicker(
+      backgroundColor: Colors.cyan,
+      itemExtent: 32.0,
+      onSelectedItemChanged: (selectedIndex) {
+        setState(() {
+          subCategory = subCategories[selectedIndex];
+        });
+      },
+      children: pickerItems,
+    );
+  }
+
+  DropdownButton<String> androidDropdown2() {
     List<DropdownMenuItem<String>> dropdownItems = [];
     for (String paymentType in paymentTypes) {
       var newItem = DropdownMenuItem(
@@ -38,7 +81,7 @@ class _NewBillState extends State<NewBill> {
     );
   }
 
-  CupertinoPicker iOSPicker() {
+  CupertinoPicker iOSPicker2() {
     List<Text> pickerItems = [];
     for (String paymentType in paymentTypes) {
       pickerItems.add(Text(paymentType));
@@ -60,6 +103,7 @@ class _NewBillState extends State<NewBill> {
   int budgetID;
   double billAmount = 0;
   String paymentType = 'Credit Card';
+  String subCategory = 'transportBudget';
   String selectedCurrency;
   bool ifBudgetNameChanged = false;
   bool reimbursable = false;
@@ -167,6 +211,13 @@ class _NewBillState extends State<NewBill> {
               ),
             ),
           ),
+          Container(
+            height: 55.0,
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 5.0),
+            color: Colors.cyan,
+            child: Platform.isIOS ? iOSPicker() : androidDropdown(),
+          ),
           Expanded(
             flex: 4,
             child: Container(
@@ -203,7 +254,7 @@ class _NewBillState extends State<NewBill> {
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     color: Colors.cyan,
-                    child: Platform.isIOS ? iOSPicker() : androidDropdown(),
+                    child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
                   ),
                 ],
               ),
@@ -211,13 +262,27 @@ class _NewBillState extends State<NewBill> {
           ),
           BottomButton(
             // CREATE BUDGET NUPP
-            onTap: () {
+            onTap: () async {
+              var billInfo = BillInfo(
+                billName: billName,
+                billAmount: billAmount,
+                id: budgetID,
+                billSubcategory: subCategory,
+                paymentType: paymentType,
+                reimbursable: reimbursable,
+              );
               print('bottom button pressed');
               print('Bill Amount: $billAmount $selectedCurrency');
               print('BudgetID: $budgetID');
               print('Bill name: $billName');
+              print('Subcategory: $subCategory');
               print('Bill reimbursable: $reimbursable');
               print('Payment: $paymentType');
+              BudgetInfo currentBudget = await _budgetHelper.getBudget(budgetID);
+              _budgetHelper.updateBudgetAmountsLeft(budgetID, subCategory, currentBudget, billAmount);
+              currentBudget = await _budgetHelper.getBudget(budgetID);
+              //_budgetHelper.insertBill(billInfo);
+              //Navigator.pop(context);
             },
             buttonTitle: 'CREATE BILL',
           )

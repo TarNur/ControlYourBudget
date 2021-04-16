@@ -79,13 +79,15 @@ class BudgetInfo {
 
 class BillInfo {
   BillInfo(
-      {this.id,
+      {this.billID,
+      this.id,
       this.billName,
       this.billAmount,
       this.billSubcategory,
       this.paymentType,
       this.reimbursable});
 
+  final int billID;
   final int id;
   final String billName;
   final double billAmount;
@@ -98,6 +100,7 @@ class BillInfo {
   void changeBudgetName() {}
 
   factory BillInfo.fromMap(Map<String, dynamic> json) => BillInfo(
+        billID: json["billID"],
         id: json["id"],
         billName: json["billName"],
         billAmount: json["billAmount"].toDouble(),
@@ -108,6 +111,7 @@ class BillInfo {
 
   Map<String, dynamic> toMap() {
     return {
+      'billID': billID,
       'id': id,
       'billName': billName,
       'billAmount': billAmount,
