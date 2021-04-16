@@ -53,7 +53,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
         ),
         SizedBox(
-          height: 20.0,
+          height: 10.0,
         ),
         ListTile(
           title: Text(
@@ -80,7 +80,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
         ),
         SizedBox(
-          height: 20.0,
+          height: 10.0,
         ),
         ListTile(
           title: Text(
@@ -107,7 +107,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
         ),
         SizedBox(
-          height: 20.0,
+          height: 10.0,
         ),
         ListTile(
           title: Text(
@@ -134,11 +134,11 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
         ),
         SizedBox(
-          height: 20.0,
+          height: 10.0,
         ),
         ListTile(
           title: Text(
-            'Transport Budget', 
+            'Other Expenses', 
             style: TextStyle(
               color: Colors.cyan,
               fontSize: 20.0,
