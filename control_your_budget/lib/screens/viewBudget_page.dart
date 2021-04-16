@@ -59,9 +59,6 @@ class _ViewBudgetsState extends State<ViewBudgets> {
             crossAxisAlignment: CrossAxisAlignment.end,
     
             children: [
-              SizedBox(
-                height: 10.0,
-              ),
               Row(
                 children: [
                   SizedBox(
@@ -76,7 +73,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                     ),
                   ),
                   SizedBox(
-                width: 30.0,
+                width: 35.0,
               ),
                   IconButton(
                     icon: Icon(Icons.edit),
