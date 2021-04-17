@@ -49,7 +49,7 @@ class _NewBillState extends State<NewBill> {
     }
 
     return CupertinoPicker(
-      backgroundColor: Colors.cyan,
+      backgroundColor: Colors.white,
       itemExtent: 32.0,
       onSelectedItemChanged: (selectedIndex) {
         setState(() {
@@ -99,6 +99,22 @@ class _NewBillState extends State<NewBill> {
     );
   }
 
+  String getSubcategoryFormat(String subCategory){
+    String correctFormatSubcategory;
+    if (subCategory == 'Transport'){
+      correctFormatSubcategory = 'transportBudget';
+    } else if (subCategory == 'Accomodation'){
+      correctFormatSubcategory = 'accomodationBudget';
+    } else if (subCategory == 'Food'){
+      correctFormatSubcategory = 'foodBudget';
+    } else if (subCategory == 'Pastime'){
+      correctFormatSubcategory = 'pastimeBudget';
+    } else {
+      correctFormatSubcategory = 'otherExpensesBudget';
+    }
+    return correctFormatSubcategory;
+  }
+
   String billName = 'Enter Bill Name';
   int budgetID;
   double billAmount = 0;
@@ -122,7 +138,7 @@ class _NewBillState extends State<NewBill> {
         children: [
           // BUDGET NAME SISESTUS
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               padding: EdgeInsets.all(5.0),
@@ -168,7 +184,7 @@ class _NewBillState extends State<NewBill> {
           ),
           // BUDGET AMOUNT SISESTUS
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               padding: EdgeInsets.all(5.0),
@@ -211,42 +227,8 @@ class _NewBillState extends State<NewBill> {
               ),
             ),
           ),
-          Container(
-            height: 55.0,
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
-            color: Colors.cyan,
-            child: Platform.isIOS ? iOSPicker() : androidDropdown(),
-          ),
           Expanded(
-            flex: 2,
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-              padding: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'Reimbursable?',
-                    style: kLabelTextStyle,
-                  ),
-                  Checkbox(
-                      value: reimbursable,
-                      onChanged: (value) {
-                        setState(() {
-                          reimbursable = !reimbursable;
-                        });
-                      })
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
+            flex: 4,
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
               padding: EdgeInsets.all(5.0),
@@ -258,57 +240,69 @@ class _NewBillState extends State<NewBill> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
+                    'Bill type: ',
+                    style: kLabelTextStyle,
+                  ),
+                  Container(
+                    height: 40.0,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    color: Colors.white,
+                    child: Platform.isIOS ? iOSPicker() : androidDropdown(),
+                  ),
+                  Text(
                     'Payment Type: ',
                     style: kLabelTextStyle,
                   ),
                   Container(
-                    height: 55.0,
+                    height: 40.0,
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 0),
                     color: Colors.white,
                     child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Reimbursable?',
+                        style: kLabelTextStyle,
+                      ),
+                      Checkbox(
+                          value: reimbursable,
+                          activeColor: Colors.cyan,
+                          onChanged: (value) {
+                            setState(() {
+                              reimbursable = !reimbursable;
+                            });
+                          })
+                    ],
+                  ),
+                  Text('Date ja pildi lisamine...')
                 ],
               ),
             ),
           ),
-
-          Expanded(
-            flex: 4,
-            child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-                padding: EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Center(child: Text('Pildi lisamine siia...'))),
-          ),
           BottomButton(
             // CREATE BUDGET NUPP
             onTap: () async {
+              int ifReimbursable = reimbursable ? 1 :0;
+              String correctSubcategory = getSubcategoryFormat(subCategory);
               var billInfo = BillInfo(
                 billName: billName,
                 billAmount: billAmount,
                 id: budgetID,
-                billSubcategory: subCategory,
+                billSubcategory: correctSubcategory,
                 paymentType: paymentType,
-                reimbursable: reimbursable,
+                reimbursable: ifReimbursable,
               );
-              print('bottom button pressed');
-              print('Bill Amount: $billAmount $selectedCurrency');
-              print('BudgetID: $budgetID');
-              print('Bill name: $billName');
-              print('Subcategory: $subCategory');
-              print('Bill reimbursable: $reimbursable');
-              print('Payment: $paymentType');
               BudgetInfo currentBudget =
                   await _budgetHelper.getBudget(budgetID);
               _budgetHelper.updateBudgetAmountsLeft(
                   budgetID, subCategory, currentBudget, billAmount);
               currentBudget = await _budgetHelper.getBudget(budgetID);
-              //_budgetHelper.insertBill(billInfo);
-              //Navigator.pop(context);
+              _budgetHelper.insertBill(billInfo);
+              Navigator.pop(context);
             },
             buttonTitle: 'CREATE BILL',
           )

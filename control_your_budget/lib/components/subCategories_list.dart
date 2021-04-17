@@ -1,4 +1,5 @@
 import 'package:control_your_budget/models/budget.dart';
+import 'package:control_your_budget/budget_helper.dart';
 import 'package:flutter/material.dart';
 
 class BudgetsList extends StatefulWidget {
@@ -12,7 +13,21 @@ class BudgetsList extends StatefulWidget {
 }
 
 class _BudgetsListState extends State<BudgetsList> {
+  BudgetHelper _budgetHelper = BudgetHelper();
+
   @override
+  void initState() {
+    _budgetHelper.initializeDatabase().then((value) {
+      print('-----------database initialized');
+      loadBudget();
+    });
+    super.initState();
+  }
+  
+  void loadBudget() {
+    _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'transportBudget');
+    if (mounted) setState(() {});
+  }
   Widget build(BuildContext context) {
     return ListView(
       children: [
@@ -46,6 +61,7 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
+                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'transportBudget');
                 }),
           ),
           subtitle: Text(
@@ -76,6 +92,7 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
+                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'accomodationBudget');
                 }),
           ),
         ),
@@ -103,6 +120,7 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
+                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'foodBudget');
                 }),
           ),
         ),
@@ -130,6 +148,7 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
+                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'pastimeBudget');
                 }),
           ),
         ),
@@ -157,6 +176,7 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
+                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'otherExpensesBudget');
                 }),
           ),
         ),

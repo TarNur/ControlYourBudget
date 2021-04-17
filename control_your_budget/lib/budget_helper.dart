@@ -105,7 +105,7 @@ class BudgetHelper {
   void insertBill(BillInfo billInfo) async {
     var db = await this.database;
     var result = await db.insert(
-      tableName,
+      tableName2,
       billInfo.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -131,6 +131,20 @@ class BudgetHelper {
     var db = await this.database;
     var result = await db.query(tableName2);
     result.forEach((element) {
+      var billInfo = BillInfo.fromMap(element);
+      _bills.add(billInfo);
+    });
+
+    return _bills;
+  }
+
+  Future<List<BillInfo>> getSingleSubCategoryBills(int id, String subCategory) async {
+    List<BillInfo> _bills = [];
+
+    var db = await this.database;
+    var result = await db.rawQuery('SELECT * FROM $tableName2 WHERE id=? AND billSubcategory=?', [id, subCategory]);
+    result.forEach((element) {
+      print(element);
       var billInfo = BillInfo.fromMap(element);
       _bills.add(billInfo);
     });

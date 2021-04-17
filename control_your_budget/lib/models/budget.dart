@@ -93,7 +93,7 @@ class BillInfo {
   final double billAmount;
   final String billSubcategory;
   final String paymentType;
-  final bool reimbursable;
+  final int reimbursable;
 
   void changeBudgetAmount() {}
 
