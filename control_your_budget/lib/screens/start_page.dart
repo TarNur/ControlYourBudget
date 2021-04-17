@@ -12,21 +12,14 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   BudgetHelper _budgetHelper = BudgetHelper();
-  Future<List<BudgetInfo>> _budgets;
-  var budgetsMade = 0;
+  int change = 0;
 
   @override
   void initState() {
     _budgetHelper.initializeDatabase().then((value) {
       print('-----------database initialized');
-      loadBudgets();
     });
     super.initState();
-  }
-
-  void loadBudgets() {
-    _budgets = _budgetHelper.getBudgets();
-    if (mounted) setState(() {});
   }
 
   @override
@@ -69,19 +62,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 SizedBox(height: 10.0),
-                FlatButton(
-                  child: Text(
-                    'Refresh Budgets',
-                    style: TextStyle(
-                      color: Colors.cyan,
-                      fontSize: 18,
-                    ),
-                  ),
-                  onPressed: (){
-                    print('loaded budgets');
-                    loadBudgets();
-                  },
-                ),
+                
               ],
             ),
           ),
@@ -95,19 +76,7 @@ class _StartPageState extends State<StartPage> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: FutureBuilder(
-                  future: _budgets,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return BudgetsList(snapshot.data);
-                    }
-                    return Center(
-                      child: Text(
-                        'Loading...',
-                        style: TextStyle(color: Colors.cyan, fontSize: 30.0),
-                      ),
-                    );
-                  }),
+              child: BudgetsList(change),
             ),
           ),
         ],
@@ -122,7 +91,10 @@ class _StartPageState extends State<StartPage> {
             ),
           )
               .then((value) {
-            loadBudgets();
+                change++;
+                setState(() {
+
+                });
           });
         },
         child: Icon(Icons.add),
