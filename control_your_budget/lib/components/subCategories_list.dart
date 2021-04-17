@@ -132,6 +132,15 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'accomodationBudget');
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => ViewBills(
+                              budgetID: widget.budgets.id,
+                              budgetSubcategory: 'accomodationBudget'),
+                        ),
+                      )
+                      .then((value) {});
                 }),
           ),
         ),
@@ -163,6 +172,15 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'foodBudget');
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => ViewBills(
+                              budgetID: widget.budgets.id,
+                              budgetSubcategory: 'foodBudget'),
+                        ),
+                      )
+                      .then((value) {});
                 }),
           ),
         ),
@@ -194,6 +212,15 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'pastimeBudget');
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => ViewBills(
+                              budgetID: widget.budgets.id,
+                              budgetSubcategory: 'pastimeBudget'),
+                        ),
+                      )
+                      .then((value) {});
                 }),
           ),
         ),
@@ -225,6 +252,15 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'otherExpensesBudget');
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => ViewBills(
+                              budgetID: widget.budgets.id,
+                              budgetSubcategory: 'otherExpensesBudget'),
+                        ),
+                      )
+                      .then((value) {});
                 }),
           ),
         ),
