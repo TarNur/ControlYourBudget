@@ -25,7 +25,7 @@ class _BudgetsListState extends State<BudgetsList> {
     } else if (moneyLeft / money < 0.2) {
       return TextStyle(
         fontSize: 12.0,
-        color: Colors.yellow,
+        color: Colors.yellow[800],
       );
     } else {
       return TextStyle(
