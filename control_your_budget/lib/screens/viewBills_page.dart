@@ -41,7 +41,7 @@ class _ViewBillsState extends State<ViewBills> {
               children: <Widget>[
                 SizedBox(width: 10.0),
                 Text(
-                  'Your Bills: ', 
+                  'Your Bills: ',
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,
@@ -60,7 +60,9 @@ class _ViewBillsState extends State<ViewBills> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: BillsList(budgetID: widget.budgetID, subCategory: widget.budgetSubcategory),
+              child: BillsList(
+                  budgetID: widget.budgetID,
+                  subCategory: widget.budgetSubcategory),
             ),
           ),
         ],
