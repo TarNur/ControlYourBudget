@@ -15,6 +15,22 @@ class BudgetsList extends StatefulWidget {
 class _BudgetsListState extends State<BudgetsList> {
   BudgetHelper _budgetHelper = BudgetHelper();
 
+  TextStyle getColor(double moneyLeft, double money) {
+    if (moneyLeft / money < 0) {
+      return TextStyle(
+        color: Colors.red,
+      );
+    } else if (moneyLeft / money < 0.2) {
+      return TextStyle(
+        color: Colors.yellow,
+      );
+    } else {
+      return TextStyle(
+        color: Colors.green,
+      );
+    }
+  }
+
   @override
   void initState() {
     _budgetHelper.initializeDatabase().then((value) {
@@ -23,17 +39,19 @@ class _BudgetsListState extends State<BudgetsList> {
     });
     super.initState();
   }
-  
+
   void loadBudget() {
-    _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'transportBudget');
+    _budgetHelper.getSingleSubCategoryBills(
+        widget.budgets.id, 'transportBudget');
     if (mounted) setState(() {});
   }
+
   Widget build(BuildContext context) {
     return ListView(
       children: [
         ListTile(
           title: Text(
-            'Budget Amount', 
+            'Budget Amount',
             style: TextStyle(
               color: Colors.black,
               fontSize: 20.0,
@@ -41,11 +59,12 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.budgetAmountLeft} of ${widget.budgets.budgetAmount}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.budgetAmountLeft, widget.budgets.budgetAmount),
           ),
         ),
         ListTile(
           title: Text(
-            'Transport Budget', 
+            'Transport Budget',
             style: TextStyle(
               color: Colors.cyan,
               fontSize: 20.0,
@@ -61,11 +80,13 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
-                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'transportBudget');
+                  _budgetHelper.getSingleSubCategoryBills(
+                      widget.budgets.id, 'transportBudget');
                 }),
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.transportBudgetLeft} of ${widget.budgets.transportBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.transportBudgetLeft, widget.budgets.transportBudget),
           ),
         ),
         SizedBox(
@@ -73,7 +94,7 @@ class _BudgetsListState extends State<BudgetsList> {
         ),
         ListTile(
           title: Text(
-            'Accomodation Budget', 
+            'Accomodation Budget',
             style: TextStyle(
               color: Colors.cyan,
               fontSize: 20.0,
@@ -81,6 +102,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.accomodationBudgetLeft} of ${widget.budgets.accomodationBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.accomodationBudgetLeft, widget.budgets.accomodationBudget),
           ),
           trailing: Material(
             color: Colors.white,
@@ -92,7 +114,8 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
-                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'accomodationBudget');
+                  _budgetHelper.getSingleSubCategoryBills(
+                      widget.budgets.id, 'accomodationBudget');
                 }),
           ),
         ),
@@ -101,7 +124,7 @@ class _BudgetsListState extends State<BudgetsList> {
         ),
         ListTile(
           title: Text(
-            'Food Budget', 
+            'Food Budget',
             style: TextStyle(
               color: Colors.cyan,
               fontSize: 20.0,
@@ -109,6 +132,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.foodBudgetLeft} of ${widget.budgets.foodBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.foodBudgetLeft, widget.budgets.foodBudget),
           ),
           trailing: Material(
             color: Colors.white,
@@ -120,7 +144,8 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
-                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'foodBudget');
+                  _budgetHelper.getSingleSubCategoryBills(
+                      widget.budgets.id, 'foodBudget');
                 }),
           ),
         ),
@@ -129,7 +154,7 @@ class _BudgetsListState extends State<BudgetsList> {
         ),
         ListTile(
           title: Text(
-            'Pastime Budget', 
+            'Pastime Budget',
             style: TextStyle(
               color: Colors.cyan,
               fontSize: 20.0,
@@ -137,6 +162,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.pastimeBudgetLeft} of ${widget.budgets.pastimeBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.pastimeBudgetLeft, widget.budgets.pastimeBudget),
           ),
           trailing: Material(
             color: Colors.white,
@@ -148,7 +174,8 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
-                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'pastimeBudget');
+                  _budgetHelper.getSingleSubCategoryBills(
+                      widget.budgets.id, 'pastimeBudget');
                 }),
           ),
         ),
@@ -157,7 +184,7 @@ class _BudgetsListState extends State<BudgetsList> {
         ),
         ListTile(
           title: Text(
-            'Other Expenses', 
+            'Other Expenses',
             style: TextStyle(
               color: Colors.cyan,
               fontSize: 20.0,
@@ -165,6 +192,7 @@ class _BudgetsListState extends State<BudgetsList> {
           ),
           subtitle: Text(
             'Money left: ${widget.budgets.otherExpensesBudgetLeft} of ${widget.budgets.otherExpensesBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.otherExpensesBudgetLeft, widget.budgets.otherExpensesBudget),
           ),
           trailing: Material(
             color: Colors.white,
@@ -176,7 +204,8 @@ class _BudgetsListState extends State<BudgetsList> {
                 color: Colors.cyan,
                 onPressed: () {
                   print('open');
-                  _budgetHelper.getSingleSubCategoryBills(widget.budgets.id, 'otherExpensesBudget');
+                  _budgetHelper.getSingleSubCategoryBills(
+                      widget.budgets.id, 'otherExpensesBudget');
                 }),
           ),
         ),
