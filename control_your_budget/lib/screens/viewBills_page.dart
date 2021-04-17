@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bills_list.dart';
 import 'package:control_your_budget/budget_helper.dart';
-import 'package:control_your_budget/screens/newBudget_page.dart';
 
 class ViewBills extends StatefulWidget {
   final int budgetID;
@@ -49,26 +48,13 @@ class _ViewBillsState extends State<ViewBills> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(width: 10.0),
                 Text(
                   'Your Bills: ', 
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,
                   ),
-                ),
-                SizedBox(width: 50.0),
-                FlatButton(
-                  child: Text(
-                    'Refresh Bills',
-                    style: TextStyle(
-                      color: Colors.cyan,
-                      fontSize: 18,
-                    ),
-                  ),
-                  onPressed: () {
-                    print('loaded bills');
-                    loadBills();
-                  },
                 ),
               ],
             ),
@@ -83,19 +69,7 @@ class _ViewBillsState extends State<ViewBills> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: FutureBuilder(
-                  future: _bills,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return BillsList(snapshot.data);
-                    }
-                    return Center(
-                      child: Text(
-                        'Loading...',
-                        style: TextStyle(color: Colors.cyan, fontSize: 30.0),
-                      ),
-                    );
-                  }),
+              child: BillsList(budgetID: widget.budgetID, subCategory: widget.budgetSubcategory),
             ),
           ),
         ],

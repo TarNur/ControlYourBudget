@@ -1,7 +1,6 @@
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
-import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/screens/newBill_page.dart';
 import 'package:control_your_budget/screens/editBudget_page.dart';
 import 'package:control_your_budget/components/subCategories_list.dart';
@@ -140,7 +139,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
         ),
       ]),
       floatingActionButton: FloatingActionButton(
-        // Create New Budget Button
+        // Create New Bill Button
         onPressed: () {
           Navigator.of(context)
               .push(

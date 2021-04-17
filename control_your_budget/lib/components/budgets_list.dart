@@ -53,7 +53,7 @@ class _BudgetsListState extends State<BudgetsList> {
                             budgetAmountLeft:
                                 snapshot.data[index].budgetAmountLeft,
                             budgetID: snapshot.data[index].id,
-                            selectedCurrency: selectedCurrency,
+                            selectedCurrency: snapshot.data[index].selectedCurrency,
                           ), // TODO: Nupp peab viima õige budgeti vaatele
                         ),
                       )
