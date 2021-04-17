@@ -1,4 +1,3 @@
-import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/budgets_list.dart';
@@ -55,7 +54,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 Text(
-                  'Your Budgets:', // TODO: how many budgets made
+                  'Your Budgets:', 
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,

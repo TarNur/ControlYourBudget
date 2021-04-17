@@ -1,4 +1,3 @@
-import 'package:control_your_budget/constants.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:control_your_budget/models/budget.dart';

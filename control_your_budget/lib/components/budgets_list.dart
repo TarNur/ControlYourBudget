@@ -36,7 +36,7 @@ class _BudgetsListState extends State<BudgetsList> {
                 return ListTile(
                   title: GestureDetector(
                     child: Text(
-                      'View Budget: ${snapshot.data[index].budgetName}', // TODO: Vaja lisada Nupp
+                      'View Budget: ${snapshot.data[index].budgetName}',
                       style: TextStyle(
                         color: Colors.cyan,
                         fontSize: 20.0,
@@ -53,8 +53,9 @@ class _BudgetsListState extends State<BudgetsList> {
                             budgetAmountLeft:
                                 snapshot.data[index].budgetAmountLeft,
                             budgetID: snapshot.data[index].id,
-                            selectedCurrency: snapshot.data[index].selectedCurrency,
-                          ), // TODO: Nupp peab viima õige budgeti vaatele
+                            selectedCurrency:
+                                snapshot.data[index].selectedCurrency,
+                          ), 
                         ),
                       )
                           .then((value) {
@@ -65,7 +66,6 @@ class _BudgetsListState extends State<BudgetsList> {
                           ),
                         );
                       });
-                      ;
                     },
                   ),
                   subtitle: Text(

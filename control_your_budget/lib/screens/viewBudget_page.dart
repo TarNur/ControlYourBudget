@@ -6,7 +6,6 @@ import 'package:control_your_budget/screens/editBudget_page.dart';
 import 'package:control_your_budget/components/subCategories_list.dart';
 
 // Siia ühe Budgeti vaate page
-// TODO: KUHUGI VAJA BUDGETI EDITIMISE NUPP
 
 class ViewBudgets extends StatefulWidget {
   final String budgetName;

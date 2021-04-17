@@ -1,4 +1,3 @@
-import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bills_list.dart';
@@ -15,22 +14,14 @@ class ViewBills extends StatefulWidget {
 
 class _ViewBillsState extends State<ViewBills> {
   BudgetHelper _budgetHelper = BudgetHelper();
-  Future<List<BillInfo>> _bills;
   var budgetsMade = 0;
 
   @override
   void initState() {
     _budgetHelper.initializeDatabase().then((value) {
       print('-----------database initialized');
-      loadBills();
     });
     super.initState();
-  }
-
-  void loadBills() {
-    _bills = _budgetHelper.getSingleSubCategoryBills(
-        widget.budgetID, widget.budgetSubcategory);
-    if (mounted) setState(() {});
   }
 
   @override

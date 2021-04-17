@@ -46,7 +46,7 @@ class _BillsListState extends State<BillsList> {
                 return ListTile(
                   title: GestureDetector(
                     child: Text(
-                      'Bill: ${snapshot.data[index].billName}', // TODO: Vaja lisada Nupp
+                      'Bill: ${snapshot.data[index].billName}', 
                       style: TextStyle(
                         color: Colors.cyan,
                         fontSize: 20.0,

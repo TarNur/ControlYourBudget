@@ -27,7 +27,7 @@ class BillTile extends StatelessWidget {
     return ListTile(
       title: GestureDetector(
         child: Text(
-          'Bill: $billName', // TODO: Vaja lisada Nupp
+          'Bill: $billName', 
           style: TextStyle(
             color: Colors.cyan,
             fontSize: 20.0,

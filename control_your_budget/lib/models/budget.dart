@@ -1,4 +1,3 @@
-import 'package:control_your_budget/constants.dart';
 
 class BudgetInfo {
   BudgetInfo(
