@@ -143,7 +143,6 @@ class BudgetHelper {
     var db = await this.database;
     var result = await db.rawQuery('SELECT * FROM $tableName2 WHERE id=? AND billSubcategory=?', [id, subCategory]);
     result.forEach((element) {
-      print(element);
       var billInfo = BillInfo.fromMap(element);
       _bills.add(billInfo);
     });
@@ -158,9 +157,6 @@ class BudgetHelper {
     List<Map> result =
         await db.rawQuery('SELECT * FROM $tableName WHERE id=?', [id]);
 
-    result.forEach((element) {
-      print(element);
-    });
     return BudgetInfo.fromMap(result.first);
   }
 
@@ -171,9 +167,6 @@ class BudgetHelper {
     List<Map> result =
         await db.rawQuery('SELECT * FROM $tableName2 WHERE billID=?', [billID]);
 
-    result.forEach((element) {
-      print(element);
-    });
     return BillInfo.fromMap(result.first);
   }
 
