@@ -1,5 +1,6 @@
 import 'package:control_your_budget/models/budget.dart';
 import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/screens/viewBills_page.dart';
 import 'package:flutter/material.dart';
 
 class BudgetsList extends StatefulWidget {
@@ -18,14 +19,17 @@ class _BudgetsListState extends State<BudgetsList> {
   TextStyle getColor(double moneyLeft, double money) {
     if (moneyLeft / money < 0) {
       return TextStyle(
+        fontSize: 12.0,
         color: Colors.red,
       );
     } else if (moneyLeft / money < 0.2) {
       return TextStyle(
+        fontSize: 12.0,
         color: Colors.yellow,
       );
     } else {
       return TextStyle(
+        fontSize: 12.0,
         color: Colors.green,
       );
     }
@@ -58,8 +62,9 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            'Money left: ${widget.budgets.budgetAmountLeft} of ${widget.budgets.budgetAmount}${widget.budgets.selectedCurrency}',
-            style: getColor(widget.budgets.budgetAmountLeft, widget.budgets.budgetAmount),
+            '  Money left: ${widget.budgets.budgetAmountLeft} of ${widget.budgets.budgetAmount}${widget.budgets.selectedCurrency}',
+            style: getColor(
+                widget.budgets.budgetAmountLeft, widget.budgets.budgetAmount),
           ),
         ),
         ListTile(
@@ -82,11 +87,21 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'transportBudget');
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => ViewBills(
+                              budgetID: widget.budgets.id,
+                              budgetSubcategory: 'transportBudget'),
+                        ),
+                      )
+                      .then((value) {});
                 }),
           ),
           subtitle: Text(
-            'Money left: ${widget.budgets.transportBudgetLeft} of ${widget.budgets.transportBudget}${widget.budgets.selectedCurrency}',
-            style: getColor(widget.budgets.transportBudgetLeft, widget.budgets.transportBudget),
+            '  Money left: ${widget.budgets.transportBudgetLeft} of ${widget.budgets.transportBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.transportBudgetLeft,
+                widget.budgets.transportBudget),
           ),
         ),
         SizedBox(
@@ -101,8 +116,9 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            'Money left: ${widget.budgets.accomodationBudgetLeft} of ${widget.budgets.accomodationBudget}${widget.budgets.selectedCurrency}',
-            style: getColor(widget.budgets.accomodationBudgetLeft, widget.budgets.accomodationBudget),
+            '  Money left: ${widget.budgets.accomodationBudgetLeft} of ${widget.budgets.accomodationBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.accomodationBudgetLeft,
+                widget.budgets.accomodationBudget),
           ),
           trailing: Material(
             color: Colors.white,
@@ -131,8 +147,9 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            'Money left: ${widget.budgets.foodBudgetLeft} of ${widget.budgets.foodBudget}${widget.budgets.selectedCurrency}',
-            style: getColor(widget.budgets.foodBudgetLeft, widget.budgets.foodBudget),
+            '  Money left: ${widget.budgets.foodBudgetLeft} of ${widget.budgets.foodBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(
+                widget.budgets.foodBudgetLeft, widget.budgets.foodBudget),
           ),
           trailing: Material(
             color: Colors.white,
@@ -161,8 +178,9 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            'Money left: ${widget.budgets.pastimeBudgetLeft} of ${widget.budgets.pastimeBudget}${widget.budgets.selectedCurrency}',
-            style: getColor(widget.budgets.pastimeBudgetLeft, widget.budgets.pastimeBudget),
+            '  Money left: ${widget.budgets.pastimeBudgetLeft} of ${widget.budgets.pastimeBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(
+                widget.budgets.pastimeBudgetLeft, widget.budgets.pastimeBudget),
           ),
           trailing: Material(
             color: Colors.white,
@@ -191,8 +209,9 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            'Money left: ${widget.budgets.otherExpensesBudgetLeft} of ${widget.budgets.otherExpensesBudget}${widget.budgets.selectedCurrency}',
-            style: getColor(widget.budgets.otherExpensesBudgetLeft, widget.budgets.otherExpensesBudget),
+            '  Money left: ${widget.budgets.otherExpensesBudgetLeft} of ${widget.budgets.otherExpensesBudget}${widget.budgets.selectedCurrency}',
+            style: getColor(widget.budgets.otherExpensesBudgetLeft,
+                widget.budgets.otherExpensesBudget),
           ),
           trailing: Material(
             color: Colors.white,
