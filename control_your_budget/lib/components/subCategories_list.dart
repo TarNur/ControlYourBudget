@@ -97,15 +97,15 @@ class _BudgetsListState extends State<BudgetsList> {
                           budgetSubcategory: 'transportBudget'),
                     ),
                   )
-                      .then((value) {
+                      .then((value) {(
                     Navigator.of(context)
                         .pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => StartPage(),
                       ),
-                    )
+                    ))
                         .then((value) {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ViewBudgets(
                             budgetName: widget.budgets.budgetName,
@@ -163,14 +163,12 @@ class _BudgetsListState extends State<BudgetsList> {
                     ),
                   )
                       .then((value) {
-                    Navigator.of(context)
-                        .pushReplacement(
+                    (Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => StartPage(),
                       ),
-                    )
-                        .then((value) {
-                      Navigator.of(context).pushReplacement(
+                    )).then((value) {
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ViewBudgets(
                             budgetName: widget.budgets.budgetName,
@@ -222,15 +220,15 @@ class _BudgetsListState extends State<BudgetsList> {
                           budgetSubcategory: 'foodBudget'),
                     ),
                   )
-                      .then((value) {
+                      .then((value) {(
                     Navigator.of(context)
                         .pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => StartPage(),
                       ),
-                    )
+                    ))
                         .then((value) {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ViewBudgets(
                             budgetName: widget.budgets.budgetName,
@@ -290,7 +288,7 @@ class _BudgetsListState extends State<BudgetsList> {
                       ),
                     )
                         .then((value) {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ViewBudgets(
                             budgetName: widget.budgets.budgetName,
@@ -342,15 +340,15 @@ class _BudgetsListState extends State<BudgetsList> {
                           budgetSubcategory: 'otherExpensesBudget'),
                     ),
                   )
-                      .then((value) {
+                      .then((value) {(
                     Navigator.of(context)
                         .pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => StartPage(),
                       ),
-                    )
+                    ))
                         .then((value) {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ViewBudgets(
                             budgetName: widget.budgets.budgetName,

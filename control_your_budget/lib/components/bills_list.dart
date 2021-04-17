@@ -17,6 +17,13 @@ class _BillsListState extends State<BillsList> {
   Future<List<BillInfo>> _bills;
   BudgetInfo budget;
   String reimb;
+
+  double addToTransportBudget = 0;
+  double addToAccomodationBudget = 0;
+  double addToFoodBudget = 0;
+  double addToPastimeBudget = 0;
+  double addToOtherExpensesBudget = 0;
+
   @override
   void initState() {
     loadBills();
@@ -63,6 +70,22 @@ class _BillsListState extends State<BillsList> {
                         onPressed: () async {
                           budget =
                               await BudgetHelper().getBudget(widget.budgetID);
+                          if (widget.subCategory == 'transportBudget') {
+                            addToTransportBudget =
+                                snapshot.data[index].billAmount;
+                          } else if (widget.subCategory ==
+                              'accomodationBudget') {
+                            addToAccomodationBudget =
+                                snapshot.data[index].billAmount;
+                          } else if (widget.subCategory == 'foodBudget') {
+                            addToFoodBudget = snapshot.data[index].billAmount;
+                          } else if (widget.subCategory == 'pastimeBudget') {
+                            addToPastimeBudget =
+                                snapshot.data[index].billAmount;
+                          } else {
+                            addToOtherExpensesBudget =
+                                snapshot.data[index].billAmount;
+                          }
                           var budgetInfo = BudgetInfo(
                             id: budget.id,
                             budgetName: budget.budgetName,
@@ -76,13 +99,17 @@ class _BillsListState extends State<BillsList> {
                             budgetAmountLeft: budget.budgetAmountLeft +
                                 snapshot.data[index].billAmount,
                             transportBudgetLeft: budget.transportBudgetLeft +
-                                snapshot.data[index].billAmount,
+                                addToTransportBudget,
                             accomodationBudgetLeft:
-                                budget.accomodationBudgetLeft,
-                            foodBudgetLeft: budget.foodBudgetLeft,
-                            pastimeBudgetLeft: budget.pastimeBudgetLeft,
+                                budget.accomodationBudgetLeft +
+                                    addToAccomodationBudget,
+                            foodBudgetLeft:
+                                budget.foodBudgetLeft + addToFoodBudget,
+                            pastimeBudgetLeft:
+                                budget.pastimeBudgetLeft + addToPastimeBudget,
                             otherExpensesBudgetLeft:
-                                budget.otherExpensesBudgetLeft,
+                                budget.otherExpensesBudgetLeft +
+                                    addToOtherExpensesBudget,
                           );
                           BudgetHelper().updateBudget(budgetInfo);
                           BudgetHelper()
