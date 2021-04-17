@@ -29,7 +29,8 @@ class _ViewBillsState extends State<ViewBills> {
   }
 
   void loadBills() {
-    _bills = _budgetHelper.getSingleSubCategoryBills(widget.budgetID, widget.budgetSubcategory);
+    _bills = _budgetHelper.getSingleSubCategoryBills(
+        widget.budgetID, widget.budgetSubcategory);
     if (mounted) setState(() {});
   }
 
@@ -45,17 +46,17 @@ class _ViewBillsState extends State<ViewBills> {
           Container(
             padding: EdgeInsets.only(
                 top: 20.0, left: 30.0, right: 30.0, bottom: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Your Bills:', // TODO: how many budgets made
+                  'Your Bills: ', 
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,
                   ),
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(width: 50.0),
                 FlatButton(
                   child: Text(
                     'Refresh Bills',
