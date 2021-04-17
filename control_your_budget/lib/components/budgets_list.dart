@@ -1,5 +1,6 @@
 import 'package:control_your_budget/models/budget.dart';
 import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/screens/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/screens/viewBudget_page.dart';
 
@@ -43,17 +44,28 @@ class _BudgetsListState extends State<BudgetsList> {
                     ),
                     onTap: () {
                       print('pressed view budget');
-                      Navigator.of(context).push(
+                      Navigator.of(context)
+                          .push(
                         MaterialPageRoute(
                           builder: (context) => ViewBudgets(
                             budgetName: snapshot.data[index].budgetName,
                             budgetAmount: snapshot.data[index].budgetAmount,
-                            budgetAmountLeft: (snapshot.data[index]).budgetAmountLeft,
+                            budgetAmountLeft:
+                                snapshot.data[index].budgetAmountLeft,
                             budgetID: snapshot.data[index].id,
                             selectedCurrency: selectedCurrency,
                           ), // TODO: Nupp peab viima õige budgeti vaatele
                         ),
-                      );
+                      )
+                          .then((value) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StartPage(),
+                          ),
+                        );
+                      });
+                      ;
                     },
                   ),
                   subtitle: Text(

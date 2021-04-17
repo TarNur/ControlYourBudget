@@ -34,6 +34,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
   double budgetAmountLeft;
   int budgetID;
   String selectedCurrency;
+  bool once = false;
 
   @override
   void initState() {
@@ -50,11 +51,14 @@ class _ViewBudgetsState extends State<ViewBudgets> {
   }
 
   Widget build(BuildContext context) {
-    budgetName = widget.budgetName;
-    budgetAmount = widget.budgetAmount;
-    budgetAmountLeft = widget.budgetAmountLeft;
-    budgetID = widget.budgetID;
-    selectedCurrency = widget.selectedCurrency;
+    if (once == false) {
+      budgetName = widget.budgetName;
+      budgetAmount = widget.budgetAmount;
+      budgetAmountLeft = widget.budgetAmountLeft;
+      budgetID = widget.budgetID;
+      selectedCurrency = widget.selectedCurrency;
+    }
+    once = true;
     return Scaffold(
       appBar: AppBar(
         title: Text('CONTROL YOUR BUDGET'),
@@ -67,7 +71,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
               Row(
                 children: [
                   SizedBox(
-                    width: 30.0,
+                    width: 20.0,
                   ),
                   Text(
                     'Budget name: $budgetName',
@@ -78,14 +82,15 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                     ),
                   ),
                   SizedBox(
-                    width: 35.0,
+                    width: 10.0,
                   ),
                   IconButton(
                     icon: Icon(Icons.edit),
                     iconSize: 30.0,
                     color: Colors.cyan,
                     onPressed: () async {
-                      BudgetInfo budget = await _budgetHelper.getBudget(widget.budgetID);
+                      BudgetInfo budget =
+                          await _budgetHelper.getBudget(widget.budgetID);
                       Navigator.of(context)
                           .push(
                         MaterialPageRoute(
@@ -94,8 +99,12 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                           ),
                         ),
                       )
-                          .then((value) {
+                          .then((value) async {
+                        budget = await _budgetHelper.getBudget(widget.budgetID);
+                        budgetName = budget.budgetName;
                         loadBudget();
+                        setState(() {
+                        });
                       });
                     },
                   ),
