@@ -244,7 +244,7 @@ class _NewBudgetState extends State<NewBudget> {
                     // ACCOMODATION BUDGET
                     children: [
                       Text(
-                        'Accomodation budget: $accomodationBudget $selectedCurrency',
+                        'Accommodation budget: $accomodationBudget $selectedCurrency',
                         style: kLabelTextStyle,
                       ),
                       IconButton(

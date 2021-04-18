@@ -178,7 +178,7 @@ class BudgetHelper {
     if (subCategory == 'Transport'){
       subcategoryLeftCurrent = budget.transportBudgetLeft;
       await db.rawUpdate('UPDATE $tableName SET $transportBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
-    } else if (subCategory == 'Accomodation'){
+    } else if (subCategory == 'Accommodation'){
       subcategoryLeftCurrent = budget.accomodationBudgetLeft;
       await db.rawUpdate('UPDATE $tableName SET $accomodationBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
     } else if (subCategory == 'Food'){

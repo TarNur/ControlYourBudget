@@ -103,7 +103,7 @@ class _NewBillState extends State<NewBill> {
     String correctFormatSubcategory;
     if (subCategory == 'Transport'){
       correctFormatSubcategory = 'transportBudget';
-    } else if (subCategory == 'Accomodation'){
+    } else if (subCategory == 'Accommodation'){
       correctFormatSubcategory = 'accomodationBudget';
     } else if (subCategory == 'Food'){
       correctFormatSubcategory = 'foodBudget';

@@ -131,7 +131,7 @@ class _BudgetsListState extends State<BudgetsList> {
         ),
         ListTile(
           title: Text(
-            'Accomodation Budget',
+            'Accommodation Budget',
             style: TextStyle(
               color: Colors.cyan,
               fontSize: 20.0,
