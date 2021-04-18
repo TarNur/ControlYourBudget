@@ -235,4 +235,14 @@ class BudgetHelper {
       whereArgs: [billID],
     );
   }
+
+  Future<void> deleteAllBillsFromBudget(int budgetID) async {
+    final db = await this.database;
+
+    await db.delete(
+      'bill',
+      where: "id = ?",
+      whereArgs: [budgetID],
+    );
+  }
 }

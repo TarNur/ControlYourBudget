@@ -83,6 +83,7 @@ class _BudgetsListState extends State<BudgetsList> {
                         splashRadius: 40.0,
                         color: Colors.red,
                         onPressed: () {
+                          BudgetHelper().deleteAllBillsFromBudget(snapshot.data[index].id);
                           BudgetHelper().deleteBudget(snapshot.data[index].id);
                           print('deleted budget');
                           loadBudgets();
