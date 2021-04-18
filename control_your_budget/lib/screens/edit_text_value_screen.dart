@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EditTextValueScreen extends StatelessWidget {
   
@@ -31,6 +32,11 @@ class EditTextValueScreen extends StatelessWidget {
             TextField(
               autofocus: true,
               textAlign: TextAlign.center,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp(r'^.{0,20}$'),
+                ),
+              ],
               onChanged: (value) {
                 newValue = value;
               },

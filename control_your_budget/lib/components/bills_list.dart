@@ -46,7 +46,8 @@ class _BillsListState extends State<BillsList> {
           if (snapshot.hasData) {
             return ListView.builder(
               itemBuilder: (context, index) {
-                return ListTile(
+                String reimb = snapshot.data[index].reimbursable == 0 ? 'No' : 'Yes';
+                return ListTile( 
                   title: GestureDetector(
                     child: Text(
                       'Bill: ${snapshot.data[index].billName}', 
@@ -60,7 +61,7 @@ class _BillsListState extends State<BillsList> {
                     },
                   ),
                   subtitle: Text(
-                    'Amount: ${snapshot.data[index].billAmount}, Reimbursable: ${snapshot.data[index].reimbursable}, Payed with ${snapshot.data[index].paymentType}',
+                    ' Amount: ${snapshot.data[index].billAmount}\n Reimbursable: $reimb\n Payed with ${snapshot.data[index].paymentType}',
                   ),
                   trailing: Material(
                     color: Colors.white,
