@@ -97,26 +97,18 @@ class _BudgetsListState extends State<BudgetsList> {
                           budgetSubcategory: 'transportBudget'),
                     ),
                   )
-                      .then((value) {(
-                    Navigator.of(context)
-                        .pushReplacement(
+                      .then((value) {
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => StartPage(),
-                      ),
-                    ))
-                        .then((value) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ViewBudgets(
-                            budgetName: widget.budgets.budgetName,
-                            budgetAmount: widget.budgets.budgetAmount,
-                            budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                            budgetID: widget.budgets.id,
-                            selectedCurrency: widget.budgets.selectedCurrency,
-                          ),
+                        builder: (context) => ViewBudgets(
+                          budgetName: widget.budgets.budgetName,
+                          budgetAmount: widget.budgets.budgetAmount,
+                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
+                          budgetID: widget.budgets.id,
+                          selectedCurrency: widget.budgets.selectedCurrency,
                         ),
-                      );
-                    });
+                      ),
+                    );
                   });
                 }),
           ),
@@ -163,23 +155,17 @@ class _BudgetsListState extends State<BudgetsList> {
                     ),
                   )
                       .then((value) {
-                    (Navigator.of(context).pushReplacement(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => StartPage(),
-                      ),
-                    )).then((value) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ViewBudgets(
-                            budgetName: widget.budgets.budgetName,
-                            budgetAmount: widget.budgets.budgetAmount,
-                            budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                            budgetID: widget.budgets.id,
-                            selectedCurrency: widget.budgets.selectedCurrency,
-                          ),
+                        builder: (context) => ViewBudgets(
+                          budgetName: widget.budgets.budgetName,
+                          budgetAmount: widget.budgets.budgetAmount,
+                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
+                          budgetID: widget.budgets.id,
+                          selectedCurrency: widget.budgets.selectedCurrency,
                         ),
-                      );
-                    });
+                      ),
+                    );
                   });
                 }),
           ),
@@ -220,26 +206,18 @@ class _BudgetsListState extends State<BudgetsList> {
                           budgetSubcategory: 'foodBudget'),
                     ),
                   )
-                      .then((value) {(
-                    Navigator.of(context)
-                        .pushReplacement(
+                      .then((value) {
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => StartPage(),
-                      ),
-                    ))
-                        .then((value) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ViewBudgets(
-                            budgetName: widget.budgets.budgetName,
-                            budgetAmount: widget.budgets.budgetAmount,
-                            budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                            budgetID: widget.budgets.id,
-                            selectedCurrency: widget.budgets.selectedCurrency,
-                          ),
+                        builder: (context) => ViewBudgets(
+                          budgetName: widget.budgets.budgetName,
+                          budgetAmount: widget.budgets.budgetAmount,
+                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
+                          budgetID: widget.budgets.id,
+                          selectedCurrency: widget.budgets.selectedCurrency,
                         ),
-                      );
-                    });
+                      ),
+                    );
                   });
                 }),
           ),
@@ -281,25 +259,17 @@ class _BudgetsListState extends State<BudgetsList> {
                     ),
                   )
                       .then((value) {
-                    Navigator.of(context)
-                        .pushReplacement(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => StartPage(),
-                      ),
-                    )
-                        .then((value) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ViewBudgets(
-                            budgetName: widget.budgets.budgetName,
-                            budgetAmount: widget.budgets.budgetAmount,
-                            budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                            budgetID: widget.budgets.id,
-                            selectedCurrency: widget.budgets.selectedCurrency,
-                          ),
+                        builder: (context) => ViewBudgets(
+                          budgetName: widget.budgets.budgetName,
+                          budgetAmount: widget.budgets.budgetAmount,
+                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
+                          budgetID: widget.budgets.id,
+                          selectedCurrency: widget.budgets.selectedCurrency,
                         ),
-                      );
-                    });
+                      ),
+                    );
                   });
                 }),
           ),
@@ -340,26 +310,18 @@ class _BudgetsListState extends State<BudgetsList> {
                           budgetSubcategory: 'otherExpensesBudget'),
                     ),
                   )
-                      .then((value) {(
-                    Navigator.of(context)
-                        .pushReplacement(
+                      .then((value) {
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => StartPage(),
-                      ),
-                    ))
-                        .then((value) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ViewBudgets(
-                            budgetName: widget.budgets.budgetName,
-                            budgetAmount: widget.budgets.budgetAmount,
-                            budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                            budgetID: widget.budgets.id,
-                            selectedCurrency: widget.budgets.selectedCurrency,
-                          ),
+                        builder: (context) => ViewBudgets(
+                          budgetName: widget.budgets.budgetName,
+                          budgetAmount: widget.budgets.budgetAmount,
+                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
+                          budgetID: widget.budgets.id,
+                          selectedCurrency: widget.budgets.selectedCurrency,
                         ),
-                      );
-                    });
+                      ),
+                    );
                   });
                 }),
           ),

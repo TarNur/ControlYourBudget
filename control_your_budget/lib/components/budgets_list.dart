@@ -47,8 +47,7 @@ class _BudgetsListState extends State<BudgetsList> {
                     ),
                     onTap: () {
                       print('pressed view budget');
-                      Navigator.of(context)
-                          .push(
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => ViewBudgets(
                             budgetName: snapshot.data[index].budgetName,
@@ -58,17 +57,9 @@ class _BudgetsListState extends State<BudgetsList> {
                             budgetID: snapshot.data[index].id,
                             selectedCurrency:
                                 snapshot.data[index].selectedCurrency,
-                          ), 
-                        ),
-                      )
-                          .then((value) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => StartPage(),
                           ),
-                        );
-                      });
+                        ),
+                      );
                     },
                   ),
                   subtitle: Text(
@@ -83,7 +74,8 @@ class _BudgetsListState extends State<BudgetsList> {
                         splashRadius: 40.0,
                         color: Colors.red,
                         onPressed: () {
-                          BudgetHelper().deleteAllBillsFromBudget(snapshot.data[index].id);
+                          BudgetHelper().deleteAllBillsFromBudget(
+                              snapshot.data[index].id);
                           BudgetHelper().deleteBudget(snapshot.data[index].id);
                           print('deleted budget');
                           loadBudgets();
