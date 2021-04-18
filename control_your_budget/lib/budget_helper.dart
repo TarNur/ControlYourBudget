@@ -137,11 +137,14 @@ class BudgetHelper {
     return _bills;
   }
 
-  Future<List<BillInfo>> getSingleSubCategoryBills(int id, String subCategory) async {
+  Future<List<BillInfo>> getSingleSubCategoryBills(
+      int id, String subCategory) async {
     List<BillInfo> _bills = [];
 
     var db = await this.database;
-    var result = await db.rawQuery('SELECT * FROM $tableName2 WHERE id=? AND billSubcategory=?', [id, subCategory]);
+    var result = await db.rawQuery(
+        'SELECT * FROM $tableName2 WHERE id=? AND billSubcategory=?',
+        [id, subCategory]);
     result.forEach((element) {
       var billInfo = BillInfo.fromMap(element);
       _bills.add(billInfo);
@@ -170,28 +173,41 @@ class BudgetHelper {
     return BillInfo.fromMap(result.first);
   }
 
-  Future<void> updateBudgetAmountsLeft(int id, String subCategory, BudgetInfo budget, double billAmount) async {
+  Future<void> updateBudgetAmountsLeft(
+      int id, String subCategory, BudgetInfo budget, double billAmount) async {
     final db = await this.database;
 
     double budgetAmountLeftCurrent = budget.budgetAmountLeft;
     double subcategoryLeftCurrent;
-    if (subCategory == 'Transport'){
+    if (subCategory == 'Transport') {
       subcategoryLeftCurrent = budget.transportBudgetLeft;
-      await db.rawUpdate('UPDATE $tableName SET $transportBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
-    } else if (subCategory == 'Accommodation'){
+      await db.rawUpdate(
+          'UPDATE $tableName SET $transportBudgetLeft = ? WHERE id = ?',
+          [subcategoryLeftCurrent - billAmount, id]);
+    } else if (subCategory == 'Accommodation') {
       subcategoryLeftCurrent = budget.accomodationBudgetLeft;
-      await db.rawUpdate('UPDATE $tableName SET $accomodationBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
-    } else if (subCategory == 'Food'){
+      await db.rawUpdate(
+          'UPDATE $tableName SET $accomodationBudgetLeft = ? WHERE id = ?',
+          [subcategoryLeftCurrent - billAmount, id]);
+    } else if (subCategory == 'Food') {
       subcategoryLeftCurrent = budget.foodBudgetLeft;
-      await db.rawUpdate('UPDATE $tableName SET $foodBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
-    } else if (subCategory == 'Pastime'){
+      await db.rawUpdate(
+          'UPDATE $tableName SET $foodBudgetLeft = ? WHERE id = ?',
+          [subcategoryLeftCurrent - billAmount, id]);
+    } else if (subCategory == 'Pastime') {
       subcategoryLeftCurrent = budget.pastimeBudgetLeft;
-      await db.rawUpdate('UPDATE $tableName SET $pastimeBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
+      await db.rawUpdate(
+          'UPDATE $tableName SET $pastimeBudgetLeft = ? WHERE id = ?',
+          [subcategoryLeftCurrent - billAmount, id]);
     } else {
       subcategoryLeftCurrent = budget.otherExpensesBudgetLeft;
-      await db.rawUpdate('UPDATE $tableName SET $otherExpensesBudgetLeft = ? WHERE id = ?', [subcategoryLeftCurrent - billAmount, id]);
+      await db.rawUpdate(
+          'UPDATE $tableName SET $otherExpensesBudgetLeft = ? WHERE id = ?',
+          [subcategoryLeftCurrent - billAmount, id]);
     }
-    await db.rawUpdate('UPDATE $tableName SET $budgetAmountLeft = ? WHERE id = ?', [budgetAmountLeftCurrent - billAmount, id]);
+    await db.rawUpdate(
+        'UPDATE $tableName SET $budgetAmountLeft = ? WHERE id = ?',
+        [budgetAmountLeftCurrent - billAmount, id]);
   }
 
   Future<void> updateBudget(BudgetInfo updatedBudget) async {
@@ -202,6 +218,7 @@ class BudgetHelper {
       updatedBudget.toMap(),
       where: "id = ?",
       whereArgs: [updatedBudget.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
@@ -211,8 +228,9 @@ class BudgetHelper {
     await db.update(
       'bill',
       updatedBill.toMap(),
-      where: "BillID = ?",
+      where: "billID = ?",
       whereArgs: [updatedBill.billID],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 

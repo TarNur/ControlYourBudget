@@ -1,6 +1,5 @@
 import 'package:control_your_budget/models/budget.dart';
 import 'package:control_your_budget/budget_helper.dart';
-import 'package:control_your_budget/screens/start_page.dart';
 import 'package:control_your_budget/screens/viewBills_page.dart';
 import 'package:control_your_budget/screens/viewBudget_page.dart';
 import 'package:flutter/material.dart';
@@ -89,27 +88,13 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'transportBudget');
-                  Navigator.of(context)
-                      .push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
                           budgetID: widget.budgets.id,
                           budgetSubcategory: 'transportBudget'),
                     ),
-                  )
-                      .then((value) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => ViewBudgets(
-                          budgetName: widget.budgets.budgetName,
-                          budgetAmount: widget.budgets.budgetAmount,
-                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                          budgetID: widget.budgets.id,
-                          selectedCurrency: widget.budgets.selectedCurrency,
-                        ),
-                      ),
-                    );
-                  });
+                  );
                 }),
           ),
           subtitle: Text(
@@ -146,27 +131,13 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'accomodationBudget');
-                  Navigator.of(context)
-                      .push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
                           budgetID: widget.budgets.id,
                           budgetSubcategory: 'accomodationBudget'),
                     ),
-                  )
-                      .then((value) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => ViewBudgets(
-                          budgetName: widget.budgets.budgetName,
-                          budgetAmount: widget.budgets.budgetAmount,
-                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                          budgetID: widget.budgets.id,
-                          selectedCurrency: widget.budgets.selectedCurrency,
-                        ),
-                      ),
-                    );
-                  });
+                  );
                 }),
           ),
         ),
@@ -198,27 +169,13 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'foodBudget');
-                  Navigator.of(context)
-                      .push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
                           budgetID: widget.budgets.id,
                           budgetSubcategory: 'foodBudget'),
                     ),
-                  )
-                      .then((value) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => ViewBudgets(
-                          budgetName: widget.budgets.budgetName,
-                          budgetAmount: widget.budgets.budgetAmount,
-                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                          budgetID: widget.budgets.id,
-                          selectedCurrency: widget.budgets.selectedCurrency,
-                        ),
-                      ),
-                    );
-                  });
+                  );
                 }),
           ),
         ),
@@ -250,27 +207,13 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'pastimeBudget');
-                  Navigator.of(context)
-                      .push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
                           budgetID: widget.budgets.id,
                           budgetSubcategory: 'pastimeBudget'),
                     ),
-                  )
-                      .then((value) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => ViewBudgets(
-                          budgetName: widget.budgets.budgetName,
-                          budgetAmount: widget.budgets.budgetAmount,
-                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                          budgetID: widget.budgets.id,
-                          selectedCurrency: widget.budgets.selectedCurrency,
-                        ),
-                      ),
-                    );
-                  });
+                  );
                 }),
           ),
         ),
@@ -302,27 +245,13 @@ class _BudgetsListState extends State<BudgetsList> {
                   print('open');
                   _budgetHelper.getSingleSubCategoryBills(
                       widget.budgets.id, 'otherExpensesBudget');
-                  Navigator.of(context)
-                      .push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
                           budgetID: widget.budgets.id,
                           budgetSubcategory: 'otherExpensesBudget'),
                     ),
-                  )
-                      .then((value) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => ViewBudgets(
-                          budgetName: widget.budgets.budgetName,
-                          budgetAmount: widget.budgets.budgetAmount,
-                          budgetAmountLeft: widget.budgets.budgetAmountLeft,
-                          budgetID: widget.budgets.id,
-                          selectedCurrency: widget.budgets.selectedCurrency,
-                        ),
-                      ),
-                    );
-                  });
+                  );
                 }),
           ),
         ),

@@ -6,6 +6,7 @@ import 'package:control_your_budget/screens/editBudget_page.dart';
 import 'package:control_your_budget/components/subCategories_list.dart';
 import 'package:control_your_budget/screens/start_page.dart';
 
+
 // Siia ühe Budgeti vaate page
 
 class ViewBudgets extends StatefulWidget {
@@ -59,18 +60,19 @@ class _ViewBudgetsState extends State<ViewBudgets> {
     }
     once = true;
     return Scaffold(
+      
       appBar: AppBar(
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            iconSize: 25.0,
-            color: Colors.cyan,
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => StartPage(),
-                ),
-              );
-            }),
+                        icon: Icon(Icons.arrow_back_ios),
+                        iconSize: 25.0,
+                        color: Colors.cyan,
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => StartPage(),
+                        ),
+                      );
+                        }),
         title: Text('CONTROL YOUR BUDGET'),
       ),
       body: Column(children: [
@@ -113,7 +115,8 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                         budget = await _budgetHelper.getBudget(widget.budgetID);
                         budgetName = budget.budgetName;
                         loadBudget();
-                        setState(() {});
+                        setState(() {
+                        });
                       });
                     },
                   ),

@@ -96,7 +96,6 @@ class _EditBudgetState extends State<EditBudget> {
       pastimeBudget = widget.budget.pastimeBudget;
       otherExpensesBudget = widget.budget.otherExpensesBudget;
       selectedCurrency = widget.budget.selectedCurrency;
-
       previousBudgetAmount = widget.budget.budgetAmount;
       previousTransportBudget = widget.budget.transportBudget;
       previousFoodBudget = widget.budget.foodBudget;
@@ -433,12 +432,18 @@ class _EditBudgetState extends State<EditBudget> {
                 pastimeBudget: pastimeBudget,
                 otherExpensesBudget: otherExpensesBudget,
                 selectedCurrency: selectedCurrency,
-                budgetAmountLeft: widget.budget.budgetAmountLeft + (budgetAmount-previousBudgetAmount),
-                transportBudgetLeft: widget.budget.transportBudgetLeft + (transportBudget-previousTransportBudget),
-                accomodationBudgetLeft: widget.budget.accomodationBudgetLeft + (accomodationBudget-previousAccomodationBudget),
-                foodBudgetLeft: widget.budget.foodBudgetLeft + (foodBudget-previousFoodBudget),
-                pastimeBudgetLeft: widget.budget.pastimeBudgetLeft + (pastimeBudget-previousPastimeBudget),
-                otherExpensesBudgetLeft: widget.budget.otherExpensesBudgetLeft + (otherExpensesBudget-previousOtherExpensesBudget),
+                budgetAmountLeft: widget.budget.budgetAmountLeft +
+                    (budgetAmount - previousBudgetAmount),
+                transportBudgetLeft: widget.budget.transportBudgetLeft +
+                    (transportBudget - previousTransportBudget),
+                accomodationBudgetLeft: widget.budget.accomodationBudgetLeft +
+                    (accomodationBudget - previousAccomodationBudget),
+                foodBudgetLeft: widget.budget.foodBudgetLeft +
+                    (foodBudget - previousFoodBudget),
+                pastimeBudgetLeft: widget.budget.pastimeBudgetLeft +
+                    (pastimeBudget - previousPastimeBudget),
+                otherExpensesBudgetLeft: widget.budget.otherExpensesBudgetLeft +
+                    (otherExpensesBudget - previousOtherExpensesBudget),
               );
               // _budgetHelper.insertBudget(budgetInfo);
               if (moneyLeft < 0 || moneyLeft > 0) {

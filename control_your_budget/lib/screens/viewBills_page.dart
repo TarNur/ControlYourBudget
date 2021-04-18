@@ -1,8 +1,9 @@
-import 'package:control_your_budget/screens/start_page.dart';
+import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bills_list.dart';
 import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/screens/viewBudget_page.dart';
 
 class ViewBills extends StatefulWidget {
   final int budgetID;
@@ -15,20 +16,43 @@ class ViewBills extends StatefulWidget {
 
 class _ViewBillsState extends State<ViewBills> {
   BudgetHelper _budgetHelper = BudgetHelper();
+  BudgetInfo _budget;
   var budgetsMade = 0;
 
   @override
   void initState() {
     _budgetHelper.initializeDatabase().then((value) {
+      loadBudget();
       print('-----------database initialized');
     });
     super.initState();
+  }
+
+  void loadBudget() async {
+    _budget = await _budgetHelper.getBudget(widget.budgetID);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            iconSize: 25.0,
+            color: Colors.cyan,
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => ViewBudgets(
+                    budgetName: _budget.budgetName,
+                    budgetAmount: _budget.budgetAmount,
+                    budgetAmountLeft: _budget.budgetAmountLeft,
+                    budgetID: _budget.id,
+                    selectedCurrency: _budget.selectedCurrency,
+                  ),
+                ),
+              );
+            }),
         title: Text('CONTROL YOUR BUDGET'),
       ),
       body: Column(

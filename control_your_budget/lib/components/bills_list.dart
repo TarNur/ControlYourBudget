@@ -1,5 +1,6 @@
 import 'package:control_your_budget/models/budget.dart';
 import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/screens/editBill_page.dart';
 import 'package:flutter/material.dart';
 
 class BillsList extends StatefulWidget {
@@ -46,18 +47,24 @@ class _BillsListState extends State<BillsList> {
           if (snapshot.hasData) {
             return ListView.builder(
               itemBuilder: (context, index) {
-                String reimb = snapshot.data[index].reimbursable == 0 ? 'No' : 'Yes';
-                return ListTile( 
+                String reimb =
+                    snapshot.data[index].reimbursable == 0 ? 'No' : 'Yes';
+                return ListTile(
                   title: GestureDetector(
                     child: Text(
-                      'Bill: ${snapshot.data[index].billName}', 
+                      'Bill: ${snapshot.data[index].billName}',
                       style: TextStyle(
                         color: Colors.cyan,
                         fontSize: 20.0,
                       ),
                     ),
                     onTap: () {
-                      print('pressed view budget');
+                      print('pressed view bill');
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => EditBill(bill: snapshot.data[index]),
+                        ),
+                      );
                     },
                   ),
                   subtitle: Text(

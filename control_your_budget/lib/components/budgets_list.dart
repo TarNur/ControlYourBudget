@@ -1,6 +1,5 @@
 import 'package:control_your_budget/models/budget.dart';
 import 'package:control_your_budget/budget_helper.dart';
-import 'package:control_your_budget/screens/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/screens/viewBudget_page.dart';
 
