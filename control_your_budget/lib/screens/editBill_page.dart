@@ -120,7 +120,7 @@ class _EditBillState extends State<EditBill> {
     String correctFormatSubcategory;
     if (subCategory == 'Transport') {
       correctFormatSubcategory = 'transportBudget';
-    } else if (subCategory == 'Accommodation') {
+    } else if (subCategory == 'Accom.') {
       correctFormatSubcategory = 'accomodationBudget';
     } else if (subCategory == 'Food') {
       correctFormatSubcategory = 'foodBudget';

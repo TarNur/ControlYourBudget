@@ -188,7 +188,7 @@ class BudgetHelper {
       await db.rawUpdate(
           'UPDATE $tableName SET $transportBudgetLeft = ? WHERE id = ?',
           [subcategoryLeftCurrent - billAmount, id]);
-    } else if (subCategory == 'Accommodation') {
+    } else if (subCategory == 'Accom.') {
       subcategoryLeftCurrent = budget.accomodationBudgetLeft;
       await db.rawUpdate(
           'UPDATE $tableName SET $accomodationBudgetLeft = ? WHERE id = ?',

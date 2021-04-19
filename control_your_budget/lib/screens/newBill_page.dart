@@ -31,7 +31,6 @@ class _NewBillState extends State<NewBill> {
   DateTime selectedDate = DateTime.now();
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
-
   Future getImagefromcamera() async {
     final pickedImage = await picker.getImage(source: ImageSource.camera);
     setState(() {
@@ -154,7 +153,7 @@ class _NewBillState extends State<NewBill> {
     String correctFormatSubcategory;
     if (subCategory == 'Transport') {
       correctFormatSubcategory = 'transportBudget';
-    } else if (subCategory == 'Accommodation') {
+    } else if (subCategory == 'Accom.') {
       correctFormatSubcategory = 'accomodationBudget';
     } else if (subCategory == 'Food') {
       correctFormatSubcategory = 'foodBudget';
@@ -290,27 +289,47 @@ class _NewBillState extends State<NewBill> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    'Bill type: ',
-                    style: kLabelTextStyle,
-                  ),
-                  Container(
-                    height: 40.0,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    color: Colors.white,
-                    child: Platform.isIOS ? iOSPicker() : androidDropdown(),
-                  ),
-                  Text(
-                    'Payment Type: ',
-                    style: kLabelTextStyle,
-                  ),
-                  Container(
-                    height: 40.0,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 0),
-                    color: Colors.white,
-                    child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            'Bill type: ',
+                            style: kLabelTextStyle,
+                          ),
+                          Container(
+                            height: 40.0,
+                            width: 150.0,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            color: Colors.white,
+                            child: Platform.isIOS
+                                ? iOSPicker()
+                                : androidDropdown(),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            'Payment Type: ',
+                            style: kLabelTextStyle,
+                          ),
+                          Container(
+                            height: 40.0,
+                            width: 150.0,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.symmetric(horizontal: 0),
+                            color: Colors.white,
+                            child: Platform.isIOS
+                                ? iOSPicker2()
+                                : androidDropdown2(),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -334,7 +353,7 @@ class _NewBillState extends State<NewBill> {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
-                          return Colors.cyan; 
+                          return Colors.cyan;
                         },
                       ),
                     ),

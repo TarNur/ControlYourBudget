@@ -47,15 +47,15 @@ const List<String> currenciesList = [
 ];
 
 const List<String> paymentTypes = [
-  'Credit Card',
-  'Debit Card',
+  'Credit',
+  'Debit',
   'Cash',
 ];
 
 const List<String> subCategories = [
   'Transport',
-  'Accommodation',
+  'Accom.',
   'Food',
   'Pastime',
-  'Other Expenses',
+  'Other',
 ];
