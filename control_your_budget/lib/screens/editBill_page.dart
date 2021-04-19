@@ -294,81 +294,97 @@ class _EditBillState extends State<EditBill> {
                     color: Colors.white,
                     child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Column(
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'Reimbursable?',
+                            style: kLabelTextStyle,
+                          ),
+                          Checkbox(
+                              value: reimbursable,
+                              activeColor: Colors.cyan,
+                              onChanged: (value) {
+                                setState(() {
+                                  reimbursable = !reimbursable;
+                                });
+                              })
+                        ],
+                      ),
                       Text(
-                        'Reimbursable?',
+                        "Selected Date: ${dateFormat.format(selectedDate)}",
                         style: kLabelTextStyle,
                       ),
-                      Checkbox(
-                          value: reimbursable,
-                          activeColor: Colors.cyan,
-                          onChanged: (value) {
-                            setState(() {
-                              reimbursable = !reimbursable;
-                            });
-                          })
                     ],
                   ),
-                  Text("${selectedDate.toLocal()}".split(' ')[0]),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          return Colors.cyan; // Use the component's default.
-                        },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                return Colors
+                                    .cyan; // Use the component's default.
+                              },
+                            ),
+                          ),
+                          child: Text('View Image'),
+                          onPressed: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: double.infinity,
+                                  color: kActiveCardColour,
+                                  child: _bytesImage == null
+                                      ? Text(
+                                          'No Image Selected',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              height: 20.0,
+                                              color: kLightGreyColour),
+                                        )
+                                      : Image.memory(
+                                          _bytesImage,
+                                          fit: BoxFit.contain,
+                                        ),
+                                );
+                              },
+                            );
+                          }),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              return Colors.cyan;
+                            },
+                          ),
+                        ),
+                        onPressed: () => _selectDate(context),
+                        child: Text('Select date'),
                       ),
-                    ),
-                    onPressed: () => _selectDate(context),
-                    child: Text('Select date'),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       IconButton(
+                          iconSize: 40.0,
                           icon: Icon(Icons.camera_alt),
                           onPressed: getImagefromcamera,
                           color: Colors.cyan),
                       IconButton(
+                          iconSize: 40.0,
                           icon: Icon(Icons.folder),
                           onPressed: getImagefromGallery,
                           color: Colors.cyan),
                     ],
                   ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            return Colors.cyan;
-                          },
-                        ),
-                      ),
-                      child: Text('View Image'),
-                      onPressed: () {
-                        showModalBottomSheet<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(
-                              height: double.infinity,
-                              color: kActiveCardColour,
-                              child: _bytesImage == null
-                                  ? Text(
-                                      'No Image Selected',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          height: 20.0,
-                                          color: kLightGreyColour),
-                                    )
-                                  : Image.memory(
-                                      _bytesImage,
-                                      fit: BoxFit.contain,
-                                    ),
-                            );
-                          },
-                        );
-                      }),
                 ],
               ),
             ),

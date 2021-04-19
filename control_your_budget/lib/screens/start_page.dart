@@ -54,14 +54,13 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 Text(
-                  'Your Budgets:', 
+                  'Your Budgets:',
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,
                   ),
                 ),
                 SizedBox(height: 10.0),
-                
               ],
             ),
           ),
@@ -90,10 +89,8 @@ class _StartPageState extends State<StartPage> {
             ),
           )
               .then((value) {
-                change++;
-                setState(() {
-
-                });
+            change++;
+            setState(() {});
           });
         },
         child: Icon(Icons.add),
