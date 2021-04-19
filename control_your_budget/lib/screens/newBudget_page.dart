@@ -413,7 +413,9 @@ class _NewBudgetState extends State<NewBudget> {
               // _budgetHelper.insertBudget(budgetInfo);
               if (moneyLeft < 0 || moneyLeft > 0) {
                 showAlertDialogMoney(context);
-              } else if (ifBudgetNameChanged == false || budgetName == null) {
+              } else if (ifBudgetNameChanged == false ||
+                  budgetName == null ||
+                  budgetName == '') {
                 showAlertDialogBudgetName(context);
               } else if (budgetAmount == 0) {
                 showAlertDialogBudgetAmount0(context);

@@ -8,6 +8,7 @@ import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
 import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:control_your_budget/screens/edit_text_value_screen.dart';
+import 'package:control_your_budget/components/alert_box.dart';
 import 'package:control_your_budget/screens/viewBills_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
@@ -39,6 +40,7 @@ class _EditBillState extends State<EditBill> {
         List<int> imageBytes = _image.readAsBytesSync();
         base64Image = base64Encode(imageBytes);
         _bytesImage = Base64Decoder().convert(base64Image);
+        showAlertDialogImageUploaded(context);
       } else {
         print('didnt select an image');
       }
@@ -53,6 +55,7 @@ class _EditBillState extends State<EditBill> {
         List<int> imageBytes = _image.readAsBytesSync();
         base64Image = base64Encode(imageBytes);
         _bytesImage = Base64Decoder().convert(base64Image);
+        showAlertDialogImageUploaded(context);
       } else {
         print('didnt select an image');
       }
@@ -346,18 +349,24 @@ class _EditBillState extends State<EditBill> {
                 reimbursable: ifReimbursable,
                 image: base64Image,
               );
-              BudgetInfo currentBudget =
-                  await _budgetHelper.getBudget(widget.bill.id);
-              _budgetHelper.updateBudgetAmountsLeft(widget.bill.id, subCategory,
-                  currentBudget, billAmount - prevBillAmount);
-              _budgetHelper.updateBill(updatedBill);
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => ViewBills(
-                      budgetID: widget.bill.id,
-                      budgetSubcategory: correctSubcategory),
-                ),
-              );
+              if (billAmount <= 0) {
+                showAlertDialogBillAmount0(context);
+              } else if (billName == null || billName == '') {
+                showAlertDialogBillNameNullAfterEdit(context);
+              } else {
+                BudgetInfo currentBudget =
+                    await _budgetHelper.getBudget(widget.bill.id);
+                _budgetHelper.updateBudgetAmountsLeft(widget.bill.id,
+                    subCategory, currentBudget, billAmount - prevBillAmount);
+                _budgetHelper.updateBill(updatedBill);
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => ViewBills(
+                        budgetID: widget.bill.id,
+                        budgetSubcategory: correctSubcategory),
+                  ),
+                );
+              }
             },
             buttonTitle: 'EDIT BILL',
           )

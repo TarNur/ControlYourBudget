@@ -7,6 +7,7 @@ import 'package:control_your_budget/components/bottom_create_button.dart';
 import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:control_your_budget/screens/edit_text_value_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:control_your_budget/components/alert_box.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:io' show Platform;
@@ -34,6 +35,7 @@ class _NewBillState extends State<NewBill> {
         _image = File(pickedImage.path);
         List<int> imageBytes = _image.readAsBytesSync();
         base64Image = base64Encode(imageBytes);
+        showAlertDialogImageUploaded(context);
       } else {
         print('didnt select an image');
       }
@@ -47,6 +49,7 @@ class _NewBillState extends State<NewBill> {
         _image = File(pickedImage.path);
         List<int> imageBytes = _image.readAsBytesSync();
         base64Image = base64Encode(imageBytes);
+        showAlertDialogImageUploaded(context);
       } else {
         print('didnt select an image');
       }
@@ -368,13 +371,21 @@ class _NewBillState extends State<NewBill> {
                 reimbursable: ifReimbursable,
                 image: base64Image,
               );
-              BudgetInfo currentBudget =
-                  await _budgetHelper.getBudget(budgetID);
-              _budgetHelper.updateBudgetAmountsLeft(
-                  budgetID, subCategory, currentBudget, billAmount);
-              currentBudget = await _budgetHelper.getBudget(budgetID);
-              _budgetHelper.insertBill(billInfo);
-              Navigator.pop(context);
+              if (billAmount <= 0) {
+                showAlertDialogBillAmount0(context);
+              } else if (ifBudgetNameChanged == false ||
+                  billName == null ||
+                  billName == '') {
+                showAlertDialogBillName(context);
+              } else {
+                BudgetInfo currentBudget =
+                    await _budgetHelper.getBudget(budgetID);
+                _budgetHelper.updateBudgetAmountsLeft(
+                    budgetID, subCategory, currentBudget, billAmount);
+                currentBudget = await _budgetHelper.getBudget(budgetID);
+                _budgetHelper.insertBill(billInfo);
+                Navigator.pop(context);
+              }
             },
             buttonTitle: 'CREATE BILL',
           )
