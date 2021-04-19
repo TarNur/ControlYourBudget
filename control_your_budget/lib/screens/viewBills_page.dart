@@ -86,8 +86,10 @@ class _ViewBillsState extends State<ViewBills> {
                 ),
               ),
               child: BillsList(
-                  budgetID: widget.budgetID,
-                  subCategory: widget.budgetSubcategory),
+                budgetID: widget.budgetID,
+                subCategory: widget.budgetSubcategory,
+                selectedCurrency: _budget.selectedCurrency,
+              ),
             ),
           ),
         ],

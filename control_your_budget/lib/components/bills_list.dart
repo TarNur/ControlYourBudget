@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class BillsList extends StatefulWidget {
   final int budgetID;
   final String subCategory;
+  final String selectedCurrency;
 
-  BillsList({this.budgetID, this.subCategory});
+  BillsList({this.budgetID, this.subCategory, this.selectedCurrency});
 
   @override
   _BillsListState createState() => _BillsListState();
@@ -69,7 +70,7 @@ class _BillsListState extends State<BillsList> {
                     },
                   ),
                   subtitle: Text(
-                    ' Amount: ${snapshot.data[index].billAmount}\n Reimbursable: $reimb\n Payed with ${snapshot.data[index].paymentType}\n Date: ${snapshot.data[index].date}',
+                    ' Amount: ${snapshot.data[index].billAmount}$selectedCurrency\n Reimbursable: $reimb\n Payed with ${snapshot.data[index].paymentType}\n Date: ${snapshot.data[index].date}',
                   ),
                   trailing: Material(
                     color: Colors.white,
