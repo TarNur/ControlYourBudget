@@ -32,7 +32,11 @@ class _NewBillState extends State<NewBill> {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
   Future getImagefromcamera() async {
-    final pickedImage = await picker.getImage(source: ImageSource.camera, imageQuality: 1);
+    final pickedImage = await picker.getImage(
+      source: ImageSource.camera,
+      maxHeight: 400.0,
+      maxWidth: 200.0,
+    );
     setState(() {
       if (pickedImage != null) {
         _image = File(pickedImage.path);
@@ -46,7 +50,11 @@ class _NewBillState extends State<NewBill> {
   }
 
   Future getImagefromGallery() async {
-    final pickedImage = await picker.getImage(source: ImageSource.gallery, imageQuality: 1);
+    final pickedImage = await picker.getImage(
+      source: ImageSource.gallery,
+      maxHeight: 400.0,
+      maxWidth: 200.0,
+    );
     setState(() {
       if (pickedImage != null) {
         _image = File(pickedImage.path);

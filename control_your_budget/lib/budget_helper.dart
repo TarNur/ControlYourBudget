@@ -166,7 +166,6 @@ class BudgetHelper {
         'SELECT billID,billName,billAmount,paymentType,reimbursable,date FROM $tableName2 WHERE id=? AND billSubcategory=?',
         [id, subCategory]);
     result.forEach((element) {
-      print(element);
       var billInfo = BillInfo.fromMapWithoutImage(element);
       _bills.add(billInfo);
     });
