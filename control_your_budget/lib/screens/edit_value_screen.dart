@@ -34,7 +34,7 @@ class EditValueScreen extends StatelessWidget {
               keyboardType: TextInputType.numberWithOptions(signed: true),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
-                  RegExp(r'^\d*[.]?\d?\d?'),
+                  RegExp(r'^\d{0,6}[.]?\d?\d?'),
                 ),
               ],
               textAlign: TextAlign.center,
