@@ -35,7 +35,7 @@ class _BillsListState extends State<BillsList> {
   }
 
   void loadBills() {
-    _bills = _budgetHelper.getSingleSubCategoryBills(
+    _bills = _budgetHelper.getSingleSubCategoryBillsWithoutImage(
         widget.budgetID, widget.subCategory);
     if (mounted) setState(() {});
   }
@@ -58,11 +58,12 @@ class _BillsListState extends State<BillsList> {
                         fontSize: 20.0,
                       ),
                     ),
-                    onTap: () {
+                    onTap: () async{
+                      BillInfo selectedBill = await _budgetHelper.getBill(snapshot.data[index].billID);
                       print('pressed view bill');
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => EditBill(bill: snapshot.data[index]),
+                          builder: (context) => EditBill(bill: selectedBill),
                         ),
                       );
                     },

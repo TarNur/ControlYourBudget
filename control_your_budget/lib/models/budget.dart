@@ -114,6 +114,15 @@ class BillInfo {
         date: json["date"],
       );
 
+  factory BillInfo.fromMapWithoutImage(Map<String, dynamic> json) => BillInfo(
+        billID: json["billID"],
+        billName: json["billName"],
+        billAmount: json["billAmount"].toDouble(),
+        paymentType: json["paymentType"],
+        reimbursable: json["reimbursable"],
+        date: json["date"],
+      );
+
   Map<String, dynamic> toMap() {
     return {
       'billID': billID,

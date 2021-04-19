@@ -157,6 +157,23 @@ class BudgetHelper {
     return _bills;
   }
 
+  Future<List<BillInfo>> getSingleSubCategoryBillsWithoutImage(
+      int id, String subCategory) async {
+    List<BillInfo> _bills = [];
+
+    var db = await this.database;
+    var result = await db.rawQuery(
+        'SELECT billID,billName,billAmount,paymentType,reimbursable,date FROM $tableName2 WHERE id=? AND billSubcategory=?',
+        [id, subCategory]);
+    result.forEach((element) {
+      print(element);
+      var billInfo = BillInfo.fromMapWithoutImage(element);
+      _bills.add(billInfo);
+    });
+
+    return _bills;
+  }
+
   Future<BudgetInfo> getBudget(int id) async {
     // muuta
     final db = await this.database;
