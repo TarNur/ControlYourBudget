@@ -303,24 +303,42 @@ class _EditBillState extends State<EditBill> {
                           icon: Icon(Icons.folder),
                           onPressed: getImagefromGallery,
                           color: Colors.cyan),
-                      Container(
-                        width: 100.0,
-                        height: 100.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0),
-                          ),
-                        ),
-                        child: Center(
-                          child: _bytesImage == null
-                              ? Text('No Image Selected')
-                              : Image.memory(_bytesImage),
-                        ),
-                      ),
                     ],
                   ),
+                  ElevatedButton(
+                      child: Text('View Image'),
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              color: kActiveCardColour,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Container(
+                                      width: 320,
+                                      height: 320,
+                                      child: Center(
+                                        child: _bytesImage == null
+                                            ? Text(
+                                                'No Image Selected',
+                                                style: TextStyle(
+                                                    color: kLightGreyColour),
+                                              )
+                                            : Image.memory(_bytesImage),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }),
                 ],
               ),
             ),
