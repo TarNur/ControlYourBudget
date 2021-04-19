@@ -313,28 +313,16 @@ class _EditBillState extends State<EditBill> {
                           builder: (BuildContext context) {
                             return Container(
                               color: kActiveCardColour,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Container(
-                                      width: 320,
-                                      height: 320,
-                                      child: Center(
-                                        child: _bytesImage == null
-                                            ? Text(
-                                                'No Image Selected',
-                                                style: TextStyle(
-                                                    color: kLightGreyColour),
-                                              )
-                                            : Image.memory(_bytesImage),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              child: _bytesImage == null
+                                  ? Text(
+                                      'No Image Selected',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          height: 20.0,
+                                          color: kLightGreyColour),
+                                    )
+                                  : Image.memory(_bytesImage,
+                                      fit: BoxFit.contain),
                             );
                           },
                         );

@@ -331,27 +331,15 @@ class _NewBillState extends State<NewBill> {
                           builder: (BuildContext context) {
                             return Container(
                               color: kActiveCardColour,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Container(
-                                      width: 320,
-                                      height: 320,
-                                      child: Center(
-                                        child: _image == null
-                                            ? Text(
-                                                'No Image Selected',
-                                                style: TextStyle(
-                                                    color: kLightGreyColour),
-                                              )
-                                            : Image.file(_image),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              child: _image == null
+                                  ? Text(
+                                      'No Image Selected',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          height: 20.0,
+                                          color: kLightGreyColour),
+                                    )
+                                  : Image.file(_image, fit: BoxFit.contain),
                             );
                           },
                         );
