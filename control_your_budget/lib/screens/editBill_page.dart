@@ -36,7 +36,7 @@ class _EditBillState extends State<EditBill> {
   final picker = ImagePicker();
 
   Future getImagefromcamera() async {
-    final pickedImage = await picker.getImage(source: ImageSource.camera);
+    final pickedImage = await picker.getImage(source: ImageSource.camera, imageQuality: 1);
     setState(() {
       if (pickedImage != null) {
         _image = File(pickedImage.path);
@@ -51,7 +51,7 @@ class _EditBillState extends State<EditBill> {
   }
 
   Future getImagefromGallery() async {
-    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    final pickedImage = await picker.getImage(source: ImageSource.gallery, imageQuality: 1);
     setState(() {
       if (pickedImage != null) {
         _image = File(pickedImage.path);
