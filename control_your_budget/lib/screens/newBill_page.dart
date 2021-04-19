@@ -168,7 +168,7 @@ class _NewBillState extends State<NewBill> {
   String billName = 'Enter Bill Name';
   int budgetID;
   double billAmount = 0;
-  String paymentType = 'Credit Card';
+  String paymentType = 'Credit';
   String subCategory = 'Transport';
   String selectedCurrency;
   bool ifBudgetNameChanged = false;

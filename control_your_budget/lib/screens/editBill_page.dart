@@ -136,13 +136,13 @@ class _EditBillState extends State<EditBill> {
     if (subCategory == 'transportBudget') {
       return 'Transport';
     } else if (subCategory == 'accomodationBudget') {
-      return 'Accommodation';
+      return 'Accom.';
     } else if (subCategory == 'foodBudget') {
       return 'Food';
     } else if (subCategory == 'pastimeBudget') {
       return 'Pastime';
     } else {
-      return 'otherExpensesBudget';
+      return 'Other';
     }
   }
 
