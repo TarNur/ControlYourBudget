@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:control_your_budget/models/budget.dart';
@@ -6,6 +8,8 @@ import 'package:control_your_budget/components/bottom_create_button.dart';
 import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:control_your_budget/screens/edit_text_value_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'dart:io' show Platform;
 
 class NewBill extends StatefulWidget {
@@ -20,6 +24,46 @@ class NewBill extends StatefulWidget {
 
 class _NewBillState extends State<NewBill> {
   BudgetHelper _budgetHelper = BudgetHelper();
+  File _image;
+  Uint8List _bytesImage;
+  String base64Image;
+  final picker = ImagePicker();
+
+  Future getImagefromcamera() async {
+    final pickedImage = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedImage != null) {
+        _image = File(pickedImage.path);
+        List<int> imageBytes = _image.readAsBytesSync();
+        print(imageBytes);
+        base64Image = base64Encode(imageBytes);
+        print('string is');
+        print(base64Image);
+        print("You selected gallery image : " + _image.path);
+        _bytesImage = Base64Decoder().convert(base64Image);
+      } else {
+        print('didnt select an image');
+      }
+    });
+  }
+
+  Future getImagefromGallery() async {
+    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedImage != null) {
+        _image = File(pickedImage.path);
+        List<int> imageBytes = _image.readAsBytesSync();
+        print(imageBytes);
+        base64Image = base64Encode(imageBytes);
+        print('string is');
+        print(base64Image);
+        print("You selected gallery image : " + _image.path);
+        _bytesImage = Base64Decoder().convert(base64Image);
+      } else {
+        print('didnt select an image');
+      }
+    });
+  }
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -99,15 +143,15 @@ class _NewBillState extends State<NewBill> {
     );
   }
 
-  String getSubcategoryFormat(String subCategory){
+  String getSubcategoryFormat(String subCategory) {
     String correctFormatSubcategory;
-    if (subCategory == 'Transport'){
+    if (subCategory == 'Transport') {
       correctFormatSubcategory = 'transportBudget';
-    } else if (subCategory == 'Accommodation'){
+    } else if (subCategory == 'Accommodation') {
       correctFormatSubcategory = 'accomodationBudget';
-    } else if (subCategory == 'Food'){
+    } else if (subCategory == 'Food') {
       correctFormatSubcategory = 'foodBudget';
-    } else if (subCategory == 'Pastime'){
+    } else if (subCategory == 'Pastime') {
       correctFormatSubcategory = 'pastimeBudget';
     } else {
       correctFormatSubcategory = 'otherExpensesBudget';
@@ -237,7 +281,7 @@ class _NewBillState extends State<NewBill> {
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     'Bill type: ',
@@ -278,15 +322,44 @@ class _NewBillState extends State<NewBill> {
                           })
                     ],
                   ),
-                  Text('Date ja pildi lisamine...')
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.camera),
+                          onPressed: getImagefromcamera,
+                          color: Colors.cyan),
+                      IconButton(
+                          icon: Icon(Icons.folder),
+                          onPressed: getImagefromGallery,
+                          color: Colors.cyan),
+                      Container(
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: _image == null
+                              ? Text('No Image Selected')
+                              : Image.file(_image),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
           ),
+
           BottomButton(
             // CREATE BUDGET NUPP
             onTap: () async {
-              int ifReimbursable = reimbursable ? 1 :0;
+              int ifReimbursable = reimbursable ? 1 : 0;
               String correctSubcategory = getSubcategoryFormat(subCategory);
               var billInfo = BillInfo(
                 billName: billName,

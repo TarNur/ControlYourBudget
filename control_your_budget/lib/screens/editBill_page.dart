@@ -261,7 +261,7 @@ class _EditBillState extends State<EditBill> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Payment Type: $paymentType',
+                    'Your Payment Type: $paymentType',
                     style: kLabelTextStyle,
                   ),
                   Container(
