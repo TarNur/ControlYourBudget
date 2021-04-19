@@ -84,7 +84,8 @@ class BillInfo {
       this.billAmount,
       this.billSubcategory,
       this.paymentType,
-      this.reimbursable});
+      this.reimbursable,
+      this.image});
 
   final int billID;
   final int id;
@@ -93,6 +94,7 @@ class BillInfo {
   final String billSubcategory;
   final String paymentType;
   final int reimbursable;
+  final String image;
 
   void changeBudgetAmount() {}
 
@@ -106,6 +108,7 @@ class BillInfo {
         billSubcategory: json["billSubcategory"],
         paymentType: json["paymentType"],
         reimbursable: json["reimbursable"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toMap() {
@@ -117,6 +120,7 @@ class BillInfo {
       'billSubcategory': billSubcategory,
       'paymentType': paymentType,
       'reimbursable': reimbursable,
+      'image': image,
     };
   }
 }

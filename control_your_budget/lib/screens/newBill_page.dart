@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:control_your_budget/models/budget.dart';
@@ -25,7 +24,6 @@ class NewBill extends StatefulWidget {
 class _NewBillState extends State<NewBill> {
   BudgetHelper _budgetHelper = BudgetHelper();
   File _image;
-  Uint8List _bytesImage;
   String base64Image;
   final picker = ImagePicker();
 
@@ -35,12 +33,7 @@ class _NewBillState extends State<NewBill> {
       if (pickedImage != null) {
         _image = File(pickedImage.path);
         List<int> imageBytes = _image.readAsBytesSync();
-        print(imageBytes);
         base64Image = base64Encode(imageBytes);
-        print('string is');
-        print(base64Image);
-        print("You selected gallery image : " + _image.path);
-        _bytesImage = Base64Decoder().convert(base64Image);
       } else {
         print('didnt select an image');
       }
@@ -53,12 +46,7 @@ class _NewBillState extends State<NewBill> {
       if (pickedImage != null) {
         _image = File(pickedImage.path);
         List<int> imageBytes = _image.readAsBytesSync();
-        print(imageBytes);
         base64Image = base64Encode(imageBytes);
-        print('string is');
-        print(base64Image);
-        print("You selected gallery image : " + _image.path);
-        _bytesImage = Base64Decoder().convert(base64Image);
       } else {
         print('didnt select an image');
       }
@@ -361,6 +349,11 @@ class _NewBillState extends State<NewBill> {
             onTap: () async {
               int ifReimbursable = reimbursable ? 1 : 0;
               String correctSubcategory = getSubcategoryFormat(subCategory);
+              //if (_image == null) {
+              //  ByteData bytes = await rootBundle.load('images/CYBlogo.png');
+              //  var buffer = bytes.buffer;
+              //  base64Image = base64.encode(Uint8List.view(buffer));
+              //}
               var billInfo = BillInfo(
                 billName: billName,
                 billAmount: billAmount,
@@ -368,6 +361,7 @@ class _NewBillState extends State<NewBill> {
                 billSubcategory: correctSubcategory,
                 paymentType: paymentType,
                 reimbursable: ifReimbursable,
+                image: base64Image,
               );
               BudgetInfo currentBudget =
                   await _budgetHelper.getBudget(budgetID);

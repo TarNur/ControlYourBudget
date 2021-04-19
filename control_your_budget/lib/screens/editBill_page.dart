@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+import 'package:image_picker/image_picker.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:control_your_budget/models/budget.dart';
@@ -8,6 +11,7 @@ import 'package:control_your_budget/screens/edit_text_value_screen.dart';
 import 'package:control_your_budget/screens/viewBills_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
+import 'dart:io';
 
 class EditBill extends StatefulWidget {
   final BillInfo bill;
@@ -21,44 +25,38 @@ class EditBill extends StatefulWidget {
 class _EditBillState extends State<EditBill> {
   BudgetHelper _budgetHelper = BudgetHelper();
   int once = 0;
+  File _image;
+  Uint8List _bytesImage;
+  String base64Image;
+  String newPickedImage;
+  final picker = ImagePicker();
 
-  DropdownButton<String> androidDropdown() {
-    List<DropdownMenuItem<String>> dropdownItems = [];
-    for (String subCategory in subCategories) {
-      var newItem = DropdownMenuItem(
-        child: Text(subCategory),
-        value: subCategory,
-      );
-      dropdownItems.add(newItem);
-    }
-
-    return DropdownButton<String>(
-      value: subCategory,
-      items: dropdownItems,
-      onChanged: (value) {
-        setState(() {
-          subCategory = value;
-        });
-      },
-    );
+  Future getImagefromcamera() async {
+    final pickedImage = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedImage != null) {
+        _image = File(pickedImage.path);
+        List<int> imageBytes = _image.readAsBytesSync();
+        base64Image = base64Encode(imageBytes);
+        _bytesImage = Base64Decoder().convert(base64Image);
+      } else {
+        print('didnt select an image');
+      }
+    });
   }
 
-  CupertinoPicker iOSPicker() {
-    List<Text> pickerItems = [];
-    for (String subCategory in subCategories) {
-      pickerItems.add(Text(subCategory));
-    }
-
-    return CupertinoPicker(
-      backgroundColor: Colors.white,
-      itemExtent: 32.0,
-      onSelectedItemChanged: (selectedIndex) {
-        setState(() {
-          subCategory = subCategories[selectedIndex];
-        });
-      },
-      children: pickerItems,
-    );
+  Future getImagefromGallery() async {
+    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedImage != null) {
+        _image = File(pickedImage.path);
+        List<int> imageBytes = _image.readAsBytesSync();
+        base64Image = base64Encode(imageBytes);
+        _bytesImage = Base64Decoder().convert(base64Image);
+      } else {
+        print('didnt select an image');
+      }
+    });
   }
 
   DropdownButton<String> androidDropdown2() {
@@ -116,17 +114,17 @@ class _EditBillState extends State<EditBill> {
     return correctFormatSubcategory;
   }
 
-  void fromSubcategoryFormat(String subCategory) {
+  String fromSubcategoryFormat(String subCategory) {
     if (subCategory == 'transportBudget') {
-      subCategory = 'Transport';
+      return 'Transport';
     } else if (subCategory == 'accomodationBudget') {
-      subCategory = 'Accommodation';
+      return 'Accommodation';
     } else if (subCategory == 'foodBudget') {
-      subCategory = 'Food';
+      return 'Food';
     } else if (subCategory == 'pastimeBudget') {
-      subCategory = 'Pastime';
+      return 'Pastime';
     } else {
-      subCategory = 'otherExpensesBudget';
+      return 'otherExpensesBudget';
     }
   }
 
@@ -146,8 +144,14 @@ class _EditBillState extends State<EditBill> {
       prevBillAmount = widget.bill.billAmount;
       paymentType = widget.bill.paymentType;
       subCategory = widget.bill.billSubcategory;
-      fromSubcategoryFormat(subCategory);
+      subCategory = fromSubcategoryFormat(subCategory);
       reimbursable = widget.bill.reimbursable == 0 ? false : true;
+      if (widget.bill.image != null) {
+        base64Image = widget.bill.image;
+        _bytesImage = Base64Decoder().convert(base64Image);
+      } else {
+        _bytesImage = null;
+      }
     }
     once = 1;
     return Scaffold(
@@ -288,7 +292,35 @@ class _EditBillState extends State<EditBill> {
                           })
                     ],
                   ),
-                  Text('Date ja pildi lisamine...')
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.camera),
+                          onPressed: getImagefromcamera,
+                          color: Colors.cyan),
+                      IconButton(
+                          icon: Icon(Icons.folder),
+                          onPressed: getImagefromGallery,
+                          color: Colors.cyan),
+                      Container(
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: _bytesImage == null
+                              ? Text('No Image Selected')
+                              : Image.memory(_bytesImage),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -306,6 +338,7 @@ class _EditBillState extends State<EditBill> {
                 billSubcategory: correctSubcategory,
                 paymentType: paymentType,
                 reimbursable: ifReimbursable,
+                image: base64Image,
               );
               BudgetInfo currentBudget =
                   await _budgetHelper.getBudget(widget.bill.id);
@@ -315,7 +348,8 @@ class _EditBillState extends State<EditBill> {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => ViewBills(
-                      budgetID: widget.bill.id, budgetSubcategory: subCategory),
+                      budgetID: widget.bill.id,
+                      budgetSubcategory: correctSubcategory),
                 ),
               );
             },
