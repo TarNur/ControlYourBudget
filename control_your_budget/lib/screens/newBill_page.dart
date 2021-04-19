@@ -9,6 +9,7 @@ import 'package:control_your_budget/screens/edit_text_value_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:control_your_budget/components/alert_box.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'dart:io';
 import 'dart:io' show Platform;
 
@@ -27,6 +28,9 @@ class _NewBillState extends State<NewBill> {
   File _image;
   String base64Image;
   final picker = ImagePicker();
+  DateTime selectedDate = DateTime.now();
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+
 
   Future getImagefromcamera() async {
     final pickedImage = await picker.getImage(source: ImageSource.camera);
@@ -132,6 +136,18 @@ class _NewBillState extends State<NewBill> {
       },
       children: pickerItems,
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
   }
 
   String getSubcategoryFormat(String subCategory) {
@@ -313,11 +329,23 @@ class _NewBillState extends State<NewBill> {
                           })
                     ],
                   ),
+                  Text("${selectedDate.toLocal()}".split(' ')[0]),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          return Colors.cyan; 
+                        },
+                      ),
+                    ),
+                    onPressed: () => _selectDate(context),
+                    child: Text('Select date'),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       IconButton(
-                          icon: Icon(Icons.camera),
+                          icon: Icon(Icons.camera_alt),
                           onPressed: getImagefromcamera,
                           color: Colors.cyan),
                       IconButton(
@@ -327,6 +355,14 @@ class _NewBillState extends State<NewBill> {
                     ],
                   ),
                   ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            return Colors.cyan; // Use the component's default.
+                          },
+                        ),
+                      ),
                       child: Text('View Image'),
                       onPressed: () {
                         showModalBottomSheet<void>(
@@ -361,11 +397,8 @@ class _NewBillState extends State<NewBill> {
             onTap: () async {
               int ifReimbursable = reimbursable ? 1 : 0;
               String correctSubcategory = getSubcategoryFormat(subCategory);
-              //if (_image == null) {
-              //  ByteData bytes = await rootBundle.load('images/CYBlogo.png');
-              //  var buffer = bytes.buffer;
-              //  base64Image = base64.encode(Uint8List.view(buffer));
-              //}
+              String dateForDatabase = dateFormat.format(selectedDate);
+              print(dateForDatabase);
               var billInfo = BillInfo(
                 billName: billName,
                 billAmount: billAmount,
@@ -374,6 +407,7 @@ class _NewBillState extends State<NewBill> {
                 paymentType: paymentType,
                 reimbursable: ifReimbursable,
                 image: base64Image,
+                date: dateForDatabase,
               );
               if (billAmount <= 0) {
                 showAlertDialogBillAmount0(context);

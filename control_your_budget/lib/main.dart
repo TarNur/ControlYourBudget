@@ -19,7 +19,7 @@ class ControlYourBudget extends StatelessWidget {
         // App-i main värvid(theme)
         primaryColor: Color(0xFF0A0E21),
         scaffoldBackgroundColor: Color(0xFF0A0E21),
-        accentColor: Colors.cyanAccent,
+        accentColor: Colors.cyan,
       ),
       home: StartPage(),
       routes: {

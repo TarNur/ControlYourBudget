@@ -11,6 +11,7 @@ import 'package:control_your_budget/screens/edit_text_value_screen.dart';
 import 'package:control_your_budget/components/alert_box.dart';
 import 'package:control_your_budget/screens/viewBills_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'dart:io' show Platform;
 import 'dart:io';
 
@@ -30,6 +31,8 @@ class _EditBillState extends State<EditBill> {
   Uint8List _bytesImage;
   String base64Image;
   String newPickedImage;
+  DateTime selectedDate;
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd");
   final picker = ImagePicker();
 
   Future getImagefromcamera() async {
@@ -101,6 +104,18 @@ class _EditBillState extends State<EditBill> {
     );
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
   String getSubcategoryFormat(String subCategory) {
     String correctFormatSubcategory;
     if (subCategory == 'Transport') {
@@ -149,6 +164,7 @@ class _EditBillState extends State<EditBill> {
       subCategory = widget.bill.billSubcategory;
       subCategory = fromSubcategoryFormat(subCategory);
       reimbursable = widget.bill.reimbursable == 0 ? false : true;
+      selectedDate = dateFormat.parse(widget.bill.date);
       if (widget.bill.image != null) {
         base64Image = widget.bill.image;
         _bytesImage = Base64Decoder().convert(base64Image);
@@ -295,11 +311,23 @@ class _EditBillState extends State<EditBill> {
                           })
                     ],
                   ),
+                  Text("${selectedDate.toLocal()}".split(' ')[0]),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          return Colors.cyan; // Use the component's default.
+                        },
+                      ),
+                    ),
+                    onPressed: () => _selectDate(context),
+                    child: Text('Select date'),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       IconButton(
-                          icon: Icon(Icons.camera),
+                          icon: Icon(Icons.camera_alt),
                           onPressed: getImagefromcamera,
                           color: Colors.cyan),
                       IconButton(
@@ -309,6 +337,14 @@ class _EditBillState extends State<EditBill> {
                     ],
                   ),
                   ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            return Colors.cyan;
+                          },
+                        ),
+                      ),
                       child: Text('View Image'),
                       onPressed: () {
                         showModalBottomSheet<void>(
@@ -342,6 +378,7 @@ class _EditBillState extends State<EditBill> {
             onTap: () async {
               int ifReimbursable = reimbursable ? 1 : 0;
               String correctSubcategory = getSubcategoryFormat(subCategory);
+              String dateForDatabase = dateFormat.format(selectedDate);
               var updatedBill = BillInfo(
                 billID: widget.bill.billID,
                 billName: billName,
@@ -351,6 +388,7 @@ class _EditBillState extends State<EditBill> {
                 paymentType: paymentType,
                 reimbursable: ifReimbursable,
                 image: base64Image,
+                date: dateForDatabase,
               );
               if (billAmount <= 0) {
                 showAlertDialogBillAmount0(context);
