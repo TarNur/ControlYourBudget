@@ -315,6 +315,7 @@ class _EditBillState extends State<EditBill> {
                           context: context,
                           builder: (BuildContext context) {
                             return Container(
+                              height: double.infinity,
                               color: kActiveCardColour,
                               child: _bytesImage == null
                                   ? Text(
@@ -324,8 +325,10 @@ class _EditBillState extends State<EditBill> {
                                           height: 20.0,
                                           color: kLightGreyColour),
                                     )
-                                  : Image.memory(_bytesImage,
-                                      fit: BoxFit.contain),
+                                  : Image.memory(
+                                      _bytesImage,
+                                      fit: BoxFit.contain,
+                                    ),
                             );
                           },
                         );

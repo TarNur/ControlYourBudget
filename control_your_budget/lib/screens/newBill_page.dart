@@ -333,6 +333,7 @@ class _NewBillState extends State<NewBill> {
                           context: context,
                           builder: (BuildContext context) {
                             return Container(
+                              height: double.infinity,
                               color: kActiveCardColour,
                               child: _image == null
                                   ? Text(
@@ -342,7 +343,10 @@ class _NewBillState extends State<NewBill> {
                                           height: 20.0,
                                           color: kLightGreyColour),
                                     )
-                                  : Image.file(_image, fit: BoxFit.contain),
+                                  : Image.file(
+                                      _image,
+                                      fit: BoxFit.contain,
+                                    ),
                             );
                           },
                         );
