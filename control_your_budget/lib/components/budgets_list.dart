@@ -62,7 +62,7 @@ class _BudgetsListState extends State<BudgetsList> {
                     },
                   ),
                   subtitle: Text(
-                    'Money left: ${snapshot.data[index].budgetAmountLeft} of ${snapshot.data[index].budgetAmount}${snapshot.data[index].selectedCurrency}',
+                    'Money spent: ${snapshot.data[index].budgetAmount - snapshot.data[index].budgetAmountLeft} of ${snapshot.data[index].budgetAmount}${snapshot.data[index].selectedCurrency}',
                   ),
                   trailing: Material(
                     color: Colors.white,

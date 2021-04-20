@@ -63,7 +63,7 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            '  Money left: ${widget.budgets.budgetAmountLeft} of ${widget.budgets.budgetAmount}${widget.budgets.selectedCurrency}',
+            '  Money spent: ${widget.budgets.budgetAmount - widget.budgets.budgetAmountLeft} of ${widget.budgets.budgetAmount}${widget.budgets.selectedCurrency}',
             style: getColor(
                 widget.budgets.budgetAmountLeft, widget.budgets.budgetAmount),
           ),
@@ -100,7 +100,7 @@ class _BudgetsListState extends State<BudgetsList> {
                 }),
           ),
           subtitle: Text(
-            '  Money left: ${widget.budgets.transportBudgetLeft} of ${widget.budgets.transportBudget}${widget.budgets.selectedCurrency}',
+            '  Money spent: ${widget.budgets.transportBudget - widget.budgets.transportBudgetLeft} of ${widget.budgets.transportBudget}${widget.budgets.selectedCurrency}',
             style: getColor(widget.budgets.transportBudgetLeft,
                 widget.budgets.transportBudget),
           ),
@@ -117,7 +117,7 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            '  Money left: ${widget.budgets.accomodationBudgetLeft} of ${widget.budgets.accomodationBudget}${widget.budgets.selectedCurrency}',
+            '  Money spent: ${widget.budgets.accomodationBudget - widget.budgets.accomodationBudgetLeft} of ${widget.budgets.accomodationBudget}${widget.budgets.selectedCurrency}',
             style: getColor(widget.budgets.accomodationBudgetLeft,
                 widget.budgets.accomodationBudget),
           ),
@@ -157,7 +157,7 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            '  Money left: ${widget.budgets.foodBudgetLeft} of ${widget.budgets.foodBudget}${widget.budgets.selectedCurrency}',
+            '  Money spent: ${widget.budgets.foodBudget - widget.budgets.foodBudgetLeft} of ${widget.budgets.foodBudget}${widget.budgets.selectedCurrency}',
             style: getColor(
                 widget.budgets.foodBudgetLeft, widget.budgets.foodBudget),
           ),
@@ -197,7 +197,7 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            '  Money left: ${widget.budgets.pastimeBudgetLeft} of ${widget.budgets.pastimeBudget}${widget.budgets.selectedCurrency}',
+            '  Money spent: ${widget.budgets.pastimeBudget - widget.budgets.pastimeBudgetLeft} of ${widget.budgets.pastimeBudget}${widget.budgets.selectedCurrency}',
             style: getColor(
                 widget.budgets.pastimeBudgetLeft, widget.budgets.pastimeBudget),
           ),
@@ -237,7 +237,7 @@ class _BudgetsListState extends State<BudgetsList> {
             ),
           ),
           subtitle: Text(
-            '  Money left: ${widget.budgets.otherExpensesBudgetLeft} of ${widget.budgets.otherExpensesBudget}${widget.budgets.selectedCurrency}',
+            '  Money spent: ${widget.budgets.otherExpensesBudget - widget.budgets.otherExpensesBudgetLeft} of ${widget.budgets.otherExpensesBudget}${widget.budgets.selectedCurrency}',
             style: getColor(widget.budgets.otherExpensesBudgetLeft,
                 widget.budgets.otherExpensesBudget),
           ),

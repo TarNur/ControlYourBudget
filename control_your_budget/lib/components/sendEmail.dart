@@ -142,11 +142,14 @@ class _EmailSenderState extends State<EmailSender> {
                       SizedBox(height: 30.0),
                       Text(
                         'Budget Name: ${snapshot.data.budgetName}',
-                        style: TextStyle(color: Colors.black,  fontWeight: FontWeight.bold, fontSize: 20.0),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0),
                       ),
                       SizedBox(height: 20.0),
                       Text(
-                        'Money left: ${snapshot.data.budgetAmountLeft} of ${snapshot.data.budgetAmount}${snapshot.data.selectedCurrency}',
+                        'Money spent: ${snapshot.data.budgetAmount - snapshot.data.budgetAmountLeft} of ${snapshot.data.budgetAmount}${snapshot.data.selectedCurrency}',
                         style: kLabelTextStyle,
                       ),
                     ]);
