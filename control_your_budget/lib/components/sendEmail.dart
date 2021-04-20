@@ -23,17 +23,13 @@ class _EmailSenderState extends State<EmailSender> {
     text: 'reciepient@example.com',
   );
 
-  final _subjectController = TextEditingController(text: 'Budget Report');
-
-  final _bodyController = TextEditingController(
-    text: 'Enter Email body.',
-  );
+  final _subjectController = TextEditingController(text: 'Enter Email Subject');
 
   Future<void> send() async {
     createBody();
     final Email email = Email(
       body: body,
-      subject: '${_budget.budgetName} Budget Report',
+      subject: _subjectController.text,
       recipients: [_recipientController.text],
       attachmentPaths: attachments,
     );
@@ -55,6 +51,7 @@ class _EmailSenderState extends State<EmailSender> {
 
   BudgetHelper _budgetHelper = BudgetHelper();
   BudgetInfo _budget;
+  Future<BudgetInfo> _budgetinfo;
   List<BillInfo> _bills;
   List<BillInfo> transportBills = [];
   List<BillInfo> accomodationBills = [];
@@ -69,6 +66,7 @@ class _EmailSenderState extends State<EmailSender> {
       loadBudget();
       print('-----------database initialized');
     });
+    loadBudgetFuture();
     super.initState();
   }
 
@@ -77,23 +75,15 @@ class _EmailSenderState extends State<EmailSender> {
     _bills = await _budgetHelper.getSingleBudgetBills(widget.budgetID);
   }
 
+  void loadBudgetFuture() {
+    _budgetinfo = _budgetHelper.getBudget(widget.budgetID);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Get Budget Report'),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              send();
-              Navigator.of(context).pop();
-            },
-            icon: Icon(
-              Icons.send,
-              color: Colors.cyan,
-            ),
-          )
-        ],
+        title: Text('CONTROL YOUR BUDGET'),
       ),
       body: Container(
         padding:
@@ -107,9 +97,14 @@ class _EmailSenderState extends State<EmailSender> {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'Get Budget Report to Email',
+              style: kLabelTextStyle,
+            ),
+            SizedBox(height: 40.0),
             Container(
               color: Colors.white,
               padding: EdgeInsets.all(8.0),
@@ -134,23 +129,46 @@ class _EmailSenderState extends State<EmailSender> {
                 ),
               ),
             ),
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                padding: EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _bodyController,
-                  style: kLabelTextStyle,
-                  maxLines: null,
-                  expands: true,
-                  textAlignVertical: TextAlignVertical.top,
-                  decoration: InputDecoration(
-                      labelText: 'Body', border: OutlineInputBorder()),
-                ),
-              ),
-            ),
+            SizedBox(height: 40.0),
+            FutureBuilder(
+                future: _budgetinfo,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(children: [
+                      Text(
+                        'Selected Budget',
+                        style: TextStyle(color: Colors.cyan, fontSize: 25.0),
+                      ),
+                      SizedBox(height: 30.0),
+                      Text(
+                        'Budget Name: ${snapshot.data.budgetName}',
+                        style: TextStyle(color: Colors.black,  fontWeight: FontWeight.bold, fontSize: 20.0),
+                      ),
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Money left: ${snapshot.data.budgetAmountLeft} of ${snapshot.data.budgetAmount}${snapshot.data.selectedCurrency}',
+                        style: kLabelTextStyle,
+                      ),
+                    ]);
+                  }
+                  return Center(
+                    child: Text(
+                      'Loading...',
+                      style: TextStyle(color: Colors.cyan, fontSize: 30.0),
+                    ),
+                  );
+                }),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        // Create New Budget Button
+        onPressed: () {
+          send();
+          Navigator.of(context).pop();
+        },
+        child: Icon(Icons.send),
+        backgroundColor: Colors.cyan,
       ),
     );
   }
@@ -172,51 +190,51 @@ class _EmailSenderState extends State<EmailSender> {
     double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
     String reimbursableformat;
     body = body +
-        '${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\nBills: \n';
+        'Budget Name: ${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\nBills: \n';
     spent = _budget.transportBudget - _budget.transportBudgetLeft;
     body = body +
-        ' Transport: $spent spent of ${_budget.transportBudget} ${_budget.selectedCurrency}\n';
+        '  Transport: $spent spent of ${_budget.transportBudget} ${_budget.selectedCurrency}\n';
     transportBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
-          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
     });
     spent = _budget.accomodationBudget - _budget.accomodationBudgetLeft;
     body = body +
-        ' Accommodation: $spent spent of ${_budget.accomodationBudget} ${_budget.selectedCurrency}\n';
+        '  Accommodation: $spent spent of ${_budget.accomodationBudget} ${_budget.selectedCurrency}\n';
     accomodationBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
-          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
     });
     spent = _budget.foodBudget - _budget.foodBudgetLeft;
     body = body +
-        ' Food: $spent spent of ${_budget.foodBudget} ${_budget.selectedCurrency}\n';
+        '  Food: $spent spent of ${_budget.foodBudget} ${_budget.selectedCurrency}\n';
     foodBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
-          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
     });
     spent = _budget.pastimeBudget - _budget.pastimeBudgetLeft;
     body = body +
-        ' Pastime: $spent spent of ${_budget.pastimeBudget} ${_budget.selectedCurrency}\n';
+        '  Pastime: $spent spent of ${_budget.pastimeBudget} ${_budget.selectedCurrency}\n';
     pastimeBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
-          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
     });
     spent = _budget.otherExpensesBudget - _budget.otherExpensesBudgetLeft;
     body = body +
-        ' Other: $spent spent of ${_budget.otherExpensesBudget} ${_budget.selectedCurrency}\n';
+        '  Other: $spent spent of ${_budget.otherExpensesBudget} ${_budget.selectedCurrency}\n';
     otherBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
-          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
     });
   }
 }
