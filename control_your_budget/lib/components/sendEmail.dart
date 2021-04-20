@@ -17,7 +17,7 @@ class EmailSender extends StatefulWidget {
 
 class _EmailSenderState extends State<EmailSender> {
   List<String> attachments = [];
-  String body = '';
+  String body = 'Your Budget Report \n\n';
 
   final _recipientController = TextEditingController(
     text: 'reciepient@example.com',
@@ -56,6 +56,11 @@ class _EmailSenderState extends State<EmailSender> {
   BudgetHelper _budgetHelper = BudgetHelper();
   BudgetInfo _budget;
   List<BillInfo> _bills;
+  List<BillInfo> transportBills = [];
+  List<BillInfo> accomodationBills = [];
+  List<BillInfo> foodBills = [];
+  List<BillInfo> pastimeBills = [];
+  List<BillInfo> otherBills = [];
   var budgetsMade = 0;
 
   @override
@@ -152,8 +157,66 @@ class _EmailSenderState extends State<EmailSender> {
 
   void createBody() {
     _bills.forEach((bill) {
-      String reimbursableformat = bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
-      body = body + '${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+      if (bill.billSubcategory == 'transportBudget') {
+        transportBills.add(bill);
+      } else if (bill.billSubcategory == 'accomodationBudget') {
+        accomodationBills.add(bill);
+      } else if (bill.billSubcategory == 'foodBudget') {
+        foodBills.add(bill);
+      } else if (bill.billSubcategory == 'pastimeBudget') {
+        pastimeBills.add(bill);
+      } else {
+        otherBills.add(bill);
+      }
+    });
+    double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
+    String reimbursableformat;
+    body = body +
+        '${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\nBills: \n';
+    spent = _budget.transportBudget - _budget.transportBudgetLeft;
+    body = body +
+        ' Transport: $spent spent of ${_budget.transportBudget} ${_budget.selectedCurrency}\n';
+    transportBills.forEach((bill) {
+      reimbursableformat =
+          bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
+      body = body +
+          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+    });
+    spent = _budget.accomodationBudget - _budget.accomodationBudgetLeft;
+    body = body +
+        ' Accommodation: $spent spent of ${_budget.accomodationBudget} ${_budget.selectedCurrency}\n';
+    accomodationBills.forEach((bill) {
+      reimbursableformat =
+          bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
+      body = body +
+          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+    });
+    spent = _budget.foodBudget - _budget.foodBudgetLeft;
+    body = body +
+        ' Food: $spent spent of ${_budget.foodBudget} ${_budget.selectedCurrency}\n';
+    foodBills.forEach((bill) {
+      reimbursableformat =
+          bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
+      body = body +
+          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+    });
+    spent = _budget.pastimeBudget - _budget.pastimeBudgetLeft;
+    body = body +
+        ' Pastime: $spent spent of ${_budget.pastimeBudget} ${_budget.selectedCurrency}\n';
+    pastimeBills.forEach((bill) {
+      reimbursableformat =
+          bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
+      body = body +
+          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+    });
+    spent = _budget.otherExpensesBudget - _budget.otherExpensesBudgetLeft;
+    body = body +
+        ' Other: $spent spent of ${_budget.otherExpensesBudget} ${_budget.selectedCurrency}\n';
+    otherBills.forEach((bill) {
+      reimbursableformat =
+          bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
+      body = body +
+          '   ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
     });
   }
 }
