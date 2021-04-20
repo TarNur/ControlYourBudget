@@ -32,6 +32,7 @@ dependencies:
   provider: ^4.3.3
   image_picker: ^0.6.7+22
   intl: ^0.16.1
+  flutter_email_sender: ^4.0.0
 
 
 dev_dependencies:

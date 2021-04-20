@@ -8,8 +8,9 @@ import 'package:control_your_budget/screens/viewBudget_page.dart';
 class ViewBills extends StatefulWidget {
   final int budgetID;
   final String budgetSubcategory;
+  final String selectedCurrency;
 
-  ViewBills({this.budgetID, this.budgetSubcategory});
+  ViewBills({this.budgetID, this.budgetSubcategory,this.selectedCurrency});
   @override
   _ViewBillsState createState() => _ViewBillsState();
 }
@@ -88,7 +89,7 @@ class _ViewBillsState extends State<ViewBills> {
               child: BillsList(
                 budgetID: widget.budgetID,
                 subCategory: widget.budgetSubcategory,
-                selectedCurrency: _budget.selectedCurrency,
+                selectedCurrency: widget.selectedCurrency,
               ),
             ),
           ),

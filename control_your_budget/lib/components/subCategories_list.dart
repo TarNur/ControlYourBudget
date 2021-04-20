@@ -91,8 +91,10 @@ class _BudgetsListState extends State<BudgetsList> {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
-                          budgetID: widget.budgets.id,
-                          budgetSubcategory: 'transportBudget'),
+                        budgetID: widget.budgets.id,
+                        budgetSubcategory: 'transportBudget',
+                        selectedCurrency: widget.budgets.selectedCurrency,
+                      ),
                     ),
                   );
                 }),
@@ -134,8 +136,10 @@ class _BudgetsListState extends State<BudgetsList> {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
-                          budgetID: widget.budgets.id,
-                          budgetSubcategory: 'accomodationBudget'),
+                        budgetID: widget.budgets.id,
+                        budgetSubcategory: 'accomodationBudget',
+                        selectedCurrency: widget.budgets.selectedCurrency,
+                      ),
                     ),
                   );
                 }),
@@ -172,8 +176,10 @@ class _BudgetsListState extends State<BudgetsList> {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
-                          budgetID: widget.budgets.id,
-                          budgetSubcategory: 'foodBudget'),
+                        budgetID: widget.budgets.id,
+                        budgetSubcategory: 'foodBudget',
+                        selectedCurrency: widget.budgets.selectedCurrency,
+                      ),
                     ),
                   );
                 }),
@@ -210,8 +216,10 @@ class _BudgetsListState extends State<BudgetsList> {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
-                          budgetID: widget.budgets.id,
-                          budgetSubcategory: 'pastimeBudget'),
+                        budgetID: widget.budgets.id,
+                        budgetSubcategory: 'pastimeBudget',
+                        selectedCurrency: widget.budgets.selectedCurrency,
+                      ),
                     ),
                   );
                 }),
@@ -248,8 +256,10 @@ class _BudgetsListState extends State<BudgetsList> {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => ViewBills(
-                          budgetID: widget.budgets.id,
-                          budgetSubcategory: 'otherExpensesBudget'),
+                        budgetID: widget.budgets.id,
+                        budgetSubcategory: 'otherExpensesBudget',
+                        selectedCurrency: widget.budgets.selectedCurrency,
+                      ),
                     ),
                   );
                 }),

@@ -70,7 +70,7 @@ class _BillsListState extends State<BillsList> {
                     },
                   ),
                   subtitle: Text(
-                    ' Amount: ${snapshot.data[index].billAmount}$selectedCurrency\n Reimbursable: $reimb\n Payed with ${snapshot.data[index].paymentType}\n Date: ${snapshot.data[index].date}',
+                    ' Amount: ${snapshot.data[index].billAmount}${widget.selectedCurrency}\n Reimbursable: $reimb\n Payed with ${snapshot.data[index].paymentType}\n Date: ${snapshot.data[index].date}',
                   ),
                   trailing: Material(
                     color: Colors.white,
