@@ -5,6 +5,8 @@ import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/alert_box.dart';
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:control_your_budget/models/budget.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
 
 class EmailSender extends StatefulWidget {
   final int budgetID;
@@ -17,6 +19,7 @@ class EmailSender extends StatefulWidget {
 
 class _EmailSenderState extends State<EmailSender> {
   List<String> attachments = [];
+  bool isHTML = false;
   String body = 'Your Budget Report \n\n';
 
   final _recipientController = TextEditingController(
@@ -26,17 +29,23 @@ class _EmailSenderState extends State<EmailSender> {
   final _subjectController = TextEditingController(text: 'Enter Email Subject');
 
   Future<void> send() async {
-    createBody();
+    if (wantedBills == 'All') {
+      createBody();
+    } else if (wantedBills == 'Reimbursable') {
+      createBodyForReimbursable(1);
+    } else {
+      createBodyForReimbursable(0);
+    }
     final Email email = Email(
       body: body,
       subject: _subjectController.text,
       recipients: [_recipientController.text],
       attachmentPaths: attachments,
+      isHTML: isHTML,
     );
 
     String platformResponse;
-    print(body);
-
+  
     try {
       await FlutterEmailSender.send(email);
       platformResponse = 'success';
@@ -44,9 +53,47 @@ class _EmailSenderState extends State<EmailSender> {
       platformResponse = error.toString();
     }
 
-    print(platformResponse);
     showAlertDialogEmailResponse(context, platformResponse);
     if (!mounted) return;
+  }
+
+  DropdownButton<String> androidDropdown() {
+    List<DropdownMenuItem<String>> dropdownItems = [];
+    for (String wantedBills in reportOptions) {
+      var newItem = DropdownMenuItem(
+        child: Text(wantedBills),
+        value: wantedBills,
+      );
+      dropdownItems.add(newItem);
+    }
+
+    return DropdownButton<String>(
+      value: wantedBills,
+      items: dropdownItems,
+      onChanged: (value) {
+        setState(() {
+          wantedBills = value;
+        });
+      },
+    );
+  }
+
+  CupertinoPicker iOSPicker() {
+    List<Text> pickerItems = [];
+    for (String wantedBills in reportOptions) {
+      pickerItems.add(Text(wantedBills));
+    }
+
+    return CupertinoPicker(
+      backgroundColor: Colors.white,
+      itemExtent: 32.0,
+      onSelectedItemChanged: (selectedIndex) {
+        setState(() {
+          wantedBills = reportOptions[selectedIndex];
+        });
+      },
+      children: pickerItems,
+    );
   }
 
   BudgetHelper _budgetHelper = BudgetHelper();
@@ -58,7 +105,7 @@ class _EmailSenderState extends State<EmailSender> {
   List<BillInfo> foodBills = [];
   List<BillInfo> pastimeBills = [];
   List<BillInfo> otherBills = [];
-  var budgetsMade = 0;
+  String wantedBills = 'All';
 
   @override
   void initState() {
@@ -82,6 +129,7 @@ class _EmailSenderState extends State<EmailSender> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('CONTROL YOUR BUDGET'),
       ),
@@ -129,7 +177,18 @@ class _EmailSenderState extends State<EmailSender> {
                 ),
               ),
             ),
-            SizedBox(height: 40.0),
+            Text(
+              'Bills to be included in report:',
+              style: TextStyle(color: Colors.cyan, fontSize: 20.0),
+            ),
+            Container(
+              height: 55.0,
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              color: Colors.cyan,
+              child: Platform.isIOS ? iOSPicker() : androidDropdown(),
+            ),
+            SizedBox(height: 30.0),
             FutureBuilder(
                 future: _budgetinfo,
                 builder: (context, snapshot) {
@@ -139,7 +198,7 @@ class _EmailSenderState extends State<EmailSender> {
                         'Selected Budget',
                         style: TextStyle(color: Colors.cyan, fontSize: 25.0),
                       ),
-                      SizedBox(height: 30.0),
+                      SizedBox(height: 10.0),
                       Text(
                         'Budget Name: ${snapshot.data.budgetName}',
                         style: TextStyle(
@@ -147,7 +206,7 @@ class _EmailSenderState extends State<EmailSender> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20.0),
                       ),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 10.0),
                       Text(
                         'Money spent: ${snapshot.data.budgetAmount - snapshot.data.budgetAmountLeft} of ${snapshot.data.budgetAmount}${snapshot.data.selectedCurrency}',
                         style: kLabelTextStyle,
@@ -238,6 +297,18 @@ class _EmailSenderState extends State<EmailSender> {
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
           '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+    });
+  }
+
+  void createBodyForReimbursable(int trueOrFalse) {
+    double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
+    body = body +
+        'Budget Name: ${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\n$wantedBills Bills: \n';
+    _bills.forEach((bill) {
+      if (bill.reimbursable == trueOrFalse) {
+        body = body +
+            '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, Payed with ${bill.paymentType}\n';
+      }
     });
   }
 }

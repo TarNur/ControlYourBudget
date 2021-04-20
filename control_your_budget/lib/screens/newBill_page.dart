@@ -34,8 +34,8 @@ class _NewBillState extends State<NewBill> {
   Future getImagefromcamera() async {
     final pickedImage = await picker.getImage(
       source: ImageSource.camera,
-      maxHeight: 400.0,
-      maxWidth: 200.0,
+      maxHeight: 500.0,
+      maxWidth: 500.0,
     );
     setState(() {
       if (pickedImage != null) {
@@ -52,8 +52,8 @@ class _NewBillState extends State<NewBill> {
   Future getImagefromGallery() async {
     final pickedImage = await picker.getImage(
       source: ImageSource.gallery,
-      maxHeight: 400.0,
-      maxWidth: 200.0,
+      maxHeight: 500.0,
+      maxWidth: 500.0,
     );
     setState(() {
       if (pickedImage != null) {

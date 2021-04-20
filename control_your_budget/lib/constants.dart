@@ -59,3 +59,10 @@ const List<String> subCategories = [
   'Pastime',
   'Other',
 ];
+
+const List<String> reportOptions = [
+  'All',
+  'Reimbursable',
+  'Non-reimbursable',
+];
+

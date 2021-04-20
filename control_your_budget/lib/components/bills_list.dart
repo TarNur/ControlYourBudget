@@ -64,7 +64,7 @@ class _BillsListState extends State<BillsList> {
                       print('pressed view bill');
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => EditBill(bill: selectedBill),
+                          builder: (context) => EditBill(bill: selectedBill, selectedCurrency: widget.selectedCurrency),
                         ),
                       );
                     },

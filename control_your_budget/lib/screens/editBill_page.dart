@@ -10,6 +10,7 @@ import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:control_your_budget/screens/edit_text_value_screen.dart';
 import 'package:control_your_budget/components/alert_box.dart';
 import 'package:control_your_budget/screens/viewBills_page.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'dart:io' show Platform;
@@ -17,8 +18,9 @@ import 'dart:io';
 
 class EditBill extends StatefulWidget {
   final BillInfo bill;
+  final String selectedCurrency;
 
-  EditBill({this.bill});
+  EditBill({this.bill, this.selectedCurrency});
 
   @override
   _EditBillState createState() => _EditBillState();
@@ -38,8 +40,8 @@ class _EditBillState extends State<EditBill> {
   Future getImagefromcamera() async {
     final pickedImage = await picker.getImage(
       source: ImageSource.camera,
-      maxHeight: 400.0,
-      maxWidth: 200.0,
+      maxHeight: 500.0,
+      maxWidth: 500.0,
     );
     setState(() {
       if (pickedImage != null) {
@@ -57,8 +59,8 @@ class _EditBillState extends State<EditBill> {
   Future getImagefromGallery() async {
     final pickedImage = await picker.getImage(
       source: ImageSource.gallery,
-      maxHeight: 400.0,
-      maxWidth: 200.0,
+      maxHeight: 500.0,
+      maxWidth: 500.0,
     );
     setState(() {
       if (pickedImage != null) {
@@ -110,6 +112,18 @@ class _EditBillState extends State<EditBill> {
       },
       children: pickerItems,
     );
+  }
+
+  _saveImage() async {
+    String result;
+    try {
+      await ImageGallerySaver.saveImage(Uint8List.fromList(_bytesImage),
+          quality: 100, name: billName);
+      result = 'Image Saved.';
+    } catch (error) {
+      result = error.toString();
+    }
+    showAlertDialogSaveImage(context, result);
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -248,7 +262,7 @@ class _EditBillState extends State<EditBill> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Bill Amount: $billAmount',
+                    'Bill Amount: $billAmount ${widget.selectedCurrency}',
                     style: kLabelTextStyle,
                   ),
                   IconButton(
@@ -335,8 +349,7 @@ class _EditBillState extends State<EditBill> {
                             backgroundColor:
                                 MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {
-                                return Colors
-                                    .cyan; // Use the component's default.
+                                return Colors.cyan;
                               },
                             ),
                           ),
@@ -391,6 +404,25 @@ class _EditBillState extends State<EditBill> {
                           icon: Icon(Icons.folder),
                           onPressed: getImagefromGallery,
                           color: Colors.cyan),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              return Colors.cyan;
+                            },
+                          ),
+                        ),
+                        onPressed: () {
+                          if (_bytesImage != null) {
+                            _saveImage();
+                          } else {
+                            showAlertDialogSaveImage(
+                                context, 'No Image to Save');
+                          }
+                        },
+                        child: Text('Save Image'),
+                      ),
                     ],
                   ),
                 ],
@@ -428,7 +460,8 @@ class _EditBillState extends State<EditBill> {
                   MaterialPageRoute(
                     builder: (context) => ViewBills(
                         budgetID: widget.bill.id,
-                        budgetSubcategory: correctSubcategory),
+                        budgetSubcategory: correctSubcategory,
+                        selectedCurrency: widget.selectedCurrency,),
                   ),
                 );
               }
