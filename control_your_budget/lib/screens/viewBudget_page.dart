@@ -83,7 +83,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => EmailSender(),
+                  builder: (context) => EmailSender(budgetID: widget.budgetID),
                 ),
               );
             },

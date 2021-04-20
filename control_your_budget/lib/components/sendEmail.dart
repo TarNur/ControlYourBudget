@@ -1,17 +1,23 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/alert_box.dart';
+import 'package:control_your_budget/budget_helper.dart';
+import 'package:control_your_budget/models/budget.dart';
 
 class EmailSender extends StatefulWidget {
+  final int budgetID;
+
+  EmailSender({this.budgetID});
+
   @override
   _EmailSenderState createState() => _EmailSenderState();
 }
 
 class _EmailSenderState extends State<EmailSender> {
   List<String> attachments = [];
+  String body = '';
 
   final _recipientController = TextEditingController(
     text: 'reciepient@example.com',
@@ -24,14 +30,16 @@ class _EmailSenderState extends State<EmailSender> {
   );
 
   Future<void> send() async {
+    createBody();
     final Email email = Email(
-      body: _bodyController.text,
-      subject: _subjectController.text,
+      body: body,
+      subject: '${_budget.budgetName} Budget Report',
       recipients: [_recipientController.text],
       attachmentPaths: attachments,
     );
 
     String platformResponse;
+    print(body);
 
     try {
       await FlutterEmailSender.send(email);
@@ -43,6 +51,25 @@ class _EmailSenderState extends State<EmailSender> {
     print(platformResponse);
     showAlertDialogEmailResponse(context, platformResponse);
     if (!mounted) return;
+  }
+
+  BudgetHelper _budgetHelper = BudgetHelper();
+  BudgetInfo _budget;
+  List<BillInfo> _bills;
+  var budgetsMade = 0;
+
+  @override
+  void initState() {
+    _budgetHelper.initializeDatabase().then((value) {
+      loadBudget();
+      print('-----------database initialized');
+    });
+    super.initState();
+  }
+
+  void loadBudget() async {
+    _budget = await _budgetHelper.getBudget(widget.budgetID);
+    _bills = await _budgetHelper.getSingleBudgetBills(widget.budgetID);
   }
 
   @override
@@ -123,9 +150,10 @@ class _EmailSenderState extends State<EmailSender> {
     );
   }
 
-  void _removeAttachment(int index) {
-    setState(() {
-      attachments.removeAt(index);
+  void createBody() {
+    _bills.forEach((bill) {
+      String reimbursableformat = bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
+      body = body + '${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
     });
   }
 }
