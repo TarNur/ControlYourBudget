@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:control_your_budget/constants.dart';
+import 'package:control_your_budget/components/alert_box.dart';
 
 class EmailSender extends StatefulWidget {
   @override
@@ -40,6 +41,7 @@ class _EmailSenderState extends State<EmailSender> {
     }
 
     print(platformResponse);
+    showAlertDialogEmailResponse(context, platformResponse);
     if (!mounted) return;
   }
 
@@ -50,8 +52,14 @@ class _EmailSenderState extends State<EmailSender> {
         title: Text('Get Budget Report'),
         actions: <Widget>[
           IconButton(
-            onPressed: send,
-            icon: Icon(Icons.send, color: Colors.cyan,),
+            onPressed: () {
+              send();
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.send,
+              color: Colors.cyan,
+            ),
           )
         ],
       ),

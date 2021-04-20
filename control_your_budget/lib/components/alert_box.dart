@@ -187,3 +187,18 @@ showAlertDialogBillNameNullAfterEdit(BuildContext context) {
     },
   );
 }
+
+showAlertDialogEmailResponse(BuildContext context, String result) {
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text('Email result: $result.'),
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
