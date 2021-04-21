@@ -173,7 +173,7 @@ class _EditBillState extends State<EditBill> {
   String paymentType;
   String subCategory;
   bool reimbursable;
-  var descriptionController = TextEditingController();
+  var descriptionController = TextEditingController(text: 'Bill Details: ');
 
   double prevBillAmount;
 
@@ -188,7 +188,9 @@ class _EditBillState extends State<EditBill> {
       subCategory = fromSubcategoryFormat(subCategory);
       reimbursable = widget.bill.reimbursable == 0 ? false : true;
       selectedDate = dateFormat.parse(widget.bill.date);
-      descriptionController.text = widget.bill.description;
+      if (widget.bill.description != null) {
+        descriptionController.text = widget.bill.description;
+      } 
       if (widget.bill.image != null) {
         base64Image = widget.bill.image;
         _bytesImage = Base64Decoder().convert(base64Image);

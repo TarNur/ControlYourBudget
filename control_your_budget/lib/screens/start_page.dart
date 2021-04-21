@@ -1,3 +1,4 @@
+import 'package:control_your_budget/components/alert_box.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/budgets_list.dart';
@@ -23,6 +24,11 @@ class _StartPageState extends State<StartPage> {
 
   @override
   Widget build(BuildContext context) {
+    try {
+      _budgetHelper.initializeDatabase();
+    } catch (error) {
+      showAlertDialogSaveImage(context, error.toString());
+    }
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.end,

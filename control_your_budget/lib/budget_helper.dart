@@ -1,3 +1,5 @@
+import 'package:control_your_budget/components/subCategories_list.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:control_your_budget/models/budget.dart';
@@ -34,6 +36,7 @@ final String otherExpensesBudgetLeft = 'otherExpensesBudgetLeft';
 final String selectedCurrencyLeft = 'selectedCurrencyLeft';
 
 class BudgetHelper {
+  
   static Database _database;
   static BudgetHelper _budgetHelper;
 
@@ -90,7 +93,7 @@ class BudgetHelper {
           $reimbursable integer,
           $image text,
           $date text not null,
-          $description)
+          $description text)
         ''');
       },
     );
