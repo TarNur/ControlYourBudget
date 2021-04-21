@@ -325,6 +325,7 @@ class _EmailSenderState extends State<EmailSender> {
         body = body +
             '\n$count.\n ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, Payed with ${bill.paymentType}\n';
         body = body + '${bill.description}\n';
+        count++;
       }
     });
   }
