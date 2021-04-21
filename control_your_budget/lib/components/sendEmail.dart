@@ -251,7 +251,7 @@ class _EmailSenderState extends State<EmailSender> {
     });
     double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
     String reimbursableformat;
-    int count = 0;
+    int count = 1;
     body = body +
         'Budget Name: ${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\n\nBills: \n';
     spent = _budget.transportBudget - _budget.transportBudgetLeft;
@@ -266,7 +266,7 @@ class _EmailSenderState extends State<EmailSender> {
       count++;
     });
     spent = _budget.accomodationBudget - _budget.accomodationBudgetLeft;
-    count = 0;
+    count = 1;
     body = body +
         '\nAccommodation: $spent spent of ${_budget.accomodationBudget} ${_budget.selectedCurrency}\n';
     accomodationBills.forEach((bill) {
@@ -278,7 +278,7 @@ class _EmailSenderState extends State<EmailSender> {
       count ++;
     });
     spent = _budget.foodBudget - _budget.foodBudgetLeft;
-    count = 0;
+    count = 1;
     body = body +
         '\nFood: $spent spent of ${_budget.foodBudget} ${_budget.selectedCurrency}\n';
     foodBills.forEach((bill) {
@@ -290,7 +290,7 @@ class _EmailSenderState extends State<EmailSender> {
       count++;
     });
     spent = _budget.pastimeBudget - _budget.pastimeBudgetLeft;
-    count = 0;
+    count = 1;
     body = body +
         '\nPastime: $spent spent of ${_budget.pastimeBudget} ${_budget.selectedCurrency}\n';
     pastimeBills.forEach((bill) {
@@ -302,7 +302,7 @@ class _EmailSenderState extends State<EmailSender> {
       count++;
     });
     spent = _budget.otherExpensesBudget - _budget.otherExpensesBudgetLeft;
-    count = 0;
+    count = 1;
     body = body +
         '\nOther: $spent spent of ${_budget.otherExpensesBudget} ${_budget.selectedCurrency}\n';
     otherBills.forEach((bill) {
@@ -317,7 +317,7 @@ class _EmailSenderState extends State<EmailSender> {
 
   void createBodyForReimbursable(int trueOrFalse) {
     double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
-    int count = 0;
+    int count = 1;
     body = body +
         'Budget Name: ${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\n$wantedBills Bills: \n';
     _bills.forEach((bill) {
