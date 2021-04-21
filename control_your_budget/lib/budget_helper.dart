@@ -23,6 +23,7 @@ final String reimbursable = 'reimbursable';
 final String image = 'image';
 final String date = 'date';
 final String billSubcategory = 'billSubcategory';
+final String description = 'description';
 
 final String budgetAmountLeft = 'budgetAmountLeft';
 final String transportBudgetLeft = 'transportBudgetLeft';
@@ -54,7 +55,7 @@ class BudgetHelper {
   Future<Database> initializeDatabase() async {
     var dir = await getDatabasesPath();
     //var path = dir + "budgets.db";
-    var path = p.join(dir, 'controlyourbudget_app.db');
+    var path = p.join(dir, 'controlyour_budget_app.db');
 
     var database = await openDatabase(
       path,
@@ -88,7 +89,8 @@ class BudgetHelper {
           $paymentType text not null,
           $reimbursable integer,
           $image text,
-          $date text not null)
+          $date text not null,
+          $description)
         ''');
       },
     );

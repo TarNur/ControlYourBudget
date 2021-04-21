@@ -86,7 +86,8 @@ class BillInfo {
       this.paymentType,
       this.reimbursable,
       this.image,
-      this.date});
+      this.date,
+      this.description});
 
   final int billID;
   final int id;
@@ -97,6 +98,7 @@ class BillInfo {
   final int reimbursable;
   final String image;
   final String date;
+  final String description;
 
   void changeBudgetAmount() {}
 
@@ -112,6 +114,7 @@ class BillInfo {
         reimbursable: json["reimbursable"],
         image: json["image"],
         date: json["date"],
+        description: json['description']
       );
 
   factory BillInfo.fromMapWithoutImage(Map<String, dynamic> json) => BillInfo(
@@ -134,6 +137,7 @@ class BillInfo {
       'reimbursable': reimbursable,
       'image': image,
       'date': date,
+      'description': description,
     };
   }
 }

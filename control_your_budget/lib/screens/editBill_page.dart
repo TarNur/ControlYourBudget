@@ -173,6 +173,7 @@ class _EditBillState extends State<EditBill> {
   String paymentType;
   String subCategory;
   bool reimbursable;
+  var descriptionController = TextEditingController();
 
   double prevBillAmount;
 
@@ -187,6 +188,7 @@ class _EditBillState extends State<EditBill> {
       subCategory = fromSubcategoryFormat(subCategory);
       reimbursable = widget.bill.reimbursable == 0 ? false : true;
       selectedDate = dateFormat.parse(widget.bill.date);
+      descriptionController.text = widget.bill.description;
       if (widget.bill.image != null) {
         base64Image = widget.bill.image;
         _bytesImage = Base64Decoder().convert(base64Image);
@@ -389,6 +391,37 @@ class _EditBillState extends State<EditBill> {
                         onPressed: () => _selectDate(context),
                         child: Text('Select date'),
                       ),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                return Colors.cyan;
+                              },
+                            ),
+                          ),
+                          child: Text('Bill Descr.'),
+                          onPressed: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: double.infinity,
+                                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+                                  color: Colors.white,
+                                  child: TextField(
+                                    controller: descriptionController,
+                                    style: kLabelTextStyle,
+                                    maxLines: null,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Bill Description',
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }),
                     ],
                   ),
                   Row(
@@ -445,6 +478,7 @@ class _EditBillState extends State<EditBill> {
                 reimbursable: ifReimbursable,
                 image: base64Image,
                 date: dateForDatabase,
+                description: descriptionController.text,
               );
               if (billAmount <= 0) {
                 showAlertDialogBillAmount0(context);
@@ -459,9 +493,10 @@ class _EditBillState extends State<EditBill> {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => ViewBills(
-                        budgetID: widget.bill.id,
-                        budgetSubcategory: correctSubcategory,
-                        selectedCurrency: widget.selectedCurrency,),
+                      budgetID: widget.bill.id,
+                      budgetSubcategory: correctSubcategory,
+                      selectedCurrency: widget.selectedCurrency,
+                    ),
                   ),
                 );
               }

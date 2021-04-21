@@ -45,7 +45,7 @@ class _EmailSenderState extends State<EmailSender> {
     );
 
     String platformResponse;
-  
+
     try {
       await FlutterEmailSender.send(email);
       platformResponse = 'success';
@@ -261,6 +261,7 @@ class _EmailSenderState extends State<EmailSender> {
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
           '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+      body = body + '     ${bill.description}\n';
     });
     spent = _budget.accomodationBudget - _budget.accomodationBudgetLeft;
     body = body +
@@ -270,6 +271,7 @@ class _EmailSenderState extends State<EmailSender> {
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
           '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+      body = body + '     ${bill.description}\n';
     });
     spent = _budget.foodBudget - _budget.foodBudgetLeft;
     body = body +
@@ -279,6 +281,7 @@ class _EmailSenderState extends State<EmailSender> {
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
           '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+      body = body + '     ${bill.description}\n';
     });
     spent = _budget.pastimeBudget - _budget.pastimeBudgetLeft;
     body = body +
@@ -288,6 +291,7 @@ class _EmailSenderState extends State<EmailSender> {
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
           '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+      body = body + '     ${bill.description}\n';
     });
     spent = _budget.otherExpensesBudget - _budget.otherExpensesBudgetLeft;
     body = body +
@@ -297,6 +301,7 @@ class _EmailSenderState extends State<EmailSender> {
           bill.reimbursable == 1 ? 'Is reimbursable' : 'Not reimbursable';
       body = body +
           '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+      body = body + '     ${bill.description}\n';
     });
   }
 
@@ -308,6 +313,7 @@ class _EmailSenderState extends State<EmailSender> {
       if (bill.reimbursable == trueOrFalse) {
         body = body +
             '    ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, Payed with ${bill.paymentType}\n';
+        body = body + '     ${bill.description}\n';
       }
     });
   }

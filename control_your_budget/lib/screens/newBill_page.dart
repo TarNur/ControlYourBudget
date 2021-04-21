@@ -178,6 +178,10 @@ class _NewBillState extends State<NewBill> {
   double billAmount = 0;
   String paymentType = 'Credit';
   String subCategory = 'Transport';
+  String description = 'Description';
+  var descriptionController = TextEditingController(
+    text: 'Bill Details: ',
+  );
   String selectedCurrency;
   bool ifBudgetNameChanged = false;
   bool reimbursable = false;
@@ -413,6 +417,38 @@ class _NewBillState extends State<NewBill> {
                         onPressed: () => _selectDate(context),
                         child: Text('Select date'),
                       ),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                return Colors
+                                    .cyan; 
+                              },
+                            ),
+                          ),
+                          child: Text('Bill Descr.'),
+                          onPressed: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+                                  height: double.infinity,
+                                  color: Colors.white,
+                                  child: TextField(
+                                    controller: descriptionController,
+                                    style: kLabelTextStyle,
+                                    maxLines: null,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Bill Description',
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }),
                     ],
                   ),
                   Row(
@@ -451,6 +487,7 @@ class _NewBillState extends State<NewBill> {
                 reimbursable: ifReimbursable,
                 image: base64Image,
                 date: dateForDatabase,
+                description: descriptionController.text,
               );
               if (billAmount <= 0) {
                 showAlertDialogBillAmount0(context);
