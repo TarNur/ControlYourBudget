@@ -180,7 +180,7 @@ class _NewBillState extends State<NewBill> {
   String subCategory = 'Transport';
   String description = 'Description';
   var descriptionController = TextEditingController(
-    text: 'Needed Bill Details: ',
+    text: 'Bill Details: ',
   );
   String selectedCurrency;
   bool ifBudgetNameChanged = false;
