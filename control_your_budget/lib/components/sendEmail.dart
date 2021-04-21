@@ -251,6 +251,7 @@ class _EmailSenderState extends State<EmailSender> {
     });
     double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
     String reimbursableformat;
+    int count = 0;
     body = body +
         'Budget Name: ${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\n\nBills: \n';
     spent = _budget.transportBudget - _budget.transportBudgetLeft;
@@ -260,59 +261,69 @@ class _EmailSenderState extends State<EmailSender> {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
+      count++;
     });
     spent = _budget.accomodationBudget - _budget.accomodationBudgetLeft;
+    count = 0;
     body = body +
         '\nAccommodation: $spent spent of ${_budget.accomodationBudget} ${_budget.selectedCurrency}\n';
     accomodationBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
+      count ++;
     });
     spent = _budget.foodBudget - _budget.foodBudgetLeft;
+    count = 0;
     body = body +
         '\nFood: $spent spent of ${_budget.foodBudget} ${_budget.selectedCurrency}\n';
     foodBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
+      count++;
     });
     spent = _budget.pastimeBudget - _budget.pastimeBudgetLeft;
+    count = 0;
     body = body +
         '\nPastime: $spent spent of ${_budget.pastimeBudget} ${_budget.selectedCurrency}\n';
     pastimeBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
+      count++;
     });
     spent = _budget.otherExpensesBudget - _budget.otherExpensesBudgetLeft;
+    count = 0;
     body = body +
         '\nOther: $spent spent of ${_budget.otherExpensesBudget} ${_budget.selectedCurrency}\n';
     otherBills.forEach((bill) {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
+      count++;
     });
   }
 
   void createBodyForReimbursable(int trueOrFalse) {
     double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
+    int count = 0;
     body = body +
         'Budget Name: ${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\n$wantedBills Bills: \n';
     _bills.forEach((bill) {
       if (bill.reimbursable == trueOrFalse) {
         body = body +
-            '\n${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, Payed with ${bill.paymentType}\n';
+            '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, Payed with ${bill.paymentType}\n';
         body = body + '${bill.description}\n';
       }
     });
