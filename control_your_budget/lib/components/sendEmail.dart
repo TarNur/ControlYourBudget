@@ -261,7 +261,7 @@ class _EmailSenderState extends State<EmailSender> {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count.\n ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
       count++;
     });
@@ -273,7 +273,7 @@ class _EmailSenderState extends State<EmailSender> {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count.\n ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
       count ++;
     });
@@ -285,7 +285,7 @@ class _EmailSenderState extends State<EmailSender> {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count.\n ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
       count++;
     });
@@ -297,7 +297,7 @@ class _EmailSenderState extends State<EmailSender> {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count.\n ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
       count++;
     });
@@ -309,7 +309,7 @@ class _EmailSenderState extends State<EmailSender> {
       reimbursableformat =
           bill.reimbursable == 1 ? 'Reimbursable' : 'Non-reimbursable';
       body = body +
-          '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
+          '\n$count.\n ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, $reimbursableformat, Payed with ${bill.paymentType}\n';
       body = body + '${bill.description}\n';
       count++;
     });
@@ -323,7 +323,7 @@ class _EmailSenderState extends State<EmailSender> {
     _bills.forEach((bill) {
       if (bill.reimbursable == trueOrFalse) {
         body = body +
-            '\n$count. ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, Payed with ${bill.paymentType}\n';
+            '\n$count.\n ${bill.date} ${bill.billName}: ${bill.billAmount}${_budget.selectedCurrency}, Payed with ${bill.paymentType}\n';
         body = body + '${bill.description}\n';
       }
     });
