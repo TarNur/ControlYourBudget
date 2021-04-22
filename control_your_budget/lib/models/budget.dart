@@ -1,4 +1,3 @@
-
 class BudgetInfo {
   BudgetInfo(
       {this.id,
@@ -74,6 +73,25 @@ class BudgetInfo {
       'otherExpensesBudgetLeft': otherExpensesBudgetLeft,
     };
   }
+
+  Map<String, dynamic> toMapWithoutID() {
+    return {
+      'budgetName': budgetName,
+      'budgetAmount': budgetAmount,
+      'transportBudget': transportBudget,
+      'foodBudget': foodBudget,
+      'accomodationBudget': accomodationBudget,
+      'pastimeBudget': pastimeBudget,
+      'otherExpensesBudget': otherExpensesBudget,
+      'selectedCurrency': selectedCurrency,
+      'budgetAmountLeft': budgetAmountLeft,
+      'transportBudgetLeft': transportBudgetLeft,
+      'foodBudgetLeft': foodBudgetLeft,
+      'accomodationBudgetLeft': accomodationBudgetLeft,
+      'pastimeBudgetLeft': pastimeBudgetLeft,
+      'otherExpensesBudgetLeft': otherExpensesBudgetLeft,
+    };
+  }
 }
 
 class BillInfo {
@@ -105,17 +123,16 @@ class BillInfo {
   void changeBudgetName() {}
 
   factory BillInfo.fromMap(Map<String, dynamic> json) => BillInfo(
-        billID: json["billID"],
-        id: json["id"],
-        billName: json["billName"],
-        billAmount: json["billAmount"].toDouble(),
-        billSubcategory: json["billSubcategory"],
-        paymentType: json["paymentType"],
-        reimbursable: json["reimbursable"],
-        image: json["image"],
-        date: json["date"],
-        description: json['description']
-      );
+      billID: json["billID"],
+      id: json["id"],
+      billName: json["billName"],
+      billAmount: json["billAmount"].toDouble(),
+      billSubcategory: json["billSubcategory"],
+      paymentType: json["paymentType"],
+      reimbursable: json["reimbursable"],
+      image: json["image"],
+      date: json["date"],
+      description: json['description']);
 
   factory BillInfo.fromMapWithoutImage(Map<String, dynamic> json) => BillInfo(
         billID: json["billID"],

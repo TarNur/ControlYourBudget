@@ -38,11 +38,11 @@ final String selectedCurrencyLeft = 'selectedCurrencyLeft';
 class BudgetHelper {
   BudgetHelper._createInstance();
   static Database _database;
-  static final BudgetHelper _budgetHelper = BudgetHelper._createInstance();
+  static BudgetHelper _budgetHelper = BudgetHelper._createInstance();
 
   factory BudgetHelper() {
     if (_budgetHelper == null) {
-      // _budgetHelper = BudgetHelper._createInstance();
+      _budgetHelper = BudgetHelper._createInstance();
     }
     return _budgetHelper;
   }
@@ -57,7 +57,7 @@ class BudgetHelper {
   Future<Database> initializeDatabase() async {
     var dir = await getDatabasesPath();
     //var path = dir + "budgets.db";
-    var path = p.join(dir, 'controlyour_budget_app.db');
+    var path = p.join(dir, 'control_your_budget__app.db');
 
     var database = await openDatabase(
       path,
@@ -98,6 +98,7 @@ class BudgetHelper {
       },
     );
 
+    print('Database initiate...');
     return database;
   }
 

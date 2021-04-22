@@ -109,10 +109,7 @@ class _EmailSenderState extends State<EmailSender> {
 
   @override
   void initState() {
-    _budgetHelper.initializeDatabase().then((value) {
-      loadBudget();
-      print('-----------database initialized');
-    });
+    loadBudget();
     loadBudgetFuture();
     super.initState();
   }
@@ -225,8 +222,8 @@ class _EmailSenderState extends State<EmailSender> {
       ),
       floatingActionButton: FloatingActionButton(
         // Create New Budget Button
-        onPressed: () {
-          send();
+        onPressed: () async {
+          await send();
           Navigator.of(context).pop();
         },
         child: Icon(Icons.send),

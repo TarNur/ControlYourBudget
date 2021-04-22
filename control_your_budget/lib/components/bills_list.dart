@@ -28,10 +28,7 @@ class _BillsListState extends State<BillsList> {
 
   @override
   void initState() {
-    _budgetHelper.initializeDatabase().then((value) {
-      print('-----------database initialized');
-      loadBills();
-    });
+    loadBills();
     super.initState();
   }
 

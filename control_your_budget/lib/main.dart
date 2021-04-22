@@ -1,17 +1,14 @@
+import 'package:control_your_budget/budget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/screens/newBudget_page.dart';
 import 'package:control_your_budget/screens/settings_page.dart';
 import 'package:control_your_budget/screens/start_page.dart';
 import 'package:control_your_budget/screens/viewBudget_page.dart';
 import 'package:flutter/services.dart';
-import 'package:control_your_budget/budget_helper.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  BudgetHelper _budgetHelper = BudgetHelper();
-  _budgetHelper.initializeDatabase().then((value) {
-    print('-----------database initialized in main');
-  });
+  await BudgetHelper().initializeDatabase();
   runApp(ControlYourBudget());
 }
 

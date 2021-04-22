@@ -22,10 +22,7 @@ class _ViewBillsState extends State<ViewBills> {
 
   @override
   void initState() {
-    _budgetHelper.initializeDatabase().then((value) {
-      loadBudget();
-      print('-----------database initialized');
-    });
+    loadBudget();
     super.initState();
   }
 

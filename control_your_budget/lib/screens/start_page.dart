@@ -16,19 +16,12 @@ class _StartPageState extends State<StartPage> {
 
   @override
   void initState() {
-    _budgetHelper.initializeDatabase().then((value) {
-      print('-----------database initialized');
-    });
+    
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    try {
-      _budgetHelper.initializeDatabase();
-    } catch (error) {
-      showAlertDialogSaveImage(context, error.toString());
-    }
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.end,

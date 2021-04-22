@@ -31,7 +31,7 @@ class EditValueScreen extends StatelessWidget {
             ),
             TextField(
               autofocus: true,
-              keyboardType: TextInputType.numberWithOptions(signed: true),
+              keyboardType: TextInputType.numberWithOptions(signed: false),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
                   RegExp(r'^\d{0,5}[.]?\d?\d?'),

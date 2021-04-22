@@ -79,9 +79,6 @@ class _EditBudgetState extends State<EditBudget> {
 
   @override
   void initState() {
-    _budgetHelper.initializeDatabase().then((value) {
-      print('-----------database initialized');
-    });
     super.initState();
   }
 

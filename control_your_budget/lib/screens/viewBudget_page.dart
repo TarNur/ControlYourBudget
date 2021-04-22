@@ -38,15 +38,12 @@ class _ViewBudgetsState extends State<ViewBudgets> {
 
   @override
   void initState() {
-    _budgetHelper.initializeDatabase().then((value) {
-      print('-----------database initialized');
-      loadBudget();
-    });
+    loadBudget();
     super.initState();
   }
 
   void loadBudget() {
-    _budget = _budgetHelper.getBudget(budgetID);
+    _budget = _budgetHelper.getBudget(widget.budgetID);
     if (mounted) setState(() {});
   }
 
