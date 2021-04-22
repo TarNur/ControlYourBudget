@@ -23,7 +23,7 @@ class _BudgetsListState extends State<BudgetsList> {
     super.initState();
   }
 
-  void loadBudgets() async {
+  void loadBudgets() {
     _budgets = _budgetHelper.getBudgets();
     if (mounted) setState(() {});
   }

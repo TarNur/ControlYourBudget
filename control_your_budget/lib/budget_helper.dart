@@ -36,14 +36,13 @@ final String otherExpensesBudgetLeft = 'otherExpensesBudgetLeft';
 final String selectedCurrencyLeft = 'selectedCurrencyLeft';
 
 class BudgetHelper {
-  
-  static Database _database;
-  static BudgetHelper _budgetHelper;
-
   BudgetHelper._createInstance();
+  static Database _database;
+  static final BudgetHelper _budgetHelper = BudgetHelper._createInstance();
+
   factory BudgetHelper() {
     if (_budgetHelper == null) {
-      _budgetHelper = BudgetHelper._createInstance();
+      // _budgetHelper = BudgetHelper._createInstance();
     }
     return _budgetHelper;
   }
@@ -63,8 +62,9 @@ class BudgetHelper {
     var database = await openDatabase(
       path,
       version: 1,
-      onCreate: (db, version) {
-        db.execute('''
+      onOpen: (db) {},
+      onCreate: (db, version) async {
+        await db.execute('''
         create table $tableName (
           $budgetID integer primary key autoincrement,
           $budgetName text not null,
@@ -82,7 +82,7 @@ class BudgetHelper {
           $pastimeBudgetLeft real,
           $otherExpensesBudgetLeft real)
         ''');
-        db.execute('''
+        await db.execute('''
         create table $tableName2 (
           $billID integer primary key autoincrement,
           $budgetID integer,
@@ -97,10 +97,11 @@ class BudgetHelper {
         ''');
       },
     );
+
     return database;
   }
 
-  void insertBudget(BudgetInfo budgetInfo) async {
+  Future<int> insertBudget(BudgetInfo budgetInfo) async {
     var db = await this.database;
     var result = await db.insert(
       tableName,
@@ -108,6 +109,7 @@ class BudgetHelper {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     print('result $result');
+    return result;
   }
 
   void insertBill(BillInfo billInfo) async {
@@ -162,14 +164,12 @@ class BudgetHelper {
     return _bills;
   }
 
-  Future<List<BillInfo>> getSingleBudgetBills(
-      int id) async {
+  Future<List<BillInfo>> getSingleBudgetBills(int id) async {
     List<BillInfo> _bills = [];
 
     var db = await this.database;
-    var result = await db.rawQuery(
-        'SELECT * FROM $tableName2 WHERE id=?',
-        [id]);
+    var result =
+        await db.rawQuery('SELECT * FROM $tableName2 WHERE id=?', [id]);
     result.forEach((element) {
       var billInfo = BillInfo.fromMap(element);
       _bills.add(billInfo);

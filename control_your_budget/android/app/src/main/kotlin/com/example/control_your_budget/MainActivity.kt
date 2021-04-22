@@ -1,4 +1,4 @@
-package com.example.control_your_budget
+package com.flutter.control_your_budget
 
 import io.flutter.embedding.android.FlutterActivity
 
