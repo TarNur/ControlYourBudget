@@ -1,7 +1,7 @@
-import 'package:control_your_budget/components/alert_box.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
-import 'package:control_your_budget/components/budgets_list.dart';
+import 'package:control_your_budget/models/budget.dart';
+import 'package:control_your_budget/screens/viewBudget_page.dart';
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:control_your_budget/screens/newBudget_page.dart';
 
@@ -12,12 +12,19 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   BudgetHelper _budgetHelper = BudgetHelper();
+  Future<List<BudgetInfo>> _budgets;
+
   int change = 0;
 
   @override
   void initState() {
-    
+    loadBudgets();
     super.initState();
+  }
+
+  void loadBudgets() {
+    _budgets = _budgetHelper.getBudgets();
+    if (mounted) setState(() {});
   }
 
   @override
@@ -73,7 +80,77 @@ class _StartPageState extends State<StartPage> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: BudgetsList(change),
+              child: FutureBuilder(
+                  future: _budgets,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: GestureDetector(
+                              child: Text(
+                                'View Budget: ${snapshot.data[index].budgetName}',
+                                style: TextStyle(
+                                  color: Colors.cyan,
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                              onTap: () {
+                                print('pressed view budget');
+                                Navigator.of(context)
+                                    .push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ViewBudgets(
+                                      budgetName:
+                                          snapshot.data[index].budgetName,
+                                      budgetAmount:
+                                          snapshot.data[index].budgetAmount,
+                                      budgetAmountLeft:
+                                          snapshot.data[index].budgetAmountLeft,
+                                      budgetID: snapshot.data[index].id,
+                                      selectedCurrency:
+                                          snapshot.data[index].selectedCurrency,
+                                    ),
+                                  ),
+                                )
+                                    .then((value) {
+                                  loadBudgets();
+                                  setState(() {});
+                                });
+                              },
+                            ),
+                            subtitle: Text(
+                              'Money spent: ${snapshot.data[index].budgetAmount - snapshot.data[index].budgetAmountLeft} of ${snapshot.data[index].budgetAmount}${snapshot.data[index].selectedCurrency}',
+                            ),
+                            trailing: Material(
+                              color: Colors.white,
+                              child: IconButton(
+                                  icon: Icon(Icons.delete),
+                                  iconSize: 25.0,
+                                  splashColor: Colors.redAccent,
+                                  splashRadius: 40.0,
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    BudgetHelper().deleteAllBillsFromBudget(
+                                        snapshot.data[index].id);
+                                    BudgetHelper()
+                                        .deleteBudget(snapshot.data[index].id);
+                                    print('deleted budget');
+                                    loadBudgets();
+                                  }),
+                            ),
+                          );
+                        },
+                        itemCount: snapshot.data.length,
+                      );
+                    }
+                    return Center(
+                      child: Text(
+                        'Loading...',
+                        style: TextStyle(color: Colors.cyan, fontSize: 30.0),
+                      ),
+                    );
+                  }),
             ),
           ),
         ],
@@ -88,7 +165,7 @@ class _StartPageState extends State<StartPage> {
             ),
           )
               .then((value) {
-            change++;
+            loadBudgets();
             setState(() {});
           });
         },

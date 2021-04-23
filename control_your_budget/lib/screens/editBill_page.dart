@@ -9,7 +9,6 @@ import 'package:control_your_budget/components/bottom_create_button.dart';
 import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:control_your_budget/screens/edit_text_value_screen.dart';
 import 'package:control_your_budget/components/alert_box.dart';
-import 'package:control_your_budget/screens/viewBills_page.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -492,15 +491,7 @@ class _EditBillState extends State<EditBill> {
                 _budgetHelper.updateBudgetAmountsLeft(widget.bill.id,
                     subCategory, currentBudget, billAmount - prevBillAmount);
                 _budgetHelper.updateBill(updatedBill);
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => ViewBills(
-                      budgetID: widget.bill.id,
-                      budgetSubcategory: correctSubcategory,
-                      selectedCurrency: widget.selectedCurrency,
-                    ),
-                  ),
-                );
+                Navigator.pop(context);
               }
             },
             buttonTitle: 'EDIT BILL',

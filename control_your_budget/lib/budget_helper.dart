@@ -1,5 +1,3 @@
-import 'package:control_your_budget/components/subCategories_list.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:control_your_budget/models/budget.dart';
@@ -57,7 +55,7 @@ class BudgetHelper {
   Future<Database> initializeDatabase() async {
     var dir = await getDatabasesPath();
     //var path = dir + "budgets.db";
-    var path = p.join(dir, 'control_your_budget__app.db');
+    var path = p.join(dir, 'control_your_budget_app_release.db');
 
     var database = await openDatabase(
       path,

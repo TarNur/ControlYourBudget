@@ -1,16 +1,15 @@
 import 'package:control_your_budget/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
-import 'package:control_your_budget/components/bills_list.dart';
 import 'package:control_your_budget/budget_helper.dart';
-import 'package:control_your_budget/screens/viewBudget_page.dart';
+import 'package:control_your_budget/screens/editBill_page.dart';
 
 class ViewBills extends StatefulWidget {
   final int budgetID;
   final String budgetSubcategory;
   final String selectedCurrency;
 
-  ViewBills({this.budgetID, this.budgetSubcategory,this.selectedCurrency});
+  ViewBills({this.budgetID, this.budgetSubcategory, this.selectedCurrency});
   @override
   _ViewBillsState createState() => _ViewBillsState();
 }
@@ -18,11 +17,21 @@ class ViewBills extends StatefulWidget {
 class _ViewBillsState extends State<ViewBills> {
   BudgetHelper _budgetHelper = BudgetHelper();
   BudgetInfo _budget;
+  Future<List<BillInfo>> _bills;
+  BudgetInfo budget;
+  String reimb;
+
+  double addToTransportBudget = 0;
+  double addToAccomodationBudget = 0;
+  double addToFoodBudget = 0;
+  double addToPastimeBudget = 0;
+  double addToOtherExpensesBudget = 0;
   var budgetsMade = 0;
 
   @override
   void initState() {
     loadBudget();
+    loadBills();
     super.initState();
   }
 
@@ -30,27 +39,16 @@ class _ViewBillsState extends State<ViewBills> {
     _budget = await _budgetHelper.getBudget(widget.budgetID);
   }
 
+  void loadBills() {
+    _bills = _budgetHelper.getSingleSubCategoryBillsWithoutImage(
+        widget.budgetID, widget.budgetSubcategory);
+    if (mounted) setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            iconSize: 25.0,
-            color: Colors.cyan,
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => ViewBudgets(
-                    budgetName: _budget.budgetName,
-                    budgetAmount: _budget.budgetAmount,
-                    budgetAmountLeft: _budget.budgetAmountLeft,
-                    budgetID: _budget.id,
-                    selectedCurrency: _budget.selectedCurrency,
-                  ),
-                ),
-              );
-            }),
         title: Text('CONTROL YOUR BUDGET'),
       ),
       body: Column(
@@ -75,20 +73,136 @@ class _ViewBillsState extends State<ViewBills> {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  ),
                 ),
-              ),
-              child: BillsList(
-                budgetID: widget.budgetID,
-                subCategory: widget.budgetSubcategory,
-                selectedCurrency: widget.selectedCurrency,
-              ),
-            ),
+                child: FutureBuilder(
+                    future: _bills,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemBuilder: (context, index) {
+                            String reimb =
+                                snapshot.data[index].reimbursable == 0
+                                    ? 'No'
+                                    : 'Yes';
+                            return ListTile(
+                              title: GestureDetector(
+                                child: Text(
+                                  'Bill: ${snapshot.data[index].billName}',
+                                  style: TextStyle(
+                                    color: Colors.cyan,
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                                onTap: () async {
+                                  BillInfo selectedBill = await _budgetHelper
+                                      .getBill(snapshot.data[index].billID);
+                                  print('pressed view bill');
+                                  Navigator.of(context)
+                                      .push(
+                                    MaterialPageRoute(
+                                      builder: (context) => EditBill(
+                                          bill: selectedBill,
+                                          selectedCurrency:
+                                              widget.selectedCurrency),
+                                    ),
+                                  )
+                                      .then((value) {
+                                    loadBills();
+                                    setState(() {});
+                                  });
+                                },
+                              ),
+                              subtitle: Text(
+                                ' Amount: ${snapshot.data[index].billAmount}${widget.selectedCurrency}\n Reimbursable: $reimb\n Payed with ${snapshot.data[index].paymentType}\n Date: ${snapshot.data[index].date}',
+                              ),
+                              trailing: Material(
+                                color: Colors.white,
+                                child: IconButton(
+                                    icon: Icon(Icons.delete),
+                                    iconSize: 25.0,
+                                    splashColor: Colors.redAccent,
+                                    splashRadius: 40.0,
+                                    color: Colors.red,
+                                    onPressed: () async {
+                                      budget = await BudgetHelper()
+                                          .getBudget(widget.budgetID);
+                                      if (widget.budgetSubcategory ==
+                                          'transportBudget') {
+                                        addToTransportBudget =
+                                            snapshot.data[index].billAmount;
+                                      } else if (widget.budgetSubcategory ==
+                                          'accomodationBudget') {
+                                        addToAccomodationBudget =
+                                            snapshot.data[index].billAmount;
+                                      } else if (widget.budgetSubcategory ==
+                                          'foodBudget') {
+                                        addToFoodBudget =
+                                            snapshot.data[index].billAmount;
+                                      } else if (widget.budgetSubcategory ==
+                                          'pastimeBudget') {
+                                        addToPastimeBudget =
+                                            snapshot.data[index].billAmount;
+                                      } else {
+                                        addToOtherExpensesBudget =
+                                            snapshot.data[index].billAmount;
+                                      }
+                                      var budgetInfo = BudgetInfo(
+                                        id: budget.id,
+                                        budgetName: budget.budgetName,
+                                        budgetAmount: budget.budgetAmount,
+                                        transportBudget: budget.transportBudget,
+                                        accomodationBudget:
+                                            budget.accomodationBudget,
+                                        foodBudget: budget.foodBudget,
+                                        pastimeBudget: budget.pastimeBudget,
+                                        otherExpensesBudget:
+                                            budget.otherExpensesBudget,
+                                        selectedCurrency:
+                                            budget.selectedCurrency,
+                                        budgetAmountLeft:
+                                            budget.budgetAmountLeft +
+                                                snapshot.data[index].billAmount,
+                                        transportBudgetLeft:
+                                            budget.transportBudgetLeft +
+                                                addToTransportBudget,
+                                        accomodationBudgetLeft:
+                                            budget.accomodationBudgetLeft +
+                                                addToAccomodationBudget,
+                                        foodBudgetLeft: budget.foodBudgetLeft +
+                                            addToFoodBudget,
+                                        pastimeBudgetLeft:
+                                            budget.pastimeBudgetLeft +
+                                                addToPastimeBudget,
+                                        otherExpensesBudgetLeft:
+                                            budget.otherExpensesBudgetLeft +
+                                                addToOtherExpensesBudget,
+                                      );
+                                      BudgetHelper().updateBudget(budgetInfo);
+                                      BudgetHelper().deleteBill(
+                                          snapshot.data[index].billID);
+                                      loadBills();
+                                      print('deleteida veel ei saa');
+                                    }),
+                              ),
+                            );
+                          },
+                          itemCount: snapshot.data.length,
+                        );
+                      }
+                      return Center(
+                        child: Text(
+                          'Loading...',
+                          style: TextStyle(color: Colors.cyan, fontSize: 30.0),
+                        ),
+                      );
+                    })),
           ),
         ],
       ),

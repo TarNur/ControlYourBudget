@@ -1,6 +1,5 @@
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:control_your_budget/models/budget.dart';
-import 'package:control_your_budget/screens/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
@@ -426,12 +425,7 @@ class _NewBudgetState extends State<NewBudget> {
                 print('otherExpensesBudget on $otherExpensesBudget');
                 print('selectedCurrency on $selectedCurrency');
                 _budgetHelper.insertBudget(budgetInfo);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => StartPage(),
-                  ),
-                );
+                Navigator.pop(context);
               }
             },
             buttonTitle: 'CREATE BUDGET',
