@@ -10,6 +10,8 @@ import 'package:control_your_budget/components/alert_box.dart';
 import 'dart:math';
 import 'dart:io' show Platform;
 
+import 'package:path/path.dart';
+
 class NewBudget extends StatefulWidget {
   @override
   _NewBudgetState createState() => _NewBudgetState();
@@ -87,6 +89,9 @@ class _NewBudgetState extends State<NewBudget> {
         pastimeBudget -
         otherExpensesBudget;
     moneyLeft = roundDouble(moneyLeft, 2);
+    if (moneyLeft == -0.00 || moneyLeft == -0.0){
+      moneyLeft = moneyLeft.abs();
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

@@ -55,18 +55,42 @@ class _ViewBudgetsState extends State<ViewBudgets> {
   }
 
   // AlamKategooria Listi Tile Loomine
-  ListTile subCategoryListTile(double subCatAmount, double subCatLeft, String subCatName, String subCatNameInDB, int subCatID, String budgetCurrency) {
-    String moneySpentAll =
-        (subCatAmount - subCatLeft)
-            .toStringAsFixed(2);
+  ListTile subCategoryListTile(
+      double subCatAmount,
+      double subCatLeft,
+      String subCatName,
+      String subCatNameInDB,
+      int subCatID,
+      String budgetCurrency) {
+    String moneySpentAll = (subCatAmount - subCatLeft).toStringAsFixed(2);
     return ListTile(
-      title: Text(
-        subCatName,
-        style: TextStyle(
-          color: Colors.cyan,
-          fontSize: 20.0,
-        ),
-      ),
+      title: GestureDetector(
+          child: Text(
+            subCatName,
+            textAlign: TextAlign.start,
+            style: TextStyle(
+              color: Colors.cyan,
+              fontSize: 20.0,
+            ),
+          ),
+          onTap: () {
+            print('open');
+            _budgetHelper.getSingleSubCategoryBills(subCatID, subCatNameInDB);
+            Navigator.of(context)
+                .push(
+              MaterialPageRoute(
+                builder: (context) => ViewBills(
+                  budgetID: subCatID,
+                  budgetSubcategory: subCatNameInDB,
+                  selectedCurrency: budgetCurrency,
+                ),
+              ),
+            )
+                .then((value) async {
+              loadBudget();
+              setState(() {});
+            });
+          }),
       trailing: Material(
         color: Colors.white,
         child: IconButton(
@@ -77,8 +101,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
             color: Colors.cyan,
             onPressed: () {
               print('open');
-              _budgetHelper.getSingleSubCategoryBills(
-                  subCatID, subCatNameInDB);
+              _budgetHelper.getSingleSubCategoryBills(subCatID, subCatNameInDB);
               Navigator.of(context)
                   .push(
                 MaterialPageRoute(
@@ -97,8 +120,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
       ),
       subtitle: Text(
         '  Money spent: $moneySpentAll of $subCatAmount $budgetCurrency',
-        style: getColor(
-            subCatLeft, subCatAmount),
+        style: getColor(subCatLeft, subCatAmount),
       ),
     );
   }
@@ -225,23 +247,53 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                                 snapshot.data.budgetAmount),
                           ),
                         ),
-                        subCategoryListTile(snapshot.data.transportBudget,snapshot.data.transportBudgetLeft, 'Transport Budget', 'transportBudget', snapshot.data.id, snapshot.data.selectedCurrency),
+                        subCategoryListTile(
+                            snapshot.data.transportBudget,
+                            snapshot.data.transportBudgetLeft,
+                            'Transport Budget',
+                            'transportBudget',
+                            snapshot.data.id,
+                            snapshot.data.selectedCurrency),
                         SizedBox(
                           height: 2.0,
                         ),
-                        subCategoryListTile(snapshot.data.accomodationBudget,snapshot.data.accomodationBudgetLeft, 'Accommodation Budget', 'accomodationBudget', snapshot.data.id, snapshot.data.selectedCurrency),
+                        subCategoryListTile(
+                            snapshot.data.accomodationBudget,
+                            snapshot.data.accomodationBudgetLeft,
+                            'Accommodation Budget',
+                            'accomodationBudget',
+                            snapshot.data.id,
+                            snapshot.data.selectedCurrency),
                         SizedBox(
                           height: 2.0,
                         ),
-                        subCategoryListTile(snapshot.data.foodBudget,snapshot.data.foodBudgetLeft, 'Food Budget', 'foodBudget', snapshot.data.id, snapshot.data.selectedCurrency),
+                        subCategoryListTile(
+                            snapshot.data.foodBudget,
+                            snapshot.data.foodBudgetLeft,
+                            'Food Budget',
+                            'foodBudget',
+                            snapshot.data.id,
+                            snapshot.data.selectedCurrency),
                         SizedBox(
                           height: 2.0,
                         ),
-                        subCategoryListTile(snapshot.data.pastimeBudget,snapshot.data.pastimeBudgetLeft, 'Pastime Budget', 'pastimeBudget', snapshot.data.id, snapshot.data.selectedCurrency),
+                        subCategoryListTile(
+                            snapshot.data.pastimeBudget,
+                            snapshot.data.pastimeBudgetLeft,
+                            'Pastime Budget',
+                            'pastimeBudget',
+                            snapshot.data.id,
+                            snapshot.data.selectedCurrency),
                         SizedBox(
                           height: 2.0,
                         ),
-                        subCategoryListTile(snapshot.data.otherExpensesBudget,snapshot.data.otherExpensesBudgetLeft, 'Other Expenses', 'otherExpensesBudget', snapshot.data.id, snapshot.data.selectedCurrency),
+                        subCategoryListTile(
+                            snapshot.data.otherExpensesBudget,
+                            snapshot.data.otherExpensesBudgetLeft,
+                            'Other Expenses',
+                            'otherExpensesBudget',
+                            snapshot.data.id,
+                            snapshot.data.selectedCurrency),
                       ],
                     );
                   }

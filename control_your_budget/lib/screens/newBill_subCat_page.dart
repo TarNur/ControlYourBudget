@@ -31,6 +31,7 @@ class _NewBillState extends State<NewBill> {
   final picker = ImagePicker();
   DateTime selectedDate = DateTime.now();
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+  String subCat;
 
   Future getImagefromcamera() async {
     final pickedImage = await picker.getImage(
@@ -135,6 +136,22 @@ class _NewBillState extends State<NewBill> {
     return correctFormatSubcategory;
   }
 
+  String getSubcategoryBottom(String subCategory) {
+    String correctFormatSubcategory;
+    if (subCategory == 'transportBudget') {
+      correctFormatSubcategory = 'TRANSPORT';
+    } else if (subCategory == 'accomodationBudget') {
+      correctFormatSubcategory = 'ACCOM.';
+    } else if (subCategory == 'foodBudget') {
+      correctFormatSubcategory = 'FOOD';
+    } else if (subCategory == 'pastimeBudget') {
+      correctFormatSubcategory = 'PASTIME';
+    } else {
+      correctFormatSubcategory = 'OTHER';
+    }
+    return correctFormatSubcategory;
+  }
+
   String billName = 'Enter Bill Name';
   int budgetID;
   double billAmount = 0;
@@ -151,6 +168,7 @@ class _NewBillState extends State<NewBill> {
   Widget build(BuildContext context) {
     budgetID = widget.budgetID;
     selectedCurrency = widget.selectedCurrency;
+    subCat = getSubcategoryBottom(widget.budgetSubcategory);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -449,7 +467,7 @@ class _NewBillState extends State<NewBill> {
                 Navigator.pop(context);
               }
             },
-            buttonTitle: 'CREATE BILL',
+            buttonTitle: 'CREATE $subCat BILL',
           )
         ],
       ),

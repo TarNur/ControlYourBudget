@@ -20,6 +20,7 @@ class _ViewBillsState extends State<ViewBills> {
   BudgetInfo _budget;
   Future<List<BillInfo>> _bills;
   BudgetInfo budget;
+  String subCat = '';
   String reimb;
 
   double addToTransportBudget = 0;
@@ -28,6 +29,22 @@ class _ViewBillsState extends State<ViewBills> {
   double addToPastimeBudget = 0;
   double addToOtherExpensesBudget = 0;
   var budgetsMade = 0;
+
+  String getSubcategoryFormat(String subCategory) {
+    String correctFormatSubcategory;
+    if (subCategory == 'transportBudget') {
+      correctFormatSubcategory = 'Transport';
+    } else if (subCategory == 'accomodationBudget') {
+      correctFormatSubcategory = 'Accom.';
+    } else if (subCategory == 'foodBudget') {
+      correctFormatSubcategory = 'Food';
+    } else if (subCategory == 'pastimeBudget') {
+      correctFormatSubcategory = 'Pastime';
+    } else {
+      correctFormatSubcategory = 'Other';
+    }
+    return correctFormatSubcategory;
+  }
 
   showAlertDialogDeleteBill(
       BuildContext context, int deleteBillID, BudgetInfo updatedBudget) {
@@ -85,6 +102,7 @@ class _ViewBillsState extends State<ViewBills> {
 
   @override
   Widget build(BuildContext context) {
+    subCat = getSubcategoryFormat(widget.budgetSubcategory);
     return Scaffold(
       appBar: AppBar(
         title: Text('CONTROL YOUR BUDGET'),
@@ -100,7 +118,7 @@ class _ViewBillsState extends State<ViewBills> {
               children: <Widget>[
                 SizedBox(width: 10.0),
                 Text(
-                  'Your Bills: ',
+                  'Your $subCat Bills: ',
                   style: TextStyle(
                     color: kLightGreyColour,
                     fontSize: 18,

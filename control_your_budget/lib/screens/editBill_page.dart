@@ -495,7 +495,7 @@ class _EditBillState extends State<EditBill> {
                 Navigator.pop(context);
               }
             },
-            buttonTitle: 'EDIT BILL',
+            buttonTitle: 'SAVE',
           )
         ],
       ),
