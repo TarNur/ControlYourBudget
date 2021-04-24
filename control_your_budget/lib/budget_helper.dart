@@ -223,31 +223,31 @@ class BudgetHelper {
       subcategoryLeftCurrent = budget.transportBudgetLeft;
       await db.rawUpdate(
           'UPDATE $tableName SET $transportBudgetLeft = ? WHERE id = ?',
-          [subcategoryLeftCurrent - billAmount, id]);
+          [double.parse((subcategoryLeftCurrent - billAmount).toStringAsFixed(2)), id]);
     } else if (subCategory == 'Accom.') {
       subcategoryLeftCurrent = budget.accomodationBudgetLeft;
       await db.rawUpdate(
           'UPDATE $tableName SET $accomodationBudgetLeft = ? WHERE id = ?',
-          [subcategoryLeftCurrent - billAmount, id]);
+          [double.parse((subcategoryLeftCurrent - billAmount).toStringAsFixed(2)), id]);
     } else if (subCategory == 'Food') {
       subcategoryLeftCurrent = budget.foodBudgetLeft;
       await db.rawUpdate(
           'UPDATE $tableName SET $foodBudgetLeft = ? WHERE id = ?',
-          [subcategoryLeftCurrent - billAmount, id]);
+          [double.parse((subcategoryLeftCurrent - billAmount).toStringAsFixed(2)), id]);
     } else if (subCategory == 'Pastime') {
       subcategoryLeftCurrent = budget.pastimeBudgetLeft;
       await db.rawUpdate(
           'UPDATE $tableName SET $pastimeBudgetLeft = ? WHERE id = ?',
-          [subcategoryLeftCurrent - billAmount, id]);
+          [double.parse((subcategoryLeftCurrent - billAmount).toStringAsFixed(2)), id]);
     } else {
       subcategoryLeftCurrent = budget.otherExpensesBudgetLeft;
       await db.rawUpdate(
           'UPDATE $tableName SET $otherExpensesBudgetLeft = ? WHERE id = ?',
-          [subcategoryLeftCurrent - billAmount, id]);
+          [double.parse((subcategoryLeftCurrent - billAmount).toStringAsFixed(2)), id]);
     }
     await db.rawUpdate(
         'UPDATE $tableName SET $budgetAmountLeft = ? WHERE id = ?',
-        [budgetAmountLeftCurrent - billAmount, id]);
+        [double.parse((budgetAmountLeftCurrent - billAmount).toStringAsFixed(2)), id]);
   }
 
   Future<void> updateBudget(BudgetInfo updatedBudget) async {

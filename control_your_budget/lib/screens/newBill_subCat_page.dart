@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/budget_helper.dart';
@@ -8,33 +6,31 @@ import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/components/bottom_create_button.dart';
 import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:control_your_budget/screens/edit_text_value_screen.dart';
-import 'package:control_your_budget/components/alert_box.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:control_your_budget/components/alert_box.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'dart:io' show Platform;
 import 'dart:io';
+import 'dart:io' show Platform;
 
-class EditBill extends StatefulWidget {
-  final BillInfo bill;
+class NewBill extends StatefulWidget {
+  final int budgetID;
+  final String budgetSubcategory;
   final String selectedCurrency;
 
-  EditBill({this.bill, this.selectedCurrency});
+  NewBill({this.budgetID,this.budgetSubcategory, this.selectedCurrency});
 
   @override
-  _EditBillState createState() => _EditBillState();
+  _NewBillState createState() => _NewBillState();
 }
 
-class _EditBillState extends State<EditBill> {
+class _NewBillState extends State<NewBill> {
   BudgetHelper _budgetHelper = BudgetHelper();
-  int once = 0;
   File _image;
-  Uint8List _bytesImage;
   String base64Image;
-  String newPickedImage;
-  DateTime selectedDate;
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd");
   final picker = ImagePicker();
+  DateTime selectedDate = DateTime.now();
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
   Future getImagefromcamera() async {
     final pickedImage = await picker.getImage(
@@ -47,7 +43,6 @@ class _EditBillState extends State<EditBill> {
         _image = File(pickedImage.path);
         List<int> imageBytes = _image.readAsBytesSync();
         base64Image = base64Encode(imageBytes);
-        _bytesImage = Base64Decoder().convert(base64Image);
         showAlertDialogImageUploaded(context);
       } else {
         print('didnt select an image');
@@ -66,7 +61,6 @@ class _EditBillState extends State<EditBill> {
         _image = File(pickedImage.path);
         List<int> imageBytes = _image.readAsBytesSync();
         base64Image = base64Encode(imageBytes);
-        _bytesImage = Base64Decoder().convert(base64Image);
         showAlertDialogImageUploaded(context);
       } else {
         print('didnt select an image');
@@ -113,18 +107,6 @@ class _EditBillState extends State<EditBill> {
     );
   }
 
-  _saveImage() async {
-    String result;
-    try {
-      await ImageGallerySaver.saveImage(Uint8List.fromList(_bytesImage),
-          quality: 100, name: billName);
-      result = 'Image Saved.';
-    } catch (error) {
-      result = error.toString();
-    }
-    showAlertDialogSaveImage(context, result);
-  }
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -139,65 +121,36 @@ class _EditBillState extends State<EditBill> {
 
   String getSubcategoryFormat(String subCategory) {
     String correctFormatSubcategory;
-    if (subCategory == 'Transport') {
-      correctFormatSubcategory = 'transportBudget';
-    } else if (subCategory == 'Accom.') {
-      correctFormatSubcategory = 'accomodationBudget';
-    } else if (subCategory == 'Food') {
-      correctFormatSubcategory = 'foodBudget';
-    } else if (subCategory == 'Pastime') {
-      correctFormatSubcategory = 'pastimeBudget';
+    if (subCategory == 'transportBudget') {
+      correctFormatSubcategory = 'Transport';
+    } else if (subCategory == 'accomodationBudget') {
+      correctFormatSubcategory = 'Accom.';
+    } else if (subCategory == 'foodBudget') {
+      correctFormatSubcategory = 'Food';
+    } else if (subCategory == 'pastimeBudget') {
+      correctFormatSubcategory = 'Pastime';
     } else {
-      correctFormatSubcategory = 'otherExpensesBudget';
+      correctFormatSubcategory = 'Other';
     }
     return correctFormatSubcategory;
   }
 
-  String fromSubcategoryFormat(String subCategory) {
-    if (subCategory == 'transportBudget') {
-      return 'Transport';
-    } else if (subCategory == 'accomodationBudget') {
-      return 'Accom.';
-    } else if (subCategory == 'foodBudget') {
-      return 'Food';
-    } else if (subCategory == 'pastimeBudget') {
-      return 'Pastime';
-    } else {
-      return 'Other';
-    }
-  }
-
-  String billName;
-  double billAmount;
-  String paymentType;
-  String subCategory;
-  bool reimbursable;
-  var descriptionController = TextEditingController(text: 'Bill Details: ');
-
-  double prevBillAmount;
+  String billName = 'Enter Bill Name';
+  int budgetID;
+  double billAmount = 0;
+  String paymentType = 'Credit';
+  String description = 'Description';
+  var descriptionController = TextEditingController(
+    text: 'Bill Details: ',
+  );
+  String selectedCurrency;
+  bool ifBudgetNameChanged = false;
+  bool reimbursable = false;
 
   @override
   Widget build(BuildContext context) {
-    if (once == 0) {
-      billName = widget.bill.billName;
-      billAmount = widget.bill.billAmount;
-      prevBillAmount = widget.bill.billAmount;
-      paymentType = widget.bill.paymentType;
-      subCategory = widget.bill.billSubcategory;
-      subCategory = fromSubcategoryFormat(subCategory);
-      reimbursable = widget.bill.reimbursable == 0 ? false : true;
-      selectedDate = dateFormat.parse(widget.bill.date);
-      if (widget.bill.description != null) {
-        descriptionController.text = widget.bill.description;
-      } 
-      if (widget.bill.image != null) {
-        base64Image = widget.bill.image;
-        _bytesImage = Base64Decoder().convert(base64Image);
-      } else {
-        _bytesImage = null;
-      }
-    }
-    once = 1;
+    budgetID = widget.budgetID;
+    selectedCurrency = widget.selectedCurrency;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -243,6 +196,7 @@ class _EditBillState extends State<EditBill> {
                       if (typedValue != null) {
                         setState(() {
                           billName = typedValue;
+                          ifBudgetNameChanged = true;
                         });
                       }
                     },
@@ -265,7 +219,7 @@ class _EditBillState extends State<EditBill> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Bill Amount: $billAmount ${widget.selectedCurrency}',
+                    'Bill Amount: $billAmount $selectedCurrency',
                     style: kLabelTextStyle,
                   ),
                   IconButton(
@@ -307,18 +261,31 @@ class _EditBillState extends State<EditBill> {
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    'Your Payment Type: $paymentType',
-                    style: kLabelTextStyle,
-                  ),
-                  Container(
-                    height: 40.0,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 0),
-                    color: Colors.white,
-                    child: Platform.isIOS ? iOSPicker2() : androidDropdown2(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            'Payment Type: ',
+                            style: kLabelTextStyle,
+                          ),
+                          Container(
+                            height: 40.0,
+                            width: 300.0,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.symmetric(horizontal: 0),
+                            color: Colors.white,
+                            child: Platform.isIOS
+                                ? iOSPicker2()
+                                : androidDropdown2(),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   Column(
                     children: [
@@ -353,7 +320,8 @@ class _EditBillState extends State<EditBill> {
                             backgroundColor:
                                 MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {
-                                return Colors.cyan;
+                                return Colors
+                                    .cyan; // Use the component's default.
                               },
                             ),
                           ),
@@ -365,7 +333,7 @@ class _EditBillState extends State<EditBill> {
                                 return Container(
                                   height: double.infinity,
                                   color: kActiveCardColour,
-                                  child: _bytesImage == null
+                                  child: _image == null
                                       ? Text(
                                           'No Image Selected',
                                           textAlign: TextAlign.center,
@@ -373,8 +341,8 @@ class _EditBillState extends State<EditBill> {
                                               height: 20.0,
                                               color: kLightGreyColour),
                                         )
-                                      : Image.memory(
-                                          _bytesImage,
+                                      : Image.file(
+                                          _image,
                                           fit: BoxFit.contain,
                                         ),
                                 );
@@ -398,7 +366,8 @@ class _EditBillState extends State<EditBill> {
                             backgroundColor:
                                 MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {
-                                return Colors.cyan;
+                                return Colors
+                                    .cyan; 
                               },
                             ),
                           ),
@@ -408,8 +377,8 @@ class _EditBillState extends State<EditBill> {
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  height: double.infinity,
                                   margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+                                  height: double.infinity,
                                   color: Colors.white,
                                   child: TextField(
                                     controller: descriptionController,
@@ -439,43 +408,25 @@ class _EditBillState extends State<EditBill> {
                           icon: Icon(Icons.folder),
                           onPressed: getImagefromGallery,
                           color: Colors.cyan),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              return Colors.cyan;
-                            },
-                          ),
-                        ),
-                        onPressed: () {
-                          if (_bytesImage != null) {
-                            _saveImage();
-                          } else {
-                            showAlertDialogSaveImage(
-                                context, 'No Image to Save');
-                          }
-                        },
-                        child: Text('Save Image'),
-                      ),
                     ],
                   ),
                 ],
               ),
             ),
           ),
+
           BottomButton(
             // CREATE BUDGET NUPP
             onTap: () async {
               int ifReimbursable = reimbursable ? 1 : 0;
-              String correctSubcategory = getSubcategoryFormat(subCategory);
+              String correctSubcategory = getSubcategoryFormat(widget.budgetSubcategory);
               String dateForDatabase = dateFormat.format(selectedDate);
-              var updatedBill = BillInfo(
-                billID: widget.bill.billID,
+              print(dateForDatabase);
+              var billInfo = BillInfo(
                 billName: billName,
                 billAmount: billAmount,
-                id: widget.bill.id,
-                billSubcategory: correctSubcategory,
+                id: budgetID,
+                billSubcategory: widget.budgetSubcategory,
                 paymentType: paymentType,
                 reimbursable: ifReimbursable,
                 image: base64Image,
@@ -484,18 +435,21 @@ class _EditBillState extends State<EditBill> {
               );
               if (billAmount <= 0) {
                 showAlertDialogBillAmount0(context);
-              } else if (billName == null || billName == '') {
-                showAlertDialogBillNameNullAfterEdit(context);
+              } else if (ifBudgetNameChanged == false ||
+                  billName == null ||
+                  billName == '') {
+                showAlertDialogBillName(context);
               } else {
                 BudgetInfo currentBudget =
-                    await _budgetHelper.getBudget(widget.bill.id);
-                _budgetHelper.updateBudgetAmountsLeft(widget.bill.id,
-                    subCategory, currentBudget, double.parse((billAmount - prevBillAmount).toStringAsFixed(2)));
-                _budgetHelper.updateBill(updatedBill);
+                    await _budgetHelper.getBudget(budgetID);
+                _budgetHelper.updateBudgetAmountsLeft(
+                    budgetID, correctSubcategory, currentBudget, billAmount);
+                currentBudget = await _budgetHelper.getBudget(budgetID);
+                _budgetHelper.insertBill(billInfo);
                 Navigator.pop(context);
               }
             },
-            buttonTitle: 'EDIT BILL',
+            buttonTitle: 'CREATE BILL',
           )
         ],
       ),

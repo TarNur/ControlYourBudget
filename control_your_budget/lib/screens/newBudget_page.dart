@@ -7,6 +7,7 @@ import 'package:control_your_budget/screens/edit_value_screen.dart';
 import 'package:control_your_budget/screens/edit_text_value_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:control_your_budget/components/alert_box.dart';
+import 'dart:math';
 import 'dart:io' show Platform;
 
 class NewBudget extends StatefulWidget {
@@ -27,6 +28,11 @@ class _NewBudgetState extends State<NewBudget> {
   double otherExpensesBudget = 0;
   String selectedCurrency = 'EUR';
   bool ifBudgetNameChanged = false;
+
+  double roundDouble(double value, int places) {
+    double mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
+  }
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -80,6 +86,7 @@ class _NewBudgetState extends State<NewBudget> {
         accomodationBudget -
         pastimeBudget -
         otherExpensesBudget;
+    moneyLeft = roundDouble(moneyLeft, 2);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -171,6 +178,8 @@ class _NewBudgetState extends State<NewBudget> {
                       if (typedValue != null) {
                         setState(() {
                           budgetAmount = double.parse(typedValue);
+                          budgetAmount =
+                              double.parse((budgetAmount).toStringAsFixed(2));
                         });
                       }
                     },
@@ -229,6 +238,8 @@ class _NewBudgetState extends State<NewBudget> {
                           if (typedValue != null) {
                             setState(() {
                               transportBudget = double.parse(typedValue);
+                              transportBudget = double.parse(
+                                  (transportBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -264,6 +275,8 @@ class _NewBudgetState extends State<NewBudget> {
                           if (typedValue != null) {
                             setState(() {
                               accomodationBudget = double.parse(typedValue);
+                              accomodationBudget = double.parse(
+                                  (accomodationBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -299,6 +312,8 @@ class _NewBudgetState extends State<NewBudget> {
                           if (typedValue != null) {
                             setState(() {
                               foodBudget = double.parse(typedValue);
+                              foodBudget = double.parse(
+                                  (foodBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -334,6 +349,8 @@ class _NewBudgetState extends State<NewBudget> {
                           if (typedValue != null) {
                             setState(() {
                               pastimeBudget = double.parse(typedValue);
+                              pastimeBudget = double.parse(
+                                  (pastimeBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -369,6 +386,8 @@ class _NewBudgetState extends State<NewBudget> {
                           if (typedValue != null) {
                             setState(() {
                               otherExpensesBudget = double.parse(typedValue);
+                              otherExpensesBudget = double.parse(
+                                  (otherExpensesBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -392,19 +411,19 @@ class _NewBudgetState extends State<NewBudget> {
             onTap: () {
               var budgetInfo = BudgetInfo(
                 budgetName: budgetName,
-                budgetAmount: budgetAmount,
-                transportBudget: transportBudget,
-                accomodationBudget: accomodationBudget,
-                foodBudget: foodBudget,
-                pastimeBudget: pastimeBudget,
-                otherExpensesBudget: otherExpensesBudget,
+                budgetAmount: double.parse(budgetAmount.toStringAsFixed(2)),
+                transportBudget: double.parse(transportBudget.toStringAsFixed(2)),
+                accomodationBudget: double.parse(accomodationBudget.toStringAsFixed(2)),
+                foodBudget: double.parse(foodBudget.toStringAsFixed(2)),
+                pastimeBudget: double.parse(pastimeBudget.toStringAsFixed(2)),
+                otherExpensesBudget: double.parse(otherExpensesBudget.toStringAsFixed(2)),
                 selectedCurrency: selectedCurrency,
-                budgetAmountLeft: budgetAmount,
-                transportBudgetLeft: transportBudget,
-                accomodationBudgetLeft: accomodationBudget,
-                foodBudgetLeft: foodBudget,
-                pastimeBudgetLeft: pastimeBudget,
-                otherExpensesBudgetLeft: otherExpensesBudget,
+                budgetAmountLeft: double.parse(budgetAmount.toStringAsFixed(2)),
+                transportBudgetLeft: double.parse(transportBudget.toStringAsFixed(2)),
+                accomodationBudgetLeft: double.parse(accomodationBudget.toStringAsFixed(2)),
+                foodBudgetLeft: double.parse(foodBudget.toStringAsFixed(2)),
+                pastimeBudgetLeft: double.parse(pastimeBudget.toStringAsFixed(2)),
+                otherExpensesBudgetLeft: double.parse(otherExpensesBudget.toStringAsFixed(2)),
               );
               // _budgetHelper.insertBudget(budgetInfo);
               if (moneyLeft < 0 || moneyLeft > 0) {

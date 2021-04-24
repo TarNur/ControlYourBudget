@@ -107,6 +107,7 @@ class _EditBudgetState extends State<EditBudget> {
         accomodationBudget -
         pastimeBudget -
         otherExpensesBudget;
+    moneyLeft = double.parse(moneyLeft.toStringAsFixed(2));
 
     previousBudgetAmount = widget.budget.budgetAmount;
     return Scaffold(
@@ -199,6 +200,8 @@ class _EditBudgetState extends State<EditBudget> {
                       if (typedValue != null) {
                         setState(() {
                           budgetAmount = double.parse(typedValue);
+                          budgetAmount =
+                              double.parse((budgetAmount).toStringAsFixed(2));
                         });
                       }
                     },
@@ -257,6 +260,8 @@ class _EditBudgetState extends State<EditBudget> {
                           if (typedValue != null) {
                             setState(() {
                               transportBudget = double.parse(typedValue);
+                              transportBudget = double.parse(
+                                  (transportBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -292,6 +297,8 @@ class _EditBudgetState extends State<EditBudget> {
                           if (typedValue != null) {
                             setState(() {
                               accomodationBudget = double.parse(typedValue);
+                              accomodationBudget = double.parse(
+                                  (accomodationBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -327,6 +334,8 @@ class _EditBudgetState extends State<EditBudget> {
                           if (typedValue != null) {
                             setState(() {
                               foodBudget = double.parse(typedValue);
+                              foodBudget = double.parse(
+                                  (foodBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -362,6 +371,8 @@ class _EditBudgetState extends State<EditBudget> {
                           if (typedValue != null) {
                             setState(() {
                               pastimeBudget = double.parse(typedValue);
+                              pastimeBudget = double.parse(
+                                  (pastimeBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -397,6 +408,8 @@ class _EditBudgetState extends State<EditBudget> {
                           if (typedValue != null) {
                             setState(() {
                               otherExpensesBudget = double.parse(typedValue);
+                              otherExpensesBudget = double.parse(
+                                  (otherExpensesBudget).toStringAsFixed(2));
                             });
                           }
                         },
@@ -429,18 +442,18 @@ class _EditBudgetState extends State<EditBudget> {
                 pastimeBudget: pastimeBudget,
                 otherExpensesBudget: otherExpensesBudget,
                 selectedCurrency: selectedCurrency,
-                budgetAmountLeft: widget.budget.budgetAmountLeft +
-                    (budgetAmount - previousBudgetAmount),
-                transportBudgetLeft: widget.budget.transportBudgetLeft +
-                    (transportBudget - previousTransportBudget),
-                accomodationBudgetLeft: widget.budget.accomodationBudgetLeft +
-                    (accomodationBudget - previousAccomodationBudget),
-                foodBudgetLeft: widget.budget.foodBudgetLeft +
-                    (foodBudget - previousFoodBudget),
-                pastimeBudgetLeft: widget.budget.pastimeBudgetLeft +
-                    (pastimeBudget - previousPastimeBudget),
-                otherExpensesBudgetLeft: widget.budget.otherExpensesBudgetLeft +
-                    (otherExpensesBudget - previousOtherExpensesBudget),
+                budgetAmountLeft: double.parse((widget.budget.budgetAmountLeft +
+                    (budgetAmount - previousBudgetAmount)).toStringAsFixed(2)),
+                transportBudgetLeft: double.parse((widget.budget.transportBudgetLeft +
+                    (transportBudget - previousTransportBudget)).toStringAsFixed(2)),
+                accomodationBudgetLeft: double.parse((widget.budget.accomodationBudgetLeft +
+                    (accomodationBudget - previousAccomodationBudget)).toStringAsFixed(2)),
+                foodBudgetLeft: double.parse((widget.budget.foodBudgetLeft +
+                    (foodBudget - previousFoodBudget)).toStringAsFixed(2)),
+                pastimeBudgetLeft: double.parse((widget.budget.pastimeBudgetLeft +
+                    (pastimeBudget - previousPastimeBudget)).toStringAsFixed(2)),
+                otherExpensesBudgetLeft: double.parse((widget.budget.otherExpensesBudgetLeft +
+                    (otherExpensesBudget - previousOtherExpensesBudget)).toStringAsFixed(2)),
               );
               // _budgetHelper.insertBudget(budgetInfo);
               if (moneyLeft < 0 || moneyLeft > 0) {

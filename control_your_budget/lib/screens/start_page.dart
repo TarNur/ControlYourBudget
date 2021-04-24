@@ -16,6 +16,44 @@ class _StartPageState extends State<StartPage> {
 
   int change = 0;
 
+  showAlertDialogDeleteBudget(BuildContext context, int deleteBudgetID) {
+    // set up the button
+    Widget deleteButton = FlatButton(
+      child: Text("Confirm"),
+      onPressed: () {
+        BudgetHelper().deleteAllBillsFromBudget(deleteBudgetID);
+        BudgetHelper().deleteBudget(deleteBudgetID);
+        Navigator.of(context).pop();
+        loadBudgets();
+      },
+    );
+
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text('Are you sure you wanted to delete this budget?'),
+      content: Text('All of its bills will also be deleted.'),
+      actions: [
+        cancelButton,
+        deleteButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   void initState() {
     loadBudgets();
@@ -84,8 +122,21 @@ class _StartPageState extends State<StartPage> {
                   future: _budgets,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
+                      if (snapshot.data.length < 1) {
+                        return Center(
+                          child: Text(
+                            'No budgets made...',
+                            style:
+                                TextStyle(color: Colors.cyan, fontSize: 30.0),
+                          ),
+                        );
+                      }
                       return ListView.builder(
                         itemBuilder: (context, index) {
+                          String moneySpent =
+                              (snapshot.data[index].budgetAmount -
+                                      snapshot.data[index].budgetAmountLeft)
+                                  .toStringAsFixed(2);
                           return ListTile(
                             title: GestureDetector(
                               child: Text(
@@ -120,7 +171,7 @@ class _StartPageState extends State<StartPage> {
                               },
                             ),
                             subtitle: Text(
-                              'Money spent: ${snapshot.data[index].budgetAmount - snapshot.data[index].budgetAmountLeft} of ${snapshot.data[index].budgetAmount}${snapshot.data[index].selectedCurrency}',
+                              'Money spent: $moneySpent of ${snapshot.data[index].budgetAmount}${snapshot.data[index].selectedCurrency}',
                             ),
                             trailing: Material(
                               color: Colors.white,
@@ -131,12 +182,8 @@ class _StartPageState extends State<StartPage> {
                                   splashRadius: 40.0,
                                   color: Colors.red,
                                   onPressed: () {
-                                    BudgetHelper().deleteAllBillsFromBudget(
-                                        snapshot.data[index].id);
-                                    BudgetHelper()
-                                        .deleteBudget(snapshot.data[index].id);
-                                    print('deleted budget');
-                                    loadBudgets();
+                                    showAlertDialogDeleteBudget(
+                                        context, snapshot.data[index].id);
                                   }),
                             ),
                           );

@@ -34,7 +34,7 @@ class EditTextValueScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
-                  RegExp(r'^.{0,20}$'),
+                  RegExp(r'^.{0,15}$'),
                 ),
               ],
               onChanged: (value) {

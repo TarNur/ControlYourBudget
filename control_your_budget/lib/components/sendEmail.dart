@@ -190,6 +190,7 @@ class _EmailSenderState extends State<EmailSender> {
                 future: _budgetinfo,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    String moneySpent = (snapshot.data.budgetAmount - snapshot.data.budgetAmountLeft).toStringAsFixed(2);
                     return Column(children: [
                       Text(
                         'Selected Budget',
@@ -205,7 +206,7 @@ class _EmailSenderState extends State<EmailSender> {
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        'Money spent: ${snapshot.data.budgetAmount - snapshot.data.budgetAmountLeft} of ${snapshot.data.budgetAmount}${snapshot.data.selectedCurrency}',
+                        'Money spent: $moneySpent of ${snapshot.data.budgetAmount}${snapshot.data.selectedCurrency}',
                         style: kLabelTextStyle,
                       ),
                     ]);
@@ -246,12 +247,12 @@ class _EmailSenderState extends State<EmailSender> {
         otherBills.add(bill);
       }
     });
-    double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
+    String spent = (_budget.budgetAmount - _budget.budgetAmountLeft).toStringAsFixed(2);
     String reimbursableformat;
     int count = 1;
     body = body +
         'Budget Name: ${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\n\nBills: \n';
-    spent = _budget.transportBudget - _budget.transportBudgetLeft;
+    spent = (_budget.transportBudget - _budget.transportBudgetLeft).toStringAsFixed(2);
     body = body +
         '\nTransport: $spent spent of ${_budget.transportBudget} ${_budget.selectedCurrency}\n';
     transportBills.forEach((bill) {
@@ -262,7 +263,7 @@ class _EmailSenderState extends State<EmailSender> {
       body = body + '${bill.description}\n';
       count++;
     });
-    spent = _budget.accomodationBudget - _budget.accomodationBudgetLeft;
+    spent = (_budget.accomodationBudget - _budget.accomodationBudgetLeft).toStringAsFixed(2);
     count = 1;
     body = body +
         '\nAccommodation: $spent spent of ${_budget.accomodationBudget} ${_budget.selectedCurrency}\n';
@@ -274,7 +275,7 @@ class _EmailSenderState extends State<EmailSender> {
       body = body + '${bill.description}\n';
       count ++;
     });
-    spent = _budget.foodBudget - _budget.foodBudgetLeft;
+    spent = (_budget.foodBudget - _budget.foodBudgetLeft).toStringAsFixed(2);
     count = 1;
     body = body +
         '\nFood: $spent spent of ${_budget.foodBudget} ${_budget.selectedCurrency}\n';
@@ -286,7 +287,7 @@ class _EmailSenderState extends State<EmailSender> {
       body = body + '${bill.description}\n';
       count++;
     });
-    spent = _budget.pastimeBudget - _budget.pastimeBudgetLeft;
+    spent = (_budget.pastimeBudget - _budget.pastimeBudgetLeft).toStringAsFixed(2);
     count = 1;
     body = body +
         '\nPastime: $spent spent of ${_budget.pastimeBudget} ${_budget.selectedCurrency}\n';
@@ -298,7 +299,7 @@ class _EmailSenderState extends State<EmailSender> {
       body = body + '${bill.description}\n';
       count++;
     });
-    spent = _budget.otherExpensesBudget - _budget.otherExpensesBudgetLeft;
+    spent = (_budget.otherExpensesBudget - _budget.otherExpensesBudgetLeft).toStringAsFixed(2);
     count = 1;
     body = body +
         '\nOther: $spent spent of ${_budget.otherExpensesBudget} ${_budget.selectedCurrency}\n';
@@ -313,7 +314,7 @@ class _EmailSenderState extends State<EmailSender> {
   }
 
   void createBodyForReimbursable(int trueOrFalse) {
-    double spent = _budget.budgetAmount - _budget.budgetAmountLeft;
+    String spent = (_budget.budgetAmount - _budget.budgetAmountLeft).toStringAsFixed(2);
     int count = 1;
     body = body +
         'Budget Name: ${_budget.budgetName}\n $spent spent of ${_budget.budgetAmount} ${_budget.selectedCurrency}\n$wantedBills Bills: \n';

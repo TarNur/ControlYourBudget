@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:control_your_budget/constants.dart';
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:control_your_budget/screens/editBill_page.dart';
+import 'package:control_your_budget/screens/newBill_subCat_page.dart';
 
 class ViewBills extends StatefulWidget {
   final int budgetID;
@@ -27,6 +28,43 @@ class _ViewBillsState extends State<ViewBills> {
   double addToPastimeBudget = 0;
   double addToOtherExpensesBudget = 0;
   var budgetsMade = 0;
+
+  showAlertDialogDeleteBill(
+      BuildContext context, int deleteBillID, BudgetInfo updatedBudget) {
+    // set up the button
+    Widget deleteButton = FlatButton(
+      child: Text("Confirm"),
+      onPressed: () {
+        BudgetHelper().updateBudget(updatedBudget);
+        BudgetHelper().deleteBill(deleteBillID);
+        Navigator.of(context).pop();
+        loadBills();
+      },
+    );
+
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text('Are you sure you wanted to delete this bill?'),
+      actions: [
+        cancelButton,
+        deleteButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -85,6 +123,15 @@ class _ViewBillsState extends State<ViewBills> {
                     future: _bills,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        if (snapshot.data.length < 1) {
+                          return Center(
+                            child: Text(
+                              'No bills made...',
+                              style:
+                                  TextStyle(color: Colors.cyan, fontSize: 30.0),
+                            ),
+                          );
+                        }
                         return ListView.builder(
                           itemBuilder: (context, index) {
                             String reimb =
@@ -184,11 +231,11 @@ class _ViewBillsState extends State<ViewBills> {
                                             budget.otherExpensesBudgetLeft +
                                                 addToOtherExpensesBudget,
                                       );
-                                      BudgetHelper().updateBudget(budgetInfo);
-                                      BudgetHelper().deleteBill(
-                                          snapshot.data[index].billID);
-                                      loadBills();
-                                      print('deleteida veel ei saa');
+                                      showAlertDialogDeleteBill(
+                                          context,
+                                          snapshot.data[index].billID,
+                                          budgetInfo);
+                                      print('deleted');
                                     }),
                               ),
                             );
@@ -205,6 +252,27 @@ class _ViewBillsState extends State<ViewBills> {
                     })),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        // Create New Bill Button
+        onPressed: () {
+          Navigator.of(context)
+              .push(
+            MaterialPageRoute(
+              builder: (context) => NewBill(
+                budgetID: widget.budgetID,
+                budgetSubcategory: widget.budgetSubcategory,
+                selectedCurrency: widget.selectedCurrency,
+              ),
+            ),
+          )
+              .then((value) {
+            loadBills();
+            setState(() {});
+          });
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.cyan,
       ),
     );
   }

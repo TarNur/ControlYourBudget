@@ -281,6 +281,7 @@ class _NewBillState extends State<NewBill> {
                       if (typedValue != null) {
                         setState(() {
                           billAmount = double.parse(typedValue);
+                          billAmount = double.parse(billAmount.toStringAsFixed(2));
                         });
                       }
                     },

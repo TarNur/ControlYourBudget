@@ -54,6 +54,55 @@ class _ViewBudgetsState extends State<ViewBudgets> {
     }
   }
 
+  // AlamKategooria Listi Tile Loomine
+  ListTile subCategoryListTile(double subCatAmount, double subCatLeft, String subCatName, String subCatNameInDB, int subCatID, String budgetCurrency) {
+    String moneySpentAll =
+        (subCatAmount - subCatLeft)
+            .toStringAsFixed(2);
+    return ListTile(
+      title: Text(
+        subCatName,
+        style: TextStyle(
+          color: Colors.cyan,
+          fontSize: 20.0,
+        ),
+      ),
+      trailing: Material(
+        color: Colors.white,
+        child: IconButton(
+            icon: Icon(Icons.folder_open),
+            iconSize: 25.0,
+            splashColor: Colors.cyan,
+            splashRadius: 40.0,
+            color: Colors.cyan,
+            onPressed: () {
+              print('open');
+              _budgetHelper.getSingleSubCategoryBills(
+                  subCatID, subCatNameInDB);
+              Navigator.of(context)
+                  .push(
+                MaterialPageRoute(
+                  builder: (context) => ViewBills(
+                    budgetID: subCatID,
+                    budgetSubcategory: subCatNameInDB,
+                    selectedCurrency: budgetCurrency,
+                  ),
+                ),
+              )
+                  .then((value) async {
+                loadBudget();
+                setState(() {});
+              });
+            }),
+      ),
+      subtitle: Text(
+        '  Money spent: $moneySpentAll of $subCatAmount $budgetCurrency',
+        style: getColor(
+            subCatLeft, subCatAmount),
+      ),
+    );
+  }
+
   @override
   void initState() {
     loadBudget();
@@ -102,10 +151,10 @@ class _ViewBudgetsState extends State<ViewBudgets> {
               Row(
                 children: [
                   SizedBox(
-                    width: 20.0,
+                    width: 15.0,
                   ),
                   Text(
-                    'Budget name: $budgetName',
+                    'Name: $budgetName',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -113,7 +162,7 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                     ),
                   ),
                   SizedBox(
-                    width: 10.0,
+                    width: 5.0,
                   ),
                   IconButton(
                     icon: Icon(Icons.edit),
@@ -157,6 +206,9 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                 future: _budget,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    String moneySpentAll = (snapshot.data.budgetAmount -
+                            snapshot.data.budgetAmountLeft)
+                        .toStringAsFixed(2);
                     return ListView(
                       children: [
                         ListTile(
@@ -168,241 +220,28 @@ class _ViewBudgetsState extends State<ViewBudgets> {
                             ),
                           ),
                           subtitle: Text(
-                            '  Money spent: ${snapshot.data.budgetAmount - snapshot.data.budgetAmountLeft} of ${snapshot.data.budgetAmount}${snapshot.data.selectedCurrency}',
+                            '  Money spent: $moneySpentAll of ${snapshot.data.budgetAmount}${snapshot.data.selectedCurrency}',
                             style: getColor(snapshot.data.budgetAmountLeft,
                                 snapshot.data.budgetAmount),
                           ),
                         ),
-                        ListTile(
-                          title: Text(
-                            'Transport Budget',
-                            style: TextStyle(
-                              color: Colors.cyan,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                          trailing: Material(
-                            color: Colors.white,
-                            child: IconButton(
-                                icon: Icon(Icons.folder_open),
-                                iconSize: 25.0,
-                                splashColor: Colors.cyan,
-                                splashRadius: 40.0,
-                                color: Colors.cyan,
-                                onPressed: () {
-                                  print('open');
-                                  _budgetHelper.getSingleSubCategoryBills(
-                                      snapshot.data.id, 'transportBudget');
-                                  Navigator.of(context)
-                                      .push(
-                                    MaterialPageRoute(
-                                      builder: (context) => ViewBills(
-                                        budgetID: snapshot.data.id,
-                                        budgetSubcategory: 'transportBudget',
-                                        selectedCurrency:
-                                            snapshot.data.selectedCurrency,
-                                      ),
-                                    ),
-                                  )
-                                      .then((value) async {
-                                    loadBudget();
-                                    setState(() {});
-                                  });
-                                }),
-                          ),
-                          subtitle: Text(
-                            '  Money spent: ${snapshot.data.transportBudget - snapshot.data.transportBudgetLeft} of ${snapshot.data.transportBudget}${snapshot.data.selectedCurrency}',
-                            style: getColor(snapshot.data.transportBudgetLeft,
-                                snapshot.data.transportBudget),
-                          ),
-                        ),
+                        subCategoryListTile(snapshot.data.transportBudget,snapshot.data.transportBudgetLeft, 'Transport Budget', 'transportBudget', snapshot.data.id, snapshot.data.selectedCurrency),
                         SizedBox(
                           height: 2.0,
                         ),
-                        ListTile(
-                          title: Text(
-                            'Accommodation Budget',
-                            style: TextStyle(
-                              color: Colors.cyan,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '  Money spent: ${snapshot.data.accomodationBudget - snapshot.data.accomodationBudgetLeft} of ${snapshot.data.accomodationBudget}${snapshot.data.selectedCurrency}',
-                            style: getColor(
-                                snapshot.data.accomodationBudgetLeft,
-                                snapshot.data.accomodationBudget),
-                          ),
-                          trailing: Material(
-                            color: Colors.white,
-                            child: IconButton(
-                                icon: Icon(Icons.folder_open),
-                                iconSize: 25.0,
-                                splashColor: Colors.cyan,
-                                splashRadius: 40.0,
-                                color: Colors.cyan,
-                                onPressed: () {
-                                  print('open');
-                                  _budgetHelper.getSingleSubCategoryBills(
-                                      snapshot.data.id, 'accomodationBudget');
-                                  Navigator.of(context)
-                                      .push(
-                                    MaterialPageRoute(
-                                      builder: (context) => ViewBills(
-                                        budgetID: snapshot.data.id,
-                                        budgetSubcategory: 'accomodationBudget',
-                                        selectedCurrency:
-                                            snapshot.data.selectedCurrency,
-                                      ),
-                                    ),
-                                  )
-                                      .then((value) async {
-                                    loadBudget();
-                                    setState(() {});
-                                  });
-                                }),
-                          ),
-                        ),
+                        subCategoryListTile(snapshot.data.accomodationBudget,snapshot.data.accomodationBudgetLeft, 'Accommodation Budget', 'accomodationBudget', snapshot.data.id, snapshot.data.selectedCurrency),
                         SizedBox(
                           height: 2.0,
                         ),
-                        ListTile(
-                          title: Text(
-                            'Food Budget',
-                            style: TextStyle(
-                              color: Colors.cyan,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '  Money spent: ${snapshot.data.foodBudget - snapshot.data.foodBudgetLeft} of ${snapshot.data.foodBudget}${snapshot.data.selectedCurrency}',
-                            style: getColor(snapshot.data.foodBudgetLeft,
-                                snapshot.data.foodBudget),
-                          ),
-                          trailing: Material(
-                            color: Colors.white,
-                            child: IconButton(
-                                icon: Icon(Icons.folder_open),
-                                iconSize: 25.0,
-                                splashColor: Colors.cyan,
-                                splashRadius: 40.0,
-                                color: Colors.cyan,
-                                onPressed: () {
-                                  print('open');
-                                  _budgetHelper.getSingleSubCategoryBills(
-                                      snapshot.data.id, 'foodBudget');
-                                  Navigator.of(context)
-                                      .push(
-                                    MaterialPageRoute(
-                                      builder: (context) => ViewBills(
-                                        budgetID: snapshot.data.id,
-                                        budgetSubcategory: 'foodBudget',
-                                        selectedCurrency:
-                                            snapshot.data.selectedCurrency,
-                                      ),
-                                    ),
-                                  )
-                                      .then((value) async {
-                                    loadBudget();
-                                    setState(() {});
-                                  });
-                                }),
-                          ),
-                        ),
+                        subCategoryListTile(snapshot.data.foodBudget,snapshot.data.foodBudgetLeft, 'Food Budget', 'foodBudget', snapshot.data.id, snapshot.data.selectedCurrency),
                         SizedBox(
                           height: 2.0,
                         ),
-                        ListTile(
-                          title: Text(
-                            'Pastime Budget',
-                            style: TextStyle(
-                              color: Colors.cyan,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '  Money spent: ${snapshot.data.pastimeBudget - snapshot.data.pastimeBudgetLeft} of ${snapshot.data.pastimeBudget}${snapshot.data.selectedCurrency}',
-                            style: getColor(snapshot.data.pastimeBudgetLeft,
-                                snapshot.data.pastimeBudget),
-                          ),
-                          trailing: Material(
-                            color: Colors.white,
-                            child: IconButton(
-                                icon: Icon(Icons.folder_open),
-                                iconSize: 25.0,
-                                splashColor: Colors.cyan,
-                                splashRadius: 40.0,
-                                color: Colors.cyan,
-                                onPressed: () {
-                                  print('open');
-                                  _budgetHelper.getSingleSubCategoryBills(
-                                      snapshot.data.id, 'pastimeBudget');
-                                  Navigator.of(context)
-                                      .push(
-                                    MaterialPageRoute(
-                                      builder: (context) => ViewBills(
-                                        budgetID: snapshot.data.id,
-                                        budgetSubcategory: 'pastimeBudget',
-                                        selectedCurrency:
-                                            snapshot.data.selectedCurrency,
-                                      ),
-                                    ),
-                                  )
-                                      .then((value) async {
-                                    loadBudget();
-                                    setState(() {});
-                                  });
-                                }),
-                          ),
-                        ),
+                        subCategoryListTile(snapshot.data.pastimeBudget,snapshot.data.pastimeBudgetLeft, 'Pastime Budget', 'pastimeBudget', snapshot.data.id, snapshot.data.selectedCurrency),
                         SizedBox(
                           height: 2.0,
                         ),
-                        ListTile(
-                          title: Text(
-                            'Other Expenses',
-                            style: TextStyle(
-                              color: Colors.cyan,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '  Money spent: ${snapshot.data.otherExpensesBudget - snapshot.data.otherExpensesBudgetLeft} of ${snapshot.data.otherExpensesBudget}${snapshot.data.selectedCurrency}',
-                            style: getColor(
-                                snapshot.data.otherExpensesBudgetLeft,
-                                snapshot.data.otherExpensesBudget),
-                          ),
-                          trailing: Material(
-                            color: Colors.white,
-                            child: IconButton(
-                                icon: Icon(Icons.folder_open),
-                                iconSize: 25.0,
-                                splashColor: Colors.cyan,
-                                splashRadius: 40.0,
-                                color: Colors.cyan,
-                                onPressed: () {
-                                  print('open');
-                                  _budgetHelper.getSingleSubCategoryBills(
-                                      snapshot.data.id, 'otherExpensesBudget');
-                                  Navigator.of(context)
-                                      .push(
-                                    MaterialPageRoute(
-                                      builder: (context) => ViewBills(
-                                        budgetID: snapshot.data.id,
-                                        budgetSubcategory:
-                                            'otherExpensesBudget',
-                                        selectedCurrency:
-                                            snapshot.data.selectedCurrency,
-                                      ),
-                                    ),
-                                  )
-                                      .then((value) async {
-                                    loadBudget();
-                                    setState(() {});
-                                  });
-                                }),
-                          ),
-                        ),
+                        subCategoryListTile(snapshot.data.otherExpensesBudget,snapshot.data.otherExpensesBudgetLeft, 'Other Expenses', 'otherExpensesBudget', snapshot.data.id, snapshot.data.selectedCurrency),
                       ],
                     );
                   }

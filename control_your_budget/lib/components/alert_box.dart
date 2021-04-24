@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:control_your_budget/budget_helper.dart';
 
 showAlertDialogMoney(BuildContext context) {
   // set up the button
@@ -12,7 +13,8 @@ showAlertDialogMoney(BuildContext context) {
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text('Your money left needs to be zero.'),
-    content: Text('Either increase your Budget Amount or decrease Budget subcategory amounts.'),
+    content: Text(
+        'Either increase your Budget Amount or decrease Budget subcategory amounts.'),
     actions: [
       okButton,
     ],
@@ -218,6 +220,46 @@ showAlertDialogEmailResponse(BuildContext context, String result) {
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text('Email result: $result.'),
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+Future<int> showAlertDialogDeleteBudget(BuildContext context, int deleteBudgetID) {
+  // set up the button
+  Widget deleteButton = FlatButton(
+    child: Text("Confirm"),
+    onPressed: () {
+      BudgetHelper().deleteAllBillsFromBudget(deleteBudgetID);
+      BudgetHelper().deleteBudget(deleteBudgetID);
+      
+      Navigator.of(context).pop();
+      return 1;
+    },
+  );
+
+  Widget cancelButton = FlatButton(
+    child: Text("Cancel"),
+    onPressed: () {
+      Navigator.of(context).pop();
+      return 0;
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text('Are you sure you wanted to delete this budget?'),
+    content: Text('All of its bills will also be deleted.'),
+    actions: [
+      cancelButton,
+      deleteButton,
+    ],
   );
 
   // show the dialog
