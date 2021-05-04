@@ -219,7 +219,7 @@ class _NewBudgetState extends State<NewBudget> {
                     // TRANSPORT BUDGET
                     children: [
                       Text(
-                        'Transport Budget:            $transportBudget $selectedCurrency',
+                        'Transport Budget:              $transportBudget $selectedCurrency',
                         style: kLabelTextStyle,
                       ),
                       IconButton(
@@ -256,7 +256,7 @@ class _NewBudgetState extends State<NewBudget> {
                     // ACCOMODATION BUDGET
                     children: [
                       Text(
-                        'Accommodation Budget: $accomodationBudget $selectedCurrency',
+                        'Accommodation Budget:   $accomodationBudget $selectedCurrency',
                         style: kLabelTextStyle,
                       ),
                       IconButton(
@@ -293,7 +293,7 @@ class _NewBudgetState extends State<NewBudget> {
                     // FOOD BUDGET
                     children: [
                       Text(
-                        'Food Budget:                  $foodBudget $selectedCurrency',
+                        'Food Budget:                      $foodBudget $selectedCurrency',
                         style: kLabelTextStyle,
                       ),
                       IconButton(
@@ -330,7 +330,7 @@ class _NewBudgetState extends State<NewBudget> {
                     // PASTIME BUDGET
                     children: [
                       Text(
-                        'Pastime Budget:               $pastimeBudget $selectedCurrency',
+                        'Pastime Budget:                 $pastimeBudget $selectedCurrency',
                         style: kLabelTextStyle,
                       ),
                       IconButton(
@@ -367,7 +367,7 @@ class _NewBudgetState extends State<NewBudget> {
                     // OTHER EXPENSES BUDGET
                     children: [
                       Text(
-                        'Other Expenses:               $otherExpensesBudget $selectedCurrency',
+                        'Other Expenses:                 $otherExpensesBudget $selectedCurrency',
                         style: kLabelTextStyle,
                       ),
                       IconButton(
