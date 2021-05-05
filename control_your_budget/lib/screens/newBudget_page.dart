@@ -10,8 +10,6 @@ import 'package:control_your_budget/components/alert_box.dart';
 import 'dart:math';
 import 'dart:io' show Platform;
 
-import 'package:path/path.dart';
-
 class NewBudget extends StatefulWidget {
   @override
   _NewBudgetState createState() => _NewBudgetState();
@@ -75,6 +73,21 @@ class _NewBudgetState extends State<NewBudget> {
     );
   }
 
+  Row subCategoryInput(
+      String subCatName, double subCatAmount, IconButton changeValueButton) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      // TRANSPORT BUDGET
+      children: [
+        Text(
+          '$subCatName $subCatAmount $selectedCurrency',
+          style: kLabelTextStyle,
+        ),
+        changeValueButton,
+      ],
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -89,7 +102,7 @@ class _NewBudgetState extends State<NewBudget> {
         pastimeBudget -
         otherExpensesBudget;
     moneyLeft = roundDouble(moneyLeft, 2);
-    if (moneyLeft == -0.00 || moneyLeft == -0.0){
+    if (moneyLeft == -0.00 || moneyLeft == -0.0) {
       moneyLeft = moneyLeft.abs();
     }
     return Scaffold(
@@ -214,190 +227,155 @@ class _NewBudgetState extends State<NewBudget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // TRANSPORT BUDGET
-                    children: [
-                      Text(
-                        'Transport Budget:              $transportBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Transport Budget:              ',
+                    transportBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              transportBudget = double.parse(typedValue);
-                              transportBudget = double.parse(
-                                  (transportBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            transportBudget = double.parse(typedValue);
+                            transportBudget = double.parse(
+                                (transportBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // ACCOMODATION BUDGET
-                    children: [
-                      Text(
-                        'Accommodation Budget:   $accomodationBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Accommodation Budget:   ',
+                    accomodationBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              accomodationBudget = double.parse(typedValue);
-                              accomodationBudget = double.parse(
-                                  (accomodationBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            accomodationBudget = double.parse(typedValue);
+                            accomodationBudget = double.parse(
+                                (accomodationBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // FOOD BUDGET
-                    children: [
-                      Text(
-                        'Food Budget:                      $foodBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Food Budget:                      ',
+                    foodBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              foodBudget = double.parse(typedValue);
-                              foodBudget = double.parse(
-                                  (foodBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            foodBudget = double.parse(typedValue);
+                            foodBudget =
+                                double.parse((foodBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // PASTIME BUDGET
-                    children: [
-                      Text(
-                        'Pastime Budget:                 $pastimeBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Pastime Budget:                 ',
+                    pastimeBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              pastimeBudget = double.parse(typedValue);
-                              pastimeBudget = double.parse(
-                                  (pastimeBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            pastimeBudget = double.parse(typedValue);
+                            pastimeBudget = double.parse(
+                                (pastimeBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // OTHER EXPENSES BUDGET
-                    children: [
-                      Text(
-                        'Other Expenses:                 $otherExpensesBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Other Expenses:                 ',
+                    otherExpensesBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              otherExpensesBudget = double.parse(typedValue);
-                              otherExpensesBudget = double.parse(
-                                  (otherExpensesBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            otherExpensesBudget = double.parse(typedValue);
+                            otherExpensesBudget = double.parse(
+                                (otherExpensesBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
                   Center(
                     child: Container(
@@ -417,18 +395,25 @@ class _NewBudgetState extends State<NewBudget> {
               var budgetInfo = BudgetInfo(
                 budgetName: budgetName,
                 budgetAmount: double.parse(budgetAmount.toStringAsFixed(2)),
-                transportBudget: double.parse(transportBudget.toStringAsFixed(2)),
-                accomodationBudget: double.parse(accomodationBudget.toStringAsFixed(2)),
+                transportBudget:
+                    double.parse(transportBudget.toStringAsFixed(2)),
+                accomodationBudget:
+                    double.parse(accomodationBudget.toStringAsFixed(2)),
                 foodBudget: double.parse(foodBudget.toStringAsFixed(2)),
                 pastimeBudget: double.parse(pastimeBudget.toStringAsFixed(2)),
-                otherExpensesBudget: double.parse(otherExpensesBudget.toStringAsFixed(2)),
+                otherExpensesBudget:
+                    double.parse(otherExpensesBudget.toStringAsFixed(2)),
                 selectedCurrency: selectedCurrency,
                 budgetAmountLeft: double.parse(budgetAmount.toStringAsFixed(2)),
-                transportBudgetLeft: double.parse(transportBudget.toStringAsFixed(2)),
-                accomodationBudgetLeft: double.parse(accomodationBudget.toStringAsFixed(2)),
+                transportBudgetLeft:
+                    double.parse(transportBudget.toStringAsFixed(2)),
+                accomodationBudgetLeft:
+                    double.parse(accomodationBudget.toStringAsFixed(2)),
                 foodBudgetLeft: double.parse(foodBudget.toStringAsFixed(2)),
-                pastimeBudgetLeft: double.parse(pastimeBudget.toStringAsFixed(2)),
-                otherExpensesBudgetLeft: double.parse(otherExpensesBudget.toStringAsFixed(2)),
+                pastimeBudgetLeft:
+                    double.parse(pastimeBudget.toStringAsFixed(2)),
+                otherExpensesBudgetLeft:
+                    double.parse(otherExpensesBudget.toStringAsFixed(2)),
               );
               // _budgetHelper.insertBudget(budgetInfo);
               if (moneyLeft < 0 || moneyLeft > 0) {

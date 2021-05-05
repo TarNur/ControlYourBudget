@@ -77,6 +77,21 @@ class _EditBudgetState extends State<EditBudget> {
     );
   }
 
+  Row subCategoryInput(
+      String subCatName, double subCatAmount, IconButton changeValueButton) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      // TRANSPORT BUDGET
+      children: [
+        Text(
+          '$subCatName $subCatAmount $selectedCurrency',
+          style: kLabelTextStyle,
+        ),
+        changeValueButton,
+      ],
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -233,190 +248,155 @@ class _EditBudgetState extends State<EditBudget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // TRANSPORT BUDGET
-                    children: [
-                      Text(
-                        'Transport Budget:              $transportBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Transport Budget:              ',
+                    transportBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              transportBudget = double.parse(typedValue);
-                              transportBudget = double.parse(
-                                  (transportBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            transportBudget = double.parse(typedValue);
+                            transportBudget = double.parse(
+                                (transportBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // ACCOMODATION BUDGET
-                    children: [
-                      Text(
-                        'Accommodation budget:   $accomodationBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Accommodation Budget:   ',
+                    accomodationBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              accomodationBudget = double.parse(typedValue);
-                              accomodationBudget = double.parse(
-                                  (accomodationBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            accomodationBudget = double.parse(typedValue);
+                            accomodationBudget = double.parse(
+                                (accomodationBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // FOOD BUDGET
-                    children: [
-                      Text(
-                        'Food Budget:                      $foodBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Food Budget:                      ',
+                    foodBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              foodBudget = double.parse(typedValue);
-                              foodBudget =
-                                  double.parse((foodBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            foodBudget = double.parse(typedValue);
+                            foodBudget =
+                                double.parse((foodBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // PASTIME BUDGET
-                    children: [
-                      Text(
-                        'Pastime Budget:                 $pastimeBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Pastime Budget:                 ',
+                    pastimeBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              pastimeBudget = double.parse(typedValue);
-                              pastimeBudget = double.parse(
-                                  (pastimeBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            pastimeBudget = double.parse(typedValue);
+                            pastimeBudget = double.parse(
+                                (pastimeBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // OTHER EXPENSES BUDGET
-                    children: [
-                      Text(
-                        'Other Expenses:                 $otherExpensesBudget $selectedCurrency',
-                        style: kLabelTextStyle,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        iconSize: 30.0,
-                        color: Colors.cyan,
-                        onPressed: () async {
-                          var typedValue = await showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: EditValueScreen(),
-                              ),
+                  subCategoryInput(
+                    'Other Expenses:                 ',
+                    otherExpensesBudget,
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      iconSize: 30.0,
+                      color: Colors.cyan,
+                      onPressed: () async {
+                        var typedValue = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: EditValueScreen(),
                             ),
-                          );
-                          if (typedValue != null) {
-                            setState(() {
-                              otherExpensesBudget = double.parse(typedValue);
-                              otherExpensesBudget = double.parse(
-                                  (otherExpensesBudget).toStringAsFixed(2));
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                        if (typedValue != null) {
+                          setState(() {
+                            otherExpensesBudget = double.parse(typedValue);
+                            otherExpensesBudget = double.parse(
+                                (otherExpensesBudget).toStringAsFixed(2));
+                          });
+                        }
+                      },
+                    ),
                   ),
                   Center(
                     child: Container(

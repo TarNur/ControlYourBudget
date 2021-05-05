@@ -231,7 +231,7 @@ showAlertDialogEmailResponse(BuildContext context, String result) {
   );
 }
 
-Future<int> showAlertDialogDeleteBudget(BuildContext context, int deleteBudgetID) {
+showAlertDialogDeleteBudget(BuildContext context, int deleteBudgetID) {
   // set up the button
   Widget deleteButton = FlatButton(
     child: Text("Confirm"),
