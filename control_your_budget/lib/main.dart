@@ -1,7 +1,6 @@
 import 'package:control_your_budget/budget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:control_your_budget/screens/newBudget_page.dart';
-import 'package:control_your_budget/screens/settings_page.dart';
 import 'package:control_your_budget/screens/start_page.dart';
 import 'package:control_your_budget/screens/viewBudget_page.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +29,6 @@ class ControlYourBudget extends StatelessWidget {
       routes: {
         '/first': (context) => NewBudget(),
         '/second': (context) => ViewBudgets(),
-        '/third': (context) => Settings(),
       },
     );
   }

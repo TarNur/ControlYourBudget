@@ -74,7 +74,10 @@ class _NewBudgetState extends State<NewBudget> {
   }
 
   Row subCategoryInput(
-      String subCatName, double subCatAmount, IconButton changeValueButton) {
+    String subCatName,
+    double subCatAmount,
+    IconButton changeValueButton,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       // TRANSPORT BUDGET
@@ -425,14 +428,6 @@ class _NewBudgetState extends State<NewBudget> {
               } else if (budgetAmount == 0) {
                 showAlertDialogBudgetAmount0(context);
               } else {
-                print('On OK.');
-                print('budgetName on $budgetName');
-                print('budgetAmount on $budgetAmount');
-                print('transportBudget on $transportBudget');
-                print('accomodationBudget on $accomodationBudget');
-                print('pastimeBudget on $pastimeBudget');
-                print('otherExpensesBudget on $otherExpensesBudget');
-                print('selectedCurrency on $selectedCurrency');
                 _budgetHelper.insertBudget(budgetInfo);
                 Navigator.pop(context);
               }

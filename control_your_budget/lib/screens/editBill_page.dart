@@ -206,7 +206,7 @@ class _EditBillState extends State<EditBill> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // BUDGET NAME SISESTUS
+          // Bill NAME SISESTUS
           Expanded(
             flex: 1,
             child: Container(
